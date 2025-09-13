@@ -3,226 +3,381 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Johannes B. A. Pambudi - Portfolio</title>
+    <title>Johannes Baptista Adiatmaja Pambudi | Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
     <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #212529;
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --card-bg: #ffffff;
+            --border-color: #dee2e6;
+        }
+        html.dark {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --primary-color: #38bdf8;
+            --secondary-color: #9ca3af;
+            --card-bg: #1e1e1e;
+            --border-color: #374151;
+        }
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #28282B;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            /* The transition property was removed to allow the View Transition API to work correctly. */
         }
-        .section-title {
-            @apply text-3xl font-bold text-white mb-8 text-center;
+        .text-primary { color: var(--primary-color); }
+        .text-secondary { color: var(--secondary-color); }
+        .bg-card { background-color: var(--card-bg); }
+        .border-custom { border-color: var(--border-color); }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            border: 4px solid var(--bg-color);
+            z-index: 1;
         }
-        .card {
-            @apply bg-gray-900 rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:transform hover:-translate-y-2;
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Theme Transition Animation --- */
+        /* Disable the default cross-fade animation */
+        ::view-transition-old(root),
+        ::view-transition-new(root) {
+          animation: none;
+          mix-blend-mode: normal;
+        }
+
+        /* Ensure the new view is always on top, so it can animate inwards. */
+        ::view-transition-old(root) {
+          z-index: 1;
+        }
+        ::view-transition-new(root) {
+          z-index: 999;
+        }
+
+        /* Keyframe for the circular reveal */
+        @keyframes reveal {
+          from {
+            clip-path: circle(0% at var(--x) var(--y));
+          }
+          to {
+            clip-path: circle(150% at var(--x) var(--y));
+          }
+        }
+
+        /* Apply the animation only to the new view that is appearing. */
+        html.animating::view-transition-new(root) {
+          animation: reveal 0.5s ease-in-out;
         }
     </style>
 </head>
-<body class="text-gray-200">
+<body class="antialiased">
 
     <!-- Header -->
-    <header class="bg-black bg-opacity-30 backdrop-blur-lg sticky top-0 z-50">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold text-white">JP</a>
-            <div class="hidden md:flex space-x-6">
-                <a href="#about" class="text-gray-300 hover:text-white transition duration-300">About</a>
-                <a href="#experience" class="text-gray-300 hover:text-white transition duration-300">Experience</a>
-                <a href="#projects" class="text-gray-300 hover:text-white transition duration-300">Projects</a>
-                <a href="#skills" class="text-gray-300 hover:text-white transition duration-300">Skills</a>
-                <a href="#contact" class="text-gray-300 hover:text-white transition duration-300">Contact</a>
+    <header class="bg-card/80 border-b border-custom shadow-sm sticky top-0 z-50 backdrop-blur-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                <a href="#about" class="hover:text-primary transition-colors">About</a>
+                <a href="#experience" class="hover:text-primary transition-colors">Experience</a>
+                <a href="#projects" class="hover:text-primary transition-colors">Projects</a>
+                <a href="#skills" class="hover:text-primary transition-colors">Skills</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                 <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                     <i data-feather="moon" class="dark:hidden"></i>
+                     <i data-feather="sun" class="hidden dark:inline"></i>
+                 </button>
             </div>
-            <div class="md:hidden">
-                <button id="menu-btn" class="text-gray-300 focus:outline-none">
-                    <i class="fas fa-bars fa-lg"></i>
-                </button>
-            </div>
-        </nav>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-gray-900">
-            <a href="#about" class="block py-2 px-4 text-sm text-gray-300 hover:bg-gray-800">About</a>
-            <a href="#experience" class="block py-2 px-4 text-sm text-gray-300 hover:bg-gray-800">Experience</a>
-            <a href="#projects" class="block py-2 px-4 text-sm text-gray-300 hover:bg-gray-800">Projects</a>
-            <a href="#skills" class="block py-2 px-4 text-sm text-gray-300 hover:bg-gray-800">Skills</a>
-            <a href="#contact" class="block py-2 px-4 text-sm text-gray-300 hover:bg-gray-800">Contact</a>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="container mx-auto px-6 py-12">
+    <main class="container mx-auto px-4 py-16">
 
         <!-- Hero Section -->
-        <section id="about" class="flex flex-col items-center justify-center min-h-[80vh] text-center">
-            <div class="w-full">
-                <h1 class="text-5xl md:text-6xl font-extrabold text-white mb-4 leading-tight">
-                    Johannes Baptista Adiatmaja Pambudi
-                </h1>
-                <h2 class="text-2xl text-gray-300 font-semibold mb-6">Data Scientist & Machine Learning Engineer</h2>
-                <p class="text-lg text-gray-400 mb-8 max-w-3xl mx-auto">
-                    Passionate about leveraging data to solve complex problems, from demand forecasting to computer vision. Skilled in developing and deploying end-to-end machine learning pipelines.
+        <section id="hero" class="text-center min-h-[60vh] flex flex-col justify-center items-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-3">Johannes Baptista Adiatmaja Pambudi</h1>
+            <p class="text-xl md:text-2xl text-secondary mb-8">Data Scientist & Machine Learning Engineer</p>
+            <div class="flex space-x-5">
+                <a href="https://github.com/adiatmaja" target="_blank" class="text-secondary hover:text-primary transition-colors"><i data-feather="github" class="w-7 h-7"></i></a>
+                <a href="https://linkedin.com/in/adiatmaja" target="_blank" class="text-secondary hover:text-primary transition-colors"><i data-feather="linkedin" class="w-7 h-7"></i></a>
+                <a href="mailto:adi@pambudi.com" class="text-secondary hover:text-primary transition-colors"><i data-feather="mail" class="w-7 h-7"></i></a>
+                <a href="CV - Johannes Baptista Adiatmaja Pambudi.pdf" target="_blank" class="text-secondary hover:text-primary transition-colors"><i data-feather="file-text" class="w-7 h-7"></i></a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-20 fade-in">
+            <h2 class="text-3xl font-bold mb-8 text-center">About Me</h2>
+            <div class="max-w-3xl mx-auto text-center text-secondary leading-relaxed">
+                <p>
+                    I am a passionate and results-driven Data Scientist with a strong foundation in machine learning and deep learning. My experience spans from developing sophisticated demand forecasting models to engineering end-to-end data pipelines for complex predictive analytics. I thrive on transforming raw data into actionable insights and building intelligent systems that solve real-world problems.
                 </p>
-                <div class="flex justify-center space-x-4">
-                    <a href="#contact" class="bg-gray-200 text-black font-bold py-3 px-6 rounded-lg hover:bg-white transition duration-300">Contact Me</a>
-                    <a href="#projects" class="bg-gray-800 text-gray-200 font-bold py-3 px-6 rounded-lg hover:bg-gray-700 transition duration-300">View Projects</a>
-                </div>
             </div>
         </section>
 
         <!-- Experience Section -->
-        <section id="experience" class="py-20">
-            <h2 class="section-title">Work Experience</h2>
-            <div class="relative border-l-2 border-gray-700 pl-10 space-y-12">
-                <!-- Timeline Item 1 -->
-                <div class="relative">
-                    <div class="absolute -left-12 top-1.5 w-6 h-6 bg-white rounded-full" style="border: 4px solid #28282B;"></div>
-                    <p class="text-sm font-medium text-gray-400">Aug 2024 - Present</p>
-                    <h3 class="text-xl font-bold text-white mt-1">Data Scientist</h3>
-                    <p class="text-md font-semibold text-gray-400">Sigma Solusi Indonesia</p>
-                    <ul class="mt-4 space-y-2 text-gray-400 list-disc list-inside">
-                        <li>Developed demand forecasting models using PyTorch and integrated them with SQL databases.</li>
-                        <li>Created a stock balancing system to optimize inventory distribution based on sales forecasts.</li>
-                        <li>Engineered a comprehensive forecasting system to predict sales, COGS, and purchasing needs.</li>
-                    </ul>
-                </div>
-                <!-- Timeline Item 2 -->
-                <div class="relative">
-                     <div class="absolute -left-12 top-1.5 w-6 h-6 bg-white rounded-full" style="border: 4px solid #28282B;"></div>
-                    <p class="text-sm font-medium text-gray-400">Aug 2022 - Jan 2023</p>
-                    <h3 class="text-xl font-bold text-white mt-1">Machine Learning Engineer - Internship</h3>
-                    <p class="text-md font-semibold text-gray-400">Beehive Drones</p>
-                    <ul class="mt-4 space-y-2 text-gray-400 list-disc list-inside">
-                        <li>Developed an end-to-end data pipeline for processing aerial imagery for carbon value estimation.</li>
-                        <li>Engineered a TensorFlow deep learning model, improving predictive accuracy from 0.27 to 0.52.</li>
-                    </ul>
+        <section id="experience" class="py-20 fade-in">
+            <h2 class="text-3xl font-bold mb-8 text-center">Work Experience</h2>
+            <div class="max-w-3xl mx-auto">
+                <div class="relative pl-8 border-l-2 border-custom">
+                    <!-- Job 1 -->
+                    <div class="mb-12 timeline-item">
+                        <div class="flex justify-between items-center">
+                           <p class="text-sm text-secondary">Aug 2024 - Present</p>
+                           <p class="text-sm text-secondary font-medium" id="sigma-duration"></p>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary mt-1">Data Scientist</h3>
+                        <p class="font-semibold">Sigma Solusi Indonesia</p>
+                        <ul class="list-disc list-inside mt-2 text-sm text-secondary space-y-1">
+                            <li>Developed demand forecasting models with PyTorch and SQL for robust predictive analytics.</li>
+                            <li>Created a stock balancing system using sales forecasts to optimize inventory distribution.</li>
+                            <li>Engineered a comprehensive forecasting system to predict sales, COGS, and purchasing needs.</li>
+                        </ul>
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">PyTorch</span>
+                            <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">SQL</span>
+                            <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">Python</span>
+                        </div>
+                        <a href="sigma-case-study.html" class="inline-block mt-3 font-semibold text-primary text-sm hover:underline">Read Case Study <i data-feather="arrow-right" class="inline w-4 h-4"></i></a>
+                    </div>
+                    <!-- Job 2 -->
+                    <div class="timeline-item">
+                         <div class="flex justify-between items-center">
+                            <p class="text-sm text-secondary">Aug 2022 - Jan 2023</p>
+                            <p class="text-sm text-secondary font-medium">6 mos</p>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary mt-1">Machine Learning Engineer - Internship</h3>
+                        <p class="font-semibold">Beehive Drones</p>
+                        <ul class="list-disc list-inside mt-2 text-sm text-secondary space-y-1">
+                            <li>Developed an end-to-end data pipeline to process and extract features from raw aerial imagery.</li>
+                            <li>Engineered a deep learning model using TensorFlow that significantly improved predictive accuracy.</li>
+                        </ul>
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">TensorFlow</span>
+                            <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">Python</span>
+                        </div>
+                        <a href="beehive-case-study.html" class="inline-block mt-3 font-semibold text-primary text-sm hover:underline">Read Case Study <i data-feather="arrow-right" class="inline w-4 h-4"></i></a>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Projects Section -->
-        <section id="projects" class="py-20">
-            <h2 class="section-title">Projects</h2>
-            <div class="grid md:grid-cols-2 gap-10">
-                <!-- Project Card 1 -->
-                <div class="card">
-                    <div class="p-8">
-                        <h3 class="text-2xl font-bold text-white mb-2">Gender Classification from Fingerprints</h3>
-                        <p class="text-gray-400 mb-4">A deep learning project to classify gender from fingerprint images, enhancing features with Gabor filters and deploying via a Streamlit web app.</p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-gray-700 text-gray-300 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Deep Learning</span>
-                            <span class="bg-gray-700 text-gray-300 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Streamlit</span>
-                            <span class="bg-gray-700 text-gray-300 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Computer Vision</span>
+        <section id="projects" class="py-20 fade-in">
+            <h2 class="text-3xl font-bold mb-8 text-center">Featured Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <!-- Project 1 -->
+                <div class="bg-card rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                    <div class="p-6 flex flex-col h-full">
+                        <div class="flex-grow">
+                            <h3 class="text-2xl font-bold mb-2 min-h-[4rem]">Gender Classification from Fingerprints</h3>
+                            <p class="text-secondary text-sm mb-4">
+                                Enhanced fingerprint features for deep learning with Gabor filters, improving F1-score by 7%. Deployed as an interactive Streamlit web app.
+                            </p>
                         </div>
-                        <a href="https://github.com/adiatmaja/Gender-Classification" target="_blank" class="font-semibold text-gray-300 hover:text-white transition duration-300">
-                            View on GitHub <i class="fas fa-arrow-right ml-1"></i>
-                        </a>
+                        <div>
+                            <div class="mb-4 flex flex-wrap gap-2">
+                                <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">TensorFlow</span>
+                                <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">Python</span>
+                                 <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">Streamlit</span>
+                            </div>
+                            <a href="gender-classification-case-study.html" class="font-semibold text-primary text-sm hover:underline">View Case Study <i data-feather="arrow-right" class="inline w-4 h-4"></i></a>
+                        </div>
                     </div>
                 </div>
-                <!-- Project Card 2 -->
-                <div class="card">
-                    <div class="p-8">
-                        <h3 class="text-2xl font-bold text-white mb-2">ASAH - Waste Classification App</h3>
-                        <p class="text-gray-400 mb-4">A mobile application that classifies waste types with 94% accuracy using an optimized MobileNetV2 model for real-time performance.</p>
-                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-gray-700 text-gray-300 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">MobileNetV2</span>
-                             <span class="bg-gray-700 text-gray-300 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Android</span>
-                             <span class="bg-gray-700 text-gray-300 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">TensorFlow</span>
+                <!-- Project 2 -->
+                <div class="bg-card rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                    <div class="p-6 flex flex-col h-full">
+                        <div class="flex-grow">
+                            <h3 class="text-2xl font-bold mb-2 min-h-[4rem]">ASAH - Waste Classification App</h3>
+                            <p class="text-secondary text-sm mb-4">
+                                Boosted waste classification accuracy to 94% using MobileNetV2, optimized for real-time inference on a production Android app.
+                            </p>
                         </div>
-                        <a href="https://github.com/ASAH-Bangkit-2023/ASAH-Project" target="_blank" class="font-semibold text-gray-300 hover:text-white transition duration-300">
-                           View on GitHub <i class="fas fa-arrow-right ml-1"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Skills & Education Section -->
-        <section id="skills" class="py-20">
-            <div class="grid md:grid-cols-2 gap-16 items-start">
-                <!-- Skills -->
-                <div>
-                    <h2 class="section-title !text-left">Skills & Expertise</h2>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="bg-gray-800 text-gray-200 text-md font-medium px-4 py-2 rounded-lg">Python</span>
-                        <span class="bg-gray-800 text-gray-200 text-md font-medium px-4 py-2 rounded-lg">SQL</span>
-                        <span class="bg-gray-800 text-gray-200 text-md font-medium px-4 py-2 rounded-lg">TensorFlow</span>
-                        <span class="bg-gray-800 text-gray-200 text-md font-medium px-4 py-2 rounded-lg">PyTorch</span>
-                        <span class="bg-gray-800 text-gray-200 text-md font-medium px-4 py-2 rounded-lg">Git</span>
-                        <span class="bg-gray-800 text-gray-200 text-md font-medium px-4 py-2 rounded-lg">Pandas</span>
-                        <span class="bg-gray-800 text-gray-200 text-md font-medium px-4 py-2 rounded-lg">scikit-learn</span>
-                        <span class="bg-gray-800 text-gray-200 text-md font-medium px-4 py-2 rounded-lg">NumPy</span>
-                        <span class="bg-gray-800 text-gray-200 text-md font-medium px-4 py-2 rounded-lg">Keras</span>
-                        <span class="bg-gray-800 text-gray-200 text-md font-medium px-4 py-2 rounded-lg">Streamlit</span>
-                        <span class="bg-gray-800 text-gray-200 text-md font-medium px-4 py-2 rounded-lg">Data Forecasting</span>
-                        <span class="bg-gray-800 text-gray-200 text-md font-medium px-4 py-2 rounded-lg">Machine Learning</span>
-                        <span class="bg-gray-800 text-gray-200 text-md font-medium px-4 py-2 rounded-lg">Deep Learning</span>
-                    </div>
-                </div>
-                <!-- Education & Certifications -->
-                <div>
-                    <h2 class="section-title !text-left">Education & Certs</h2>
-                    <div class="space-y-6">
-                        <div class="card p-6">
-                            <p class="font-bold text-lg text-white">Bachelor of Science, Informatics</p>
-                            <p class="text-gray-400">Universitas Kristen Duta Wacana</p>
-                            <p class="text-sm text-gray-500">Graduated 2024 with 3.75 GPA</p>
-                        </div>
-                         <div class="card p-6">
-                            <p class="font-bold text-lg text-white">TensorFlow Developer Certificate</p>
-                            <p class="text-gray-400">Google</p>
-                            <p class="text-sm text-gray-500">Credential ID: 86185588</p>
+                        <div>
+                            <div class="mb-4 flex flex-wrap gap-2">
+                                <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">TensorFlow</span>
+                                <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">Python</span>
+                            </div>
+                            <a href="asah-case-study.html" class="font-semibold text-primary text-sm hover:underline">View Case Study <i data-feather="arrow-right" class="inline w-4 h-4"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="py-20 text-center">
-             <h2 class="section-title">Get In Touch</h2>
-             <p class="max-w-2xl mx-auto text-lg text-gray-400 mb-8">
-                I'm currently seeking new opportunities and am open to collaboration. Feel free to reach out.
-            </p>
-            <a href="mailto:adi@pambudi.com" class="inline-block bg-gray-200 text-black font-bold py-4 px-8 rounded-lg text-lg hover:bg-white transition duration-300">
-                <i class="fas fa-envelope mr-2"></i> adi@pambudi.com
-            </a>
+        <!-- Skills Section -->
+        <section id="skills" class="py-20 fade-in">
+            <h2 class="text-3xl font-bold mb-8 text-center">Skills & Expertise</h2>
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="flex flex-wrap justify-center gap-3">
+                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Python</span>
+                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">SQL</span>
+                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Java</span>
+                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">PHP</span>
+                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">TensorFlow</span>
+                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">PyTorch</span>
+                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Git</span>
+                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Pandas</span>
+                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Scikit-learn</span>
+                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">NumPy</span>
+                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Keras</span>
+                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Streamlit</span>
+                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Data Forecasting</span>
+                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Machine Learning</span>
+                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Deep Learning</span>
+                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Feature Extraction</span>
+                </div>
+                <div class="mt-12">
+                     <h3 class="text-2xl font-bold mb-4">Certifications</h3>
+                     <div class="inline-flex items-center bg-card p-4 rounded-lg shadow-sm border border-custom">
+                         <i data-feather="award" class="w-8 h-8 mr-4 text-primary"></i>
+                         <div>
+                             <h4 class="text-lg font-bold text-left">TensorFlow Developer Certificate</h4>
+                             <p class="text-secondary text-sm text-left">Credential ID: 86185588</p>
+                         </div>
+                     </div>
+                </div>
+            </div>
         </section>
 
     </main>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900">
-        <div class="container mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center">
-            <p class="text-gray-500">&copy; 2025 Johannes B. A. Pambudi. All Rights Reserved.</p>
-            <div class="flex space-x-6 mt-4 md:mt-0">
-                <a href="https://github.com/adiatmaja" target="_blank" class="text-gray-500 hover:text-white transition duration-300">
-                    <i class="fab fa-github fa-2x"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/adiatmaja/" target="_blank" class="text-gray-500 hover:text-white transition duration-300">
-                    <i class="fab fa-linkedin fa-2x"></i>
-                </a>
-            </div>
-        </div>
-    </footer>
     
+    <footer class="text-center py-6 border-t border-custom mt-12">
+        <p class="text-secondary text-sm">&copy; <span id="copyright-year"></span> Johannes Baptista Adiatmaja Pambudi. All Rights Reserved.</p>
+    </footer>
+
     <script>
-        // Mobile menu toggle
-        const menuBtn = document.getElementById('menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+        feather.replace();
+
+        // --- Set current year in footer ---
+        document.getElementById('copyright-year').textContent = new Date().getFullYear();
+
+        // --- Theme Toggler ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlEl = document.documentElement;
+
+        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+        if (localStorage.getItem('theme') === 'dark') {
+          htmlEl.classList.add('dark');
+        } else {
+          htmlEl.classList.remove('dark');
+        }
+        
+        themeToggle.addEventListener('click', (e) => {
+            if (!document.startViewTransition) {
+                toggleTheme();
+                return;
+            }
+
+            const x = e.clientX;
+            const y = e.clientY;
+
+            document.documentElement.style.setProperty('--x', x + 'px');
+            document.documentElement.style.setProperty('--y', y + 'px');
+
+            const transition = document.startViewTransition(() => {
+                toggleTheme();
+            });
+
+            transition.ready.then(() => {
+                document.documentElement.classList.add('animating');
+            });
+            
+            transition.finished.then(() => {
+                document.documentElement.classList.remove('animating');
+                document.documentElement.style.removeProperty('--x');
+                document.documentElement.style.removeProperty('--y');
+            });
+
         });
 
-        // Close mobile menu when a link is clicked
-        const mobileMenuLinks = document.querySelectorAll('#mobile-menu a');
-        mobileMenuLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
+        function toggleTheme() {
+            if (htmlEl.classList.contains('dark')) {
+                htmlEl.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                htmlEl.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // --- Calculate Dynamic Duration ---
+        function calculateDuration() {
+            const startDate = new Date('2024-08-01');
+            const now = new Date();
+            const durationEl = document.getElementById('sigma-duration');
+
+            if (!durationEl) return;
+
+            // Calculate total full months difference
+            let totalMonths = (now.getFullYear() - startDate.getFullYear()) * 12 + (now.getMonth() - startDate.getMonth()) + 1;
+            
+            if (totalMonths <= 0) {
+                durationEl.textContent = '1 mo';
+                return;
+            }
+
+            const years = Math.floor(totalMonths / 12);
+            const months = totalMonths % 12;
+
+            let result = [];
+            if (years > 0) {
+                result.push(`${years} yr${years > 1 ? 's' : ''}`);
+            }
+            if (months > 0) {
+                result.push(`${months} mo${months > 1 ? 's' : ''}`);
+            }
+            
+            durationEl.textContent = result.join(' ');
+        }
+        calculateDuration();
+
+
+        // --- Scroll Animations ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
             });
+        }, {
+            threshold: 0.1
         });
+
+        const sections = document.querySelectorAll('.fade-in');
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
 
