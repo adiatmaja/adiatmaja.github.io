@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Johannes Baptista Adiatmaja Pambudi | Portfolio</title>
+    
+    <!-- Open Graph / LinkedIn Meta Tags -->
+    <!-- These tags control the preview that appears when you share the link on social media -->
+    <meta property="og:title" content="Johannes Baptista Adiatmaja Pambudi | Data Scientist">
+    <meta property="og:description" content="Data Scientist specializing in building predictive models and data-driven solutions. Explore my projects and experience with Python, PyTorch, TensorFlow, and SQL in machine learning and data forecasting.">
+    <!-- IMPORTANT: Create an 'assets' folder in your project and add your 'thumbnail.png' (1200x627px) inside it. -->
+    <meta property="og:image" content="https://adiatmaja.github.io/assets/thumbnail.png">
+    <meta property="og:url" content="https://adiatmaja.github.io/">
+    <meta property="og:type" content="website">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/feather-icons"></script>
@@ -40,7 +50,7 @@
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: -33px; 
+            left: -33px;  
             top: 5px;
             width: 20px;
             height: 20px;
@@ -65,6 +75,7 @@
             transform: translateY(0);
         }
 
+        /* View Transition API for theme toggle */
         ::view-transition-old(root),
         ::view-transition-new(root) {
             animation: none;
@@ -396,4 +407,3 @@
     </script>
 </body>
 </html>
-
