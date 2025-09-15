@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details: ASAH Waste Classification App | J.B.A. Pambudi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #212529;
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --card-bg: #ffffff;
+            --border-color: #dee2e6;
+        }
+        html.dark {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --primary-color: #38bdf8;
+            --secondary-color: #9ca3af;
+            --card-bg: #1e1e1e;
+            --border-color: #374151;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+        .text-primary { color: var(--primary-color); }
+        .text-secondary { color: var(--secondary-color); }
+        .bg-card { background-color: var(--card-bg); }
+        .border-custom { border-color: var(--border-color); }
+        ::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+        ::view-transition-old(root) { z-index: 1; }
+        ::view-transition-new(root) { z-index: 999; }
+        @keyframes reveal { from { clip-path: circle(0% at var(--x) var(--y)); } to { clip-path: circle(150% at var(--x) var(--y)); } }
+        html.animating::view-transition-new(root) { animation: reveal 0.5s ease-in-out; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-card/80 border-b border-custom shadow-sm sticky top-0 z-50 backdrop-blur-md">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-3">
+                 <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                    <a href="#highlights" class="hover:text-primary transition-colors">Highlights</a>
+                    <a href="#tech-stack" class="hover:text-primary transition-colors">Tech Stack</a>
+                    <a href="#projects" class="hover:text-primary transition-colors">Contributions</a>
+                </nav>
+                <div class="flex items-center space-x-2 ml-auto">
+                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <i data-feather="moon" class="dark:hidden"></i>
+                        <i data-feather="sun" class="hidden dark:inline"></i>
+                    </button>
+                    <button id="mobile-menu-button" class="md:hidden p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <i data-feather="menu" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+            <nav id="mobile-menu" class="hidden md:hidden pb-4">
+                <a href="#highlights" class="block py-2 px-3 text-sm hover:bg-gray-200 dark:hover:bg-gray-700 rounded">Highlights</a>
+                <a href="#tech-stack" class="block py-2 px-3 text-sm hover:bg-gray-200 dark:hover:bg-gray-700 rounded">Tech Stack</a>
+                <a href="#projects" class="block py-2 px-3 text-sm hover:bg-gray-200 dark:hover:bg-gray-700 rounded">Contributions</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 py-16">
+        <article class="max-w-4xl mx-auto">
+            <header class="mb-12">
+                 <a href="index.html#projects" class="text-sm text-primary font-semibold hover:underline mb-4 inline-block"><i data-feather="arrow-left" class="inline w-4 h-4 mr-1"></i>Back to Projects</a>
+                <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">ASAH - Waste Classification App</h1>
+                <p class="text-2xl text-secondary font-medium">Team Project</p>
+            </header>
+
+            <div class="prose dark:prose-invert lg:prose-xl max-w-none mx-auto text-secondary leading-relaxed">
+                <section id="highlights" class="mb-12">
+                    <h2 class="text-3xl font-bold text-primary !mb-4">Key Highlights</h2>
+                    <ul class="space-y-3 !pl-0 !list-none">
+                        <li class="flex items-start"><i data-feather="check-circle" class="w-5 h-5 mr-3 mt-1 text-green-500 flex-shrink-0"></i><span><strong>Boosted Classification Accuracy to 94%</strong> (a 6.1% improvement) by replacing the VGG16 model with the more efficient MobileNetV2 architecture.</span></li>
+                        <li class="flex items-start"><i data-feather="check-circle" class="w-5 h-5 mr-3 mt-1 text-green-500 flex-shrink-0"></i><span><strong>Enabled Real-Time Mobile Inference</strong> by optimizing the model for low-latency performance, leading to a successful integration in the production Android app.</span></li>
+                    </ul>
+                </section>
+                
+                <section id="tech-stack" class="mb-12">
+                    <h2 class="text-3xl font-bold text-primary !mb-6">Tech Stack</h2>
+                    <div class="flex flex-wrap justify-start items-start gap-x-8 gap-y-6 text-secondary">
+                        <div class="flex flex-col items-center w-20">
+                            <div class="h-12 flex items-center justify-center">
+                                <i class="devicon-tensorflow-original text-5xl"></i>
+                            </div>
+                            <p class="text-xs mt-2 font-semibold text-center">TensorFlow</p>
+                        </div>
+                         <div class="flex flex-col items-center w-20">
+                            <div class="h-12 flex items-center justify-center">
+                                <i class="devicon-python-plain text-5xl"></i>
+                            </div>
+                            <p class="text-xs mt-2 font-semibold text-center">Python</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="projects">
+                    <h2 class="text-3xl font-bold text-primary !mb-6">Contributions</h2>
+
+                    <div class="mb-16">
+                        <h3 class="text-2xl font-bold !mb-4 border-b border-custom pb-2">1. Model Architecture Optimization</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-6">
+                            <div class="md:col-span-1">
+                                <h4 class="text-xl font-semibold !mb-2">The Challenge</h4>
+                                <p class="!mt-0 text-sm">The initial VGG16 model was too resource-intensive and not accurate enough for a responsive mobile waste classification application.</p>
+                            </div>
+                            <div class="md:col-span-2">
+                                <h4 class="text-xl font-semibold !mb-2">My Solution</h4>
+                                <p class="!mt-0">I researched and implemented MobileNetV2, a lightweight architecture designed for mobile devices. This strategic change not only improved classification accuracy by 6.1% to a final 94%, but also significantly reduced the model's size and computational cost.</p>
+                            </div>
+                        </div>
+                        <div class="mt-8">
+                            <h4 class="text-xl font-semibold !mb-4 text-center">Model Performance: VGG16 vs. MobileNetV2</h4>
+                             <img src="https://placehold.co/1200x600/e2e8f0/64748b?text=Chart+of+Model+Performance" alt="Model Performance Chart" class="rounded-lg shadow-lg border border-custom w-full">
+                             <p class="text-center text-sm mt-2 text-secondary">A comparison of accuracy and inference speed between the two models.</p>
+                        </div>
+                    </div>
+
+                     <div class="mb-16">
+                        <h3 class="text-2xl font-bold !mb-4 border-b border-custom pb-2">2. Mobile Deployment and Integration</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-6">
+                            <div class="md:col-span-1">
+                                <h4 class="text-xl font-semibold !mb-2">The Challenge</h4>
+                                <p class="!mt-0 text-sm">The final model needed to be seamlessly integrated into a production Android application and perform classification in real-time on a mobile device's camera feed.</p>
+                            </div>
+                            <div class="md:col-span-2">
+                                <h4 class="text-xl font-semibold !mb-2">My Solution</h4>
+                                <p class="!mt-0">By leveraging the efficient convolutions of MobileNetV2 and applying post-training quantization, I created a highly optimized model file. This ensured smooth, real-time inference on the device, allowing users to get instant feedback on waste classification and contributing to a successful app launch.</p>
+                            </div>
+                        </div>
+                        <div class="mt-8">
+                            <h4 class="text-xl font-semibold !mb-4 text-center">ASAH App in Action</h4>
+                             <img src="https://placehold.co/800x600/e2e8f0/64748b?text=Screenshot+of+Android+App" alt="ASAH Android App" class="rounded-lg shadow-lg border border-custom w-full">
+                             <p class="text-center text-sm mt-2 text-secondary">The final Android application classifying waste in real-time.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </article>
+    </main>
+
+    <footer class="text-center py-6 border-t border-custom mt-12">
+        <p class="text-secondary text-sm">&copy; <span id="copyright-year"></span> Johannes Baptista Adiatmaja Pambudi. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        feather.replace();
+        document.getElementById('copyright-year').textContent = new Date().getFullYear();
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        mobileMenuButton.addEventListener('click', () => {
+            const isHidden = mobileMenu.classList.toggle('hidden');
+            menuIcon.setAttribute('data-feather', isHidden ? 'menu' : 'x');
+            feather.replace();
+        });
+        mobileMenu.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                mobileMenu.classList.add('hidden');
+                menuIcon.setAttribute('data-feather', 'menu');
+                feather.replace();
+            }
+        });
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlEl = document.documentElement;
+        if (localStorage.getItem('theme') === 'dark') { htmlEl.classList.add('dark'); }
+        themeToggle.addEventListener('click', (e) => {
+            if (!document.startViewTransition) { toggleTheme(); return; }
+            const x = e.clientX; const y = e.clientY;
+            document.documentElement.style.setProperty('--x', x + 'px');
+            document.documentElement.style.setProperty('--y', y + 'px');
+            const transition = document.startViewTransition(() => toggleTheme());
+            transition.ready.then(() => document.documentElement.classList.add('animating'));
+            transition.finished.then(() => {
+                document.documentElement.classList.remove('animating');
+                document.documentElement.style.removeProperty('--x');
+                document.documentElement.style.removeProperty('--y');
+            });
+        });
+        function toggleTheme() {
+            if (htmlEl.classList.contains('dark')) {
+                htmlEl.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                htmlEl.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+    </script>
+</body>
+</html>
