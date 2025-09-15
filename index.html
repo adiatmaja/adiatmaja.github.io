@@ -40,7 +40,6 @@
         .timeline-item::before {
             content: '';
             position: absolute;
-            /* Adjusted for mobile's pl-6 */
             left: -33px; 
             top: 5px;
             width: 20px;
@@ -50,10 +49,8 @@
             border: 4px solid var(--bg-color);
             z-index: 1;
         }
-        /* Adjust dot position for larger screens based on increased padding */
         @media (min-width: 640px) {
             .timeline-item::before {
-                 /* Adjusted for sm:pl-8 */
                 left: -41px;
             }
         }
@@ -68,7 +65,6 @@
             transform: translateY(0);
         }
 
-        /* --- Theme Transition Animation --- */
         ::view-transition-old(root),
         ::view-transition-new(root) {
             animation: none;
@@ -142,7 +138,7 @@
             <h2 class="text-3xl font-bold mb-8 text-center">About Me</h2>
             <div class="max-w-3xl mx-auto text-center text-secondary leading-relaxed">
                 <p>
-                    I am a passionate and results-driven Data Scientist with a strong foundation in machine learning and deep learning. My experience spans from developing sophisticated demand forecasting models to engineering end-to-end data pipelines for complex predictive analytics. I thrive on transforming raw data into actionable insights and building intelligent systems that solve real-world problems.
+                    As a Data Scientist specializing in machine learning and data forecasting, I bring a strong foundation in developing predictive models and data-driven solutions. I graduated from Universitas Kristen Duta Wacana with a Bachelor of Science in Informatics, achieving a 3.75 GPA. My expertise is further validated by a TensorFlow Developer Certificate. I am proficient in a range of technologies including Python, SQL, TensorFlow, and PyTorch, with a deep understanding of machine learning, deep learning, and data forecasting techniques.
                 </p>
             </div>
         </section>
@@ -170,7 +166,7 @@
                             <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">SQL</span>
                             <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">Python</span>
                         </div>
-                        <a href="sigma-case-study.html" class="inline-block mt-3 font-semibold text-primary text-sm hover:underline">Read Case Study <i data-feather="arrow-right" class="inline w-4 h-4"></i></a>
+                        <a href="sigma-details.html" class="inline-block mt-3 font-semibold text-primary text-sm hover:underline">View Details <i data-feather="arrow-right" class="inline w-4 h-4"></i></a>
                     </div>
                     <!-- Job 2 -->
                     <div class="timeline-item">
@@ -188,7 +184,7 @@
                             <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">TensorFlow</span>
                             <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">Python</span>
                         </div>
-                        <a href="beehive-case-study.html" class="inline-block mt-3 font-semibold text-primary text-sm hover:underline">Read Case Study <i data-feather="arrow-right" class="inline w-4 h-4"></i></a>
+                        <a href="beehive-details.html" class="inline-block mt-3 font-semibold text-primary text-sm hover:underline">View Details <i data-feather="arrow-right" class="inline w-4 h-4"></i></a>
                     </div>
                 </div>
             </div>
@@ -196,7 +192,7 @@
 
         <!-- Projects Section -->
         <section id="projects" class="py-20 fade-in">
-            <h2 class="text-3xl font-bold mb-8 text-center">Featured Projects</h2>
+            <h2 class="text-3xl font-bold mb-8 text-center">Projects</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                 <!-- Project 1 -->
                 <div class="bg-card rounded-lg shadow-lg overflow-hidden border border-custom transition-all duration-300 hover:shadow-xl hover:border-primary/50">
@@ -204,7 +200,7 @@
                         <div class="flex-grow">
                             <h3 class="text-2xl font-bold mb-2 min-h-[4rem]">Gender Classification from Fingerprints</h3>
                             <p class="text-secondary text-sm mb-4">
-                                Enhanced fingerprint features for deep learning with Gabor filters, improving F1-score by 7%. Deployed as an interactive Streamlit web app.
+                                A research to explore the influence of Gabor filters on gender classification system based on fingerprint images. By applying Gabor filters with various parameters, the study aims to gain insight into the role of Gabor filters in gender classification.
                             </p>
                         </div>
                         <div>
@@ -213,7 +209,7 @@
                                 <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">Python</span>
                                 <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">Streamlit</span>
                             </div>
-                            <a href="gender-classification-case-study.html" class="font-semibold text-primary text-sm hover:underline">View Case Study <i data-feather="arrow-right" class="inline w-4 h-4"></i></a>
+                            <a href="gender-classification-details.html" class="font-semibold text-primary text-sm hover:underline">View Details <i data-feather="arrow-right" class="inline w-4 h-4"></i></a>
                         </div>
                     </div>
                 </div>
@@ -223,7 +219,7 @@
                         <div class="flex-grow">
                             <h3 class="text-2xl font-bold mb-2 min-h-[4rem]">ASAH - Waste Classification App</h3>
                             <p class="text-secondary text-sm mb-4">
-                                Boosted waste classification accuracy to 94% using MobileNetV2, optimized for real-time inference on a production Android app.
+                                ASAH (Aplikasi Sortir Sampah) is a mobile application to sort waste and dispose to recycling agencies in their vicinity. We encourage communities to manage waste in an appropriate manner and provides rewards when users successfully manage their waste correctly.
                             </p>
                         </div>
                         <div>
@@ -231,7 +227,7 @@
                                 <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">TensorFlow</span>
                                 <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">Python</span>
                             </div>
-                            <a href="asah-case-study.html" class="font-semibold text-primary text-sm hover:underline">View Case Study <i data-feather="arrow-right" class="inline w-4 h-4"></i></a>
+                            <a href="asah-details.html" class="font-semibold text-primary text-sm hover:underline">View Details <i data-feather="arrow-right" class="inline w-4 h-4"></i></a>
                         </div>
                     </div>
                 </div>
@@ -242,24 +238,50 @@
         <section id="skills" class="py-20 fade-in">
             <h2 class="text-3xl font-bold mb-8 text-center">Skills & Expertise</h2>
             <div class="max-w-4xl mx-auto text-center">
-                <div class="flex flex-wrap justify-center gap-3">
-                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Python</span>
-                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">SQL</span>
-                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Java</span>
-                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">PHP</span>
-                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">TensorFlow</span>
-                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">PyTorch</span>
-                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Git</span>
-                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Pandas</span>
-                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Scikit-learn</span>
-                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">NumPy</span>
-                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Keras</span>
-                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Streamlit</span>
-                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Data Forecasting</span>
-                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Machine Learning</span>
-                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Deep Learning</span>
-                    <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Feature Extraction</span>
+
+                <div class="space-y-6">
+                    <!-- Core Concepts -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-secondary mb-3">Core Concepts</h3>
+                        <div class="flex flex-wrap justify-center gap-3">
+                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Machine Learning</span>
+                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Deep Learning</span>
+                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Data Forecasting</span>
+                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Feature Extraction</span>
+                        </div>
+                    </div>
+                    <!-- Languages -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-secondary mb-3">Languages</h3>
+                        <div class="flex flex-wrap justify-center gap-3">
+                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Python</span>
+                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">SQL</span>
+                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Java</span>
+                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">PHP</span>
+                        </div>
+                    </div>
+                    <!-- Libraries & Frameworks -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-secondary mb-3">Libraries & Frameworks</h3>
+                        <div class="flex flex-wrap justify-center gap-3">
+                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">TensorFlow</span>
+                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">PyTorch</span>
+                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Keras</span>
+                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Scikit-learn</span>
+                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Pandas</span>
+                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">NumPy</span>
+                        </div>
+                    </div>
+                    <!-- Tools -->
+                    <div>
+                         <h3 class="text-lg font-semibold text-secondary mb-3">Tools</h3>
+                        <div class="flex flex-wrap justify-center gap-3">
+                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Git</span>
+                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Streamlit</span>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="mt-12">
                       <h3 class="text-2xl font-bold mb-4">Certifications</h3>
                       <a href="https://www.credential.net/f8487de9-a067-4dea-a944-9b5151192046#acc.3FzK2q1e" target="_blank" class="inline-block group">
@@ -284,22 +306,15 @@
 
     <script>
         feather.replace();
-
-        // --- Set current year in footer ---
         document.getElementById('copyright-year').textContent = new Date().getFullYear();
-
-        // --- Mobile Menu Toggle ---
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
         const menuIcon = document.getElementById('menu-icon');
-
         mobileMenuButton.addEventListener('click', () => {
             const isHidden = mobileMenu.classList.toggle('hidden');
             menuIcon.setAttribute('data-feather', isHidden ? 'menu' : 'x');
             feather.replace();
         });
-        
-        // Close mobile menu when a link is clicked for smooth navigation
         mobileMenu.addEventListener('click', (e) => {
             if (e.target.tagName === 'A') {
                 mobileMenu.classList.add('hidden');
@@ -307,44 +322,31 @@
                 feather.replace();
             }
         });
-
-
-        // --- Theme Toggler ---
         const themeToggle = document.getElementById('theme-toggle');
         const htmlEl = document.documentElement;
-
         if (localStorage.getItem('theme') === 'dark') {
-          htmlEl.classList.add('dark');
-        } else {
-          htmlEl.classList.remove('dark');
+            htmlEl.classList.add('dark');
         }
-        
         themeToggle.addEventListener('click', (e) => {
             if (!document.startViewTransition) {
                 toggleTheme();
                 return;
             }
-
             const x = e.clientX;
             const y = e.clientY;
-
             document.documentElement.style.setProperty('--x', x + 'px');
             document.documentElement.style.setProperty('--y', y + 'px');
-
             const transition = document.startViewTransition(() => {
                 toggleTheme();
             });
-
             transition.ready.then(() => {
                 document.documentElement.classList.add('animating');
             });
-            
             transition.finished.then(() => {
                 document.documentElement.classList.remove('animating');
                 document.documentElement.style.removeProperty('--x');
                 document.documentElement.style.removeProperty('--y');
             });
-
         });
 
         function toggleTheme() {
@@ -356,25 +358,18 @@
                 localStorage.setItem('theme', 'dark');
             }
         }
-
-        // --- Calculate Dynamic Duration ---
         function calculateDuration() {
             const startDate = new Date('2024-08-01');
             const now = new Date();
             const durationEl = document.getElementById('sigma-duration');
-
             if (!durationEl) return;
-
             let totalMonths = (now.getFullYear() - startDate.getFullYear()) * 12 + (now.getMonth() - startDate.getMonth()) + 1;
-            
             if (totalMonths <= 0) {
                 durationEl.textContent = '1 mo';
                 return;
             }
-
             const years = Math.floor(totalMonths / 12);
             const months = totalMonths % 12;
-
             let result = [];
             if (years > 0) {
                 result.push(`${years} yr${years > 1 ? 's' : ''}`);
@@ -382,13 +377,9 @@
             if (months > 0) {
                 result.push(`${months} mo${months > 1 ? 's' : ''}`);
             }
-            
             durationEl.textContent = result.join(' ');
         }
         calculateDuration();
-
-
-        // --- Scroll Animations ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -398,12 +389,10 @@
         }, {
             threshold: 0.1
         });
-
         const sections = document.querySelectorAll('.fade-in');
         sections.forEach(section => {
             observer.observe(section);
         });
-
     </script>
 </body>
 </html>
