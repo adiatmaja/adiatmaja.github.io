@@ -250,6 +250,7 @@
         if (!nav) return;
 
         var lastScroll = 0;
+        var navHeight = 80; // Approximate height of the fixed nav
 
         window.addEventListener('scroll', function() {
             var currentScroll = window.pageYOffset;
@@ -276,17 +277,28 @@
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 var targetId = this.getAttribute('href');
-                var target = document.querySelector(targetId);
-                if (target) {
-                    var offset = 0;
-                    var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
+                scrollToTarget(targetId);
             });
         });
+
+        // Handle initial hash scrolling
+        if (window.location.hash) {
+            // Small delay to ensure layout and animations don't interfere
+            setTimeout(function() {
+                scrollToTarget(window.location.hash);
+            }, 500);
+        }
+
+        function scrollToTarget(targetId) {
+            var target = document.querySelector(targetId);
+            if (target) {
+                var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
     }
 
 })();
