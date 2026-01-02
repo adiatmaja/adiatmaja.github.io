@@ -619,11 +619,20 @@ a {
 }
 
 .project-tags span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     padding: 4px 10px;
     font-size: 12px;
     font-weight: 500;
     background: var(--bg);
     border: 1px solid var(--border);
+}
+
+.project-tags i, .project-tags img {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
 }
 
 /* Contact */
