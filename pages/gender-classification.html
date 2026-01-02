@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gender Classification - Project Details</title>
+    <meta name="description" content="Gender Classification from Fingerprints using Gabor Filters">
+    <meta name="theme-color" content="#0a0a0a">
+    <link rel="icon" type="image/png" href="../assets/thumbnail.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <nav class="nav">
+        <ul class="nav-links">
+            <li><a href="../index.html#about">About</a></li>
+            <li><a href="../index.html#experience">Experience</a></li>
+            <li><a href="../index.html#projects">Projects</a></li>
+            <li><a href="../index.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <a href="../index.html#projects" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back to Projects
+            </a>
+            <h1 class="page-title">Gender Classification</h1>
+            <p class="page-subtitle">Fingerprint Analysis Thesis</p>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="container">
+            <div class="article-layout">
+                <div class="article-content">
+                    <p>This research project focused on exploring the effectiveness of Gabor filters in extracting features from fingerprint images for gender classification. The study aimed to determine if enhancing fingerprint patterns could improve the accuracy of machine learning models in identifying gender.</p>
+                    
+                    <h3>Research Methodology</h3>
+                    <p>The project involved a comparative analysis between raw fingerprint images and those processed with Gabor filters. We experimented with various Gabor filter parameters (frequency, orientation) to find the optimal configuration for feature enhancement.</p>
+
+                    <h3>Results</h3>
+                    <ul>
+                        <li><strong>Performance Boost:</strong> Achieved a 7% improvement in F1-score when using Gabor-filtered images compared to the baseline.</li>
+                        <li><strong>Feature Extraction:</strong> Demonstrated that Gabor filters effectively highlight ridge structures that are discriminative for gender classification.</li>
+                        <li><strong>Model:</strong> Utilized Convolutional Neural Networks (CNN) for the classification task, implemented in Python using TensorFlow/Keras.</li>
+                    </ul>
+
+                    <h3>Impact</h3>
+                    <p>This thesis contributes to the field of biometrics by providing empirical evidence on the utility of texture analysis techniques like Gabor filtering for soft biometric traits classification.</p>
+                </div>
+
+                <aside class="meta-sidebar">
+                    <div class="meta-group">
+                        <span class="meta-label">Type</span>
+                        <p>Undergraduate Thesis</p>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Timeline</span>
+                        <p>2024</p>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Tech Stack</span>
+                        <div class="project-tags">
+                            <span>Python</span>
+                            <span>TensorFlow</span>
+                            <span>OpenCV</span>
+                            <span>Gabor Filters</span>
+                        </div>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Links</span>
+                        <div class="meta-links">
+                            <a href="https://github.com/adiatmaja/GenderClassification" target="_blank" class="btn btn-secondary">
+                                View on GitHub
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Johannes Baptista Adiatmaja Pambudi</p>
+        </div>
+    </footer>
+</body>
+</html>

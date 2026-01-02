@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASAH - Project Details</title>
+    <meta name="description" content="Waste Classification Mobile App using MobileNetV2 and TensorFlow">
+    <meta name="theme-color" content="#0a0a0a">
+    <link rel="icon" type="image/png" href="../assets/thumbnail.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <nav class="nav">
+        <ul class="nav-links">
+            <li><a href="../index.html#about">About</a></li>
+            <li><a href="../index.html#experience">Experience</a></li>
+            <li><a href="../index.html#projects">Projects</a></li>
+            <li><a href="../index.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <a href="../index.html#projects" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back to Projects
+            </a>
+            <h1 class="page-title">ASAH</h1>
+            <p class="page-subtitle">Waste Classification Mobile App</p>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="container">
+            <div class="article-layout">
+                <div class="article-content">
+                    <p>ASAH (Aplikasi Sortir Sampah) is a mobile application designed to help communities manage waste more effectively. By leveraging computer vision, the app identifies different types of waste and provides guidance on proper disposal and recycling methods.</p>
+                    
+                    <h3>Key Features</h3>
+                    <ul>
+                        <li><strong>Real-time Classification:</strong> Instantly identifies waste types using the device's camera.</li>
+                        <li><strong>High Accuracy:</strong> Achieved 94% accuracy in waste categorization using a fine-tuned MobileNetV2 model.</li>
+                        <li><strong>Offline Capability:</strong> Optimized for on-device inference using TensorFlow Lite, ensuring functionality even without internet access.</li>
+                        <li><strong>Educational Content:</strong> Provides tips and guidelines on recycling and waste management.</li>
+                    </ul>
+
+                    <h3>Technical Details</h3>
+                    <p>The core of the application is a deep learning model based on the MobileNetV2 architecture. We chose this architecture for its efficiency on mobile devices. The model was trained on a custom dataset of waste images and then converted to TensorFlow Lite format for deployment on Android.</p>
+                    <p>The Android application was built using Kotlin, integrating the TFLite interpreter for seamless real-time performance.</p>
+                </div>
+
+                <aside class="meta-sidebar">
+                    <div class="meta-group">
+                        <span class="meta-label">Role</span>
+                        <p>Machine Learning Engineer</p>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Timeline</span>
+                        <p>2023</p>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Tech Stack</span>
+                        <div class="project-tags">
+                            <span>MobileNetV2</span>
+                            <span>TensorFlow</span>
+                            <span>Android</span>
+                            <span>Kotlin</span>
+                        </div>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Links</span>
+                        <div class="meta-links">
+                            <a href="https://github.com/ASAH-Bangkit-2023/ASAH-Project" target="_blank" class="btn btn-secondary">
+                                View on GitHub
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Johannes Baptista Adiatmaja Pambudi</p>
+        </div>
+    </footer>
+</body>
+</html>
