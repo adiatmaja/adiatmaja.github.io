@@ -1,409 +1,295 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Johannes Baptista Adiatmaja Pambudi | Portfolio</title>
-    
-    <!-- Open Graph / LinkedIn Meta Tags -->
-    <!-- These tags control the preview that appears when you share the link on social media -->
-    <meta property="og:title" content="Johannes Baptista Adiatmaja Pambudi | Data Scientist">
-    <meta property="og:description" content="Data Scientist specializing in building predictive models and data-driven solutions. Explore my projects and experience with Python, PyTorch, TensorFlow, and SQL in machine learning and data forecasting.">
-    <!-- IMPORTANT: Create an 'assets' folder in your project and add your 'thumbnail.png' (1200x627px) inside it. -->
-    <meta property="og:image" content="https://adiatmaja.github.io/assets/thumbnail.png">
-    <meta property="og:url" content="https://adiatmaja.github.io/">
+    <title>Johannes Baptista Adiatmaja Pambudi</title>
+    <meta name="description" content="Data Scientist specializing in Forecasting, RAG Systems, and Deep Learning">
+    <meta name="theme-color" content="#0a0a0a">
+
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://adiatmaja.github.io/">
+    <meta property="og:title" content="Johannes Baptista Adiatmaja Pambudi - Data Scientist">
+    <meta property="og:description" content="Building intelligent systems through forecasting, RAG, and deep learning.">
+    <meta property="og:image" content="https://adiatmaja.github.io/assets/thumbnail.png">
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/feather-icons"></script>
-    <style>
-        :root {
-            --bg-color: #f8f9fa;
-            --text-color: #212529;
-            --primary-color: #007bff;
-            --secondary-color: #6c757d;
-            --card-bg: #ffffff;
-            --border-color: #dee2e6;
-        }
-        html.dark {
-            --bg-color: #121212;
-            --text-color: #e0e0e0;
-            --primary-color: #38bdf8;
-            --secondary-color: #9ca3af;
-            --card-bg: #1e1e1e;
-            --border-color: #374151;
-        }
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-        }
-        .text-primary { color: var(--primary-color); }
-        .text-secondary { color: var(--secondary-color); }
-        .bg-card { background-color: var(--card-bg); }
-        .border-custom { border-color: var(--border-color); }
-        
-        .timeline-item {
-            position: relative;
-        }
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -33px;  
-            top: 5px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: var(--primary-color);
-            border: 4px solid var(--bg-color);
-            z-index: 1;
-        }
-        @media (min-width: 640px) {
-            .timeline-item::before {
-                left: -41px;
-            }
-        }
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://adiatmaja.github.io/">
+    <meta property="twitter:title" content="Johannes Baptista Adiatmaja Pambudi - Data Scientist">
+    <meta property="twitter:description" content="Building intelligent systems through forecasting, RAG, and deep learning.">
+    <meta property="twitter:image" content="https://adiatmaja.github.io/assets/thumbnail.png">
 
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/thumbnail.png">
 
-        /* View Transition API for theme toggle */
-        ::view-transition-old(root),
-        ::view-transition-new(root) {
-            animation: none;
-            mix-blend-mode: normal;
-        }
-        ::view-transition-old(root) { z-index: 1; }
-        ::view-transition-new(root) { z-index: 999; }
-
-        @keyframes reveal {
-            from { clip-path: circle(0% at var(--x) var(--y)); }
-            to { clip-path: circle(150% at var(--x) var(--y)); }
-        }
-        html.animating::view-transition-new(root) {
-            animation: reveal 0.5s ease-in-out;
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="antialiased">
+<body>
+    <nav class="nav">
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
 
-    <!-- Header -->
-    <header class="bg-card/80 border-b border-custom shadow-sm sticky top-0 z-50 backdrop-blur-md">
-        <div class="container mx-auto px-4">
-            <div class="flex justify-end md:justify-between items-center py-3">
-                <!-- Desktop Nav -->
-                <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
-                    <a href="#about" class="hover:text-primary transition-colors">About</a>
-                    <a href="#experience" class="hover:text-primary transition-colors">Experience</a>
-                    <a href="#projects" class="hover:text-primary transition-colors">Projects</a>
-                    <a href="#skills" class="hover:text-primary transition-colors">Skills</a>
-                </nav>
-
-                <!-- Right side icons -->
-                <div class="flex items-center space-x-2">
-                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                        <i data-feather="moon" class="dark:hidden"></i>
-                        <i data-feather="sun" class="hidden dark:inline"></i>
-                    </button>
-                    <!-- Mobile Menu Button -->
-                    <button id="mobile-menu-button" class="md:hidden p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                        <i data-feather="menu" id="menu-icon"></i>
-                    </button>
-                </div>
+    <section class="hero" id="hero">
+        <div class="container">
+            <h1 class="hero-title">
+                <span class="line">Johannes Baptista</span>
+                <span class="line">Adiatmaja Pambudi</span>
+            </h1>
+            <div class="hero-typing">
+                <span class="typing-text"></span>
+                <span class="cursor">|</span>
             </div>
-
-            <!-- Mobile Nav -->
-            <nav id="mobile-menu" class="hidden md:hidden pb-4">
-                <a href="#about" class="block py-2 px-3 text-sm hover:bg-gray-200 dark:hover:bg-gray-700 rounded">About</a>
-                <a href="#experience" class="block py-2 px-3 text-sm hover:bg-gray-200 dark:hover:bg-gray-700 rounded">Experience</a>
-                <a href="#projects" class="block py-2 px-3 text-sm hover:bg-gray-200 dark:hover:bg-gray-700 rounded">Projects</a>
-                <a href="#skills" class="block py-2 px-3 text-sm hover:bg-gray-200 dark:hover:bg-gray-700 rounded">Skills</a>
-            </nav>
+            <p class="hero-desc">Building intelligent systems through forecasting, RAG, and deep learning.</p>
+            <div class="hero-cta">
+                <a href="CV - Johannes Baptista Adiatmaja Pambudi.pdf" target="_blank" class="btn btn-primary">Open CV</a>
+                <a href="#projects" class="btn btn-secondary">View Projects</a>
+            </div>
         </div>
-    </header>
+        <div class="scroll-hint">
+            <span>Scroll</span>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M19 12l-7 7-7-7"/>
+            </svg>
+        </div>
+    </section>
 
-    <main class="container mx-auto px-4 sm:px-6 py-16">
-
-        <!-- Hero Section -->
-        <section id="hero" class="text-center min-h-[60vh] flex flex-col justify-center items-center">
-            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-3 leading-tight">Johannes Baptista Adiatmaja Pambudi</h1>
-            <p class="text-lg sm:text-xl md:text-2xl text-secondary mb-8">Data Scientist & Machine Learning Engineer</p>
-            <div class="flex space-x-5">
-                <a href="https://github.com/adiatmaja" target="_blank" class="text-secondary hover:text-primary transition-colors"><i data-feather="github" class="w-7 h-7"></i></a>
-                <a href="https://linkedin.com/in/adiatmaja" target="_blank" class="text-secondary hover:text-primary transition-colors"><i data-feather="linkedin" class="w-7 h-7"></i></a>
-                <a href="mailto:adi@pambudi.com" class="text-secondary hover:text-primary transition-colors"><i data-feather="mail" class="w-7 h-7"></i></a>
-                <a href="CV - Johannes Baptista Adiatmaja Pambudi.pdf" target="_blank" class="text-secondary hover:text-primary transition-colors"><i data-feather="file-text" class="w-7 h-7"></i></a>
-            </div>
-        </section>
-
-        <!-- About Section -->
-        <section id="about" class="py-20 fade-in">
-            <h2 class="text-3xl font-bold mb-8 text-center">About Me</h2>
-            <div class="max-w-3xl mx-auto text-center text-secondary leading-relaxed">
-                <p>
-                    As a Data Scientist specializing in machine learning and data forecasting, I bring a strong foundation in developing predictive models and data-driven solutions. I graduated from Universitas Kristen Duta Wacana with a Bachelor of Science in Informatics, achieving a 3.75 GPA. My expertise is further validated by a TensorFlow Developer Certificate. I am proficient in a range of technologies including Python, SQL, TensorFlow, and PyTorch, with a deep understanding of machine learning, deep learning, and data forecasting techniques.
-                </p>
-            </div>
-        </section>
-
-        <!-- Experience Section -->
-        <section id="experience" class="py-20 fade-in">
-            <h2 class="text-3xl font-bold mb-8 text-center">Work Experience</h2>
-            <div class="max-w-3xl mx-auto">
-                <div class="relative pl-6 sm:pl-8 border-l-2 border-custom">
-                    <!-- Job 1 -->
-                    <div class="mb-12 timeline-item">
-                        <div class="flex flex-col sm:flex-row justify-between sm:items-center">
-                            <p class="text-sm text-secondary">Aug 2024 - Present</p>
-                            <p class="text-sm text-secondary font-medium mt-1 sm:mt-0" id="sigma-duration"></p>
-                        </div>
-                        <h3 class="text-xl font-bold text-primary mt-1">Data Scientist</h3>
-                        <p class="font-semibold">Sigma Solusi Indonesia</p>
-                        <ul class="list-disc list-inside mt-2 text-sm text-secondary space-y-1">
-                            <li>Developed demand forecasting models with PyTorch and SQL for robust predictive analytics.</li>
-                            <li>Created a stock balancing system using sales forecasts to optimize inventory distribution.</li>
-                            <li>Engineered a comprehensive forecasting system to predict sales, COGS, and purchasing needs.</li>
-                        </ul>
-                        <div class="mt-3 flex flex-wrap gap-2">
-                            <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">PyTorch</span>
-                            <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">SQL</span>
-                            <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">Python</span>
-                        </div>
-                        <a href="sigma-details.html" class="inline-block mt-3 font-semibold text-primary text-sm hover:underline">View Details <i data-feather="arrow-right" class="inline w-4 h-4"></i></a>
+    <section class="section" id="about">
+        <div class="container">
+            <h2 class="section-title">About</h2>
+            <div class="about-content">
+                <p class="about-lead">Data Scientist based in Indonesia, building end-to-end ML solutions from data pipelines to production models.</p>
+                <div class="about-grid">
+                    <div class="about-card">
+                        <span class="card-label">Education</span>
+                        <span class="card-value">B.S. Informatics, UKDW</span>
+                        <span class="card-sub">GPA 3.75/4.00 — 2024</span>
                     </div>
-                    <!-- Job 2 -->
-                    <div class="timeline-item">
-                         <div class="flex flex-col sm:flex-row justify-between sm:items-center">
-                            <p class="text-sm text-secondary">Aug 2022 - Jan 2023</p>
-                            <p class="text-sm text-secondary font-medium mt-1 sm:mt-0">6 mos</p>
-                        </div>
-                        <h3 class="text-xl font-bold text-primary mt-1">Machine Learning Engineer - Internship</h3>
-                        <p class="font-semibold">Beehive Drones</p>
-                        <ul class="list-disc list-inside mt-2 text-sm text-secondary space-y-1">
-                            <li>Developed an end-to-end data pipeline to process and extract features from raw aerial imagery.</li>
-                            <li>Engineered a deep learning model using TensorFlow that significantly improved predictive accuracy.</li>
-                        </ul>
-                        <div class="mt-3 flex flex-wrap gap-2">
-                            <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">TensorFlow</span>
-                            <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">Python</span>
-                        </div>
-                        <a href="beehive-details.html" class="inline-block mt-3 font-semibold text-primary text-sm hover:underline">View Details <i data-feather="arrow-right" class="inline w-4 h-4"></i></a>
+                    <div class="about-card">
+                        <span class="card-label">Certification</span>
+                        <span class="card-value">TensorFlow Developer</span>
+                        <span class="card-sub">Google — 2023</span>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- Projects Section -->
-        <section id="projects" class="py-20 fade-in">
-            <h2 class="text-3xl font-bold mb-8 text-center">Projects</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                <!-- Project 1 -->
-                <div class="bg-card rounded-lg shadow-lg overflow-hidden border border-custom transition-all duration-300 hover:shadow-xl hover:border-primary/50">
-                    <div class="p-6 flex flex-col h-full">
-                        <div class="flex-grow">
-                            <h3 class="text-2xl font-bold mb-2 min-h-[4rem]">Gender Classification from Fingerprints</h3>
-                            <p class="text-secondary text-sm mb-4">
-                                A research to explore the influence of Gabor filters on gender classification system based on fingerprint images. By applying Gabor filters with various parameters, the study aims to gain insight into the role of Gabor filters in gender classification.
-                            </p>
-                        </div>
-                        <div>
-                            <div class="mb-4 flex flex-wrap gap-2">
-                                <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">TensorFlow</span>
-                                <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">Python</span>
-                                <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">Streamlit</span>
+                <div class="skills">
+                    <h3 class="skills-title">Skills</h3>
+                    <div class="skills-marquee">
+                        <div class="skills-track">
+                            <div class="skill-item">
+                                <i class="devicon-python-plain colored"></i>
+                                <span>Python</span>
                             </div>
-                            <a href="gender-classification-details.html" class="font-semibold text-primary text-sm hover:underline">View Details <i data-feather="arrow-right" class="inline w-4 h-4"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Project 2 -->
-                <div class="bg-card rounded-lg shadow-lg overflow-hidden border border-custom transition-all duration-300 hover:shadow-xl hover:border-primary/50">
-                    <div class="p-6 flex flex-col h-full">
-                        <div class="flex-grow">
-                            <h3 class="text-2xl font-bold mb-2 min-h-[4rem]">ASAH - Waste Classification App</h3>
-                            <p class="text-secondary text-sm mb-4">
-                                ASAH (Aplikasi Sortir Sampah) is a mobile application to sort waste and dispose to recycling agencies in their vicinity. We encourage communities to manage waste in an appropriate manner and provides rewards when users successfully manage their waste correctly.
-                            </p>
-                        </div>
-                        <div>
-                            <div class="mb-4 flex flex-wrap gap-2">
-                                <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">TensorFlow</span>
-                                <span class="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-1 rounded-full">Python</span>
+                            <div class="skill-item">
+                                <i class="devicon-postgresql-plain colored"></i>
+                                <span>SQL</span>
                             </div>
-                            <a href="asah-details.html" class="font-semibold text-primary text-sm hover:underline">View Details <i data-feather="arrow-right" class="inline w-4 h-4"></i></a>
+                            <div class="skill-item">
+                                <i class="devicon-pytorch-original colored"></i>
+                                <span>PyTorch</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="devicon-tensorflow-original colored"></i>
+                                <span>TensorFlow</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="devicon-keras-plain colored"></i>
+                                <span>Keras</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="devicon-scikitlearn-plain colored"></i>
+                                <span>scikit-learn</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="devicon-pandas-plain colored"></i>
+                                <span>Pandas</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="devicon-mongodb-plain colored"></i>
+                                <span>ChromaDB</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="devicon-git-plain colored"></i>
+                                <span>Git</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="devicon-nodejs-plain colored"></i>
+                                <span>n8n</span>
+                            </div>
+                            <!-- Duplicate for seamless loop -->
+                            <div class="skill-item">
+                                <i class="devicon-python-plain colored"></i>
+                                <span>Python</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="devicon-postgresql-plain colored"></i>
+                                <span>SQL</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="devicon-pytorch-original colored"></i>
+                                <span>PyTorch</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="devicon-tensorflow-original colored"></i>
+                                <span>TensorFlow</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="devicon-keras-plain colored"></i>
+                                <span>Keras</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="devicon-scikitlearn-plain colored"></i>
+                                <span>scikit-learn</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="devicon-pandas-plain colored"></i>
+                                <span>Pandas</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="devicon-mongodb-plain colored"></i>
+                                <span>ChromaDB</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="devicon-git-plain colored"></i>
+                                <span>Git</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="devicon-nodejs-plain colored"></i>
+                                <span>n8n</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Skills Section -->
-        <section id="skills" class="py-20 fade-in">
-            <h2 class="text-3xl font-bold mb-8 text-center">Skills & Expertise</h2>
-            <div class="max-w-4xl mx-auto text-center">
+    <section class="section" id="experience">
+        <div class="container">
+            <h2 class="section-title">Experience</h2>
+            <div class="timeline">
+                <article class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <div>
+                                <h3>Data Scientist</h3>
+                                <p class="company">Sigma Solusi Indonesia</p>
+                            </div>
+                            <span class="date">Aug 2024 — Present</span>
+                        </div>
+                        <ul class="timeline-list">
+                            <li>Built end-to-end forecasting pipelines using PyTorch and SQL for demand/sales prediction</li>
+                            <li>Designed stock balancing system using sales forecasts and warehouse simulations</li>
+                            <li>Built RAG system using ChromaDB with knowledge distillation, automated via n8n</li>
+                        </ul>
+                    </div>
+                </article>
+                <article class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <div>
+                                <h3>Machine Learning Engineer</h3>
+                                <p class="company">Beehive Drones <span class="tag">Intern</span></p>
+                            </div>
+                            <span class="date">Aug 2022 — Jan 2023</span>
+                        </div>
+                        <ul class="timeline-list">
+                            <li>Developed data pipeline for aerial imagery processing for carbon value estimation</li>
+                            <li>Engineered deep learning model achieving 93% improvement over baseline</li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
 
-                <div class="space-y-6">
-                    <!-- Core Concepts -->
-                    <div>
-                        <h3 class="text-lg font-semibold text-secondary mb-3">Core Concepts</h3>
-                        <div class="flex flex-wrap justify-center gap-3">
-                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Machine Learning</span>
-                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Deep Learning</span>
-                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Data Forecasting</span>
-                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Feature Extraction</span>
-                        </div>
+    <section class="section" id="projects">
+        <div class="container">
+            <h2 class="section-title">Projects</h2>
+            <div class="projects-grid">
+                <article class="project-card">
+                    <div class="project-header">
+                        <span class="project-year">2023</span>
+                        <a href="https://github.com/ASAH-Bangkit-2023/ASAH-Project" class="project-link" target="_blank" aria-label="View ASAH Project on GitHub">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+                            </svg>
+                        </a>
                     </div>
-                    <!-- Languages -->
-                    <div>
-                        <h3 class="text-lg font-semibold text-secondary mb-3">Languages</h3>
-                        <div class="flex flex-wrap justify-center gap-3">
-                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Python</span>
-                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">SQL</span>
-                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Java</span>
-                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">PHP</span>
-                        </div>
+                    <h3 class="project-title">ASAH</h3>
+                    <p class="project-sub">Waste Classification Mobile App</p>
+                    <p class="project-desc">Achieved 94% accuracy using MobileNetV2, optimized for real-time inference on Android.</p>
+                    <div class="project-tags">
+                        <span>MobileNetV2</span>
+                        <span>TensorFlow</span>
+                        <span>Android</span>
                     </div>
-                    <!-- Libraries & Frameworks -->
-                    <div>
-                        <h3 class="text-lg font-semibold text-secondary mb-3">Libraries & Frameworks</h3>
-                        <div class="flex flex-wrap justify-center gap-3">
-                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">TensorFlow</span>
-                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">PyTorch</span>
-                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Keras</span>
-                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Scikit-learn</span>
-                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Pandas</span>
-                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">NumPy</span>
-                        </div>
+                </article>
+                <article class="project-card">
+                    <div class="project-header">
+                        <span class="project-year">2024</span>
+                        <a href="https://github.com/adiatmaja/GenderClassification" class="project-link" target="_blank" aria-label="View Gender Classification Project on GitHub">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+                            </svg>
+                        </a>
                     </div>
-                    <!-- Tools -->
-                    <div>
-                         <h3 class="text-lg font-semibold text-secondary mb-3">Tools</h3>
-                        <div class="flex flex-wrap justify-center gap-3">
-                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Git</span>
-                            <span class="bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full">Streamlit</span>
-                        </div>
+                    <h3 class="project-title">Gender Classification</h3>
+                    <p class="project-sub">Fingerprint Analysis — Thesis</p>
+                    <p class="project-desc">Achieved 7% F1-score improvement using Gabor filter feature extraction.</p>
+                    <div class="project-tags">
+                        <span>Gabor Filters</span>
+                        <span>Image Processing</span>
+                        <span>Python</span>
                     </div>
-                </div>
+                </article>
+            </div>
+        </div>
+    </section>
 
-                <div class="mt-12">
-                      <h3 class="text-2xl font-bold mb-4">Certifications</h3>
-                      <a href="https://www.credential.net/f8487de9-a067-4dea-a944-9b5151192046#acc.3FzK2q1e" target="_blank" class="inline-block group">
-                          <div class="inline-flex items-center bg-card p-4 rounded-lg shadow-sm border border-custom transition-all duration-300 group-hover:shadow-lg group-hover:border-primary/50">
-                              <i data-feather="award" class="w-8 h-8 mr-4 text-primary"></i>
-                              <div>
-                                  <h4 class="text-lg font-bold text-left group-hover:text-primary transition-colors">TensorFlow Developer Certificate</h4>
-                                  <p class="text-secondary text-sm text-left">Credential ID: 86185588</p>
-                              </div>
-                              <i data-feather="external-link" class="w-4 h-4 ml-4 text-secondary/50 opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                          </div>
-                      </a>
+    <section class="section" id="contact">
+        <div class="container">
+            <h2 class="section-title">Contact</h2>
+            <div class="contact-content">
+                <p class="contact-text">Open to opportunities and collaborations.</p>
+                <a href="mailto:adi@pambudi.com" class="contact-email">adi@pambudi.com</a>
+                <div class="contact-links">
+                    <a href="https://linkedin.com/in/adiatmaja" target="_blank" class="social-link" aria-label="Connect on LinkedIn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                        LinkedIn
+                    </a>
+                    <a href="https://github.com/adiatmaja" target="_blank" class="social-link" aria-label="Follow on GitHub">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        GitHub
+                    </a>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-    </main>
-    
-    <footer class="text-center py-6 border-t border-custom mt-12">
-        <p class="text-secondary text-sm">&copy; <span id="copyright-year"></span> Johannes Baptista Adiatmaja Pambudi. All Rights Reserved.</p>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Johannes Baptista Adiatmaja Pambudi</p>
+        </div>
     </footer>
 
-    <script>
-        feather.replace();
-        document.getElementById('copyright-year').textContent = new Date().getFullYear();
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const menuIcon = document.getElementById('menu-icon');
-        mobileMenuButton.addEventListener('click', () => {
-            const isHidden = mobileMenu.classList.toggle('hidden');
-            menuIcon.setAttribute('data-feather', isHidden ? 'menu' : 'x');
-            feather.replace();
-        });
-        mobileMenu.addEventListener('click', (e) => {
-            if (e.target.tagName === 'A') {
-                mobileMenu.classList.add('hidden');
-                menuIcon.setAttribute('data-feather', 'menu');
-                feather.replace();
-            }
-        });
-        const themeToggle = document.getElementById('theme-toggle');
-        const htmlEl = document.documentElement;
-        if (localStorage.getItem('theme') === 'dark') {
-            htmlEl.classList.add('dark');
-        }
-        themeToggle.addEventListener('click', (e) => {
-            if (!document.startViewTransition) {
-                toggleTheme();
-                return;
-            }
-            const x = e.clientX;
-            const y = e.clientY;
-            document.documentElement.style.setProperty('--x', x + 'px');
-            document.documentElement.style.setProperty('--y', y + 'px');
-            const transition = document.startViewTransition(() => {
-                toggleTheme();
-            });
-            transition.ready.then(() => {
-                document.documentElement.classList.add('animating');
-            });
-            transition.finished.then(() => {
-                document.documentElement.classList.remove('animating');
-                document.documentElement.style.removeProperty('--x');
-                document.documentElement.style.removeProperty('--y');
-            });
-        });
-
-        function toggleTheme() {
-            if (htmlEl.classList.contains('dark')) {
-                htmlEl.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-            } else {
-                htmlEl.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-            }
-        }
-        function calculateDuration() {
-            const startDate = new Date('2024-08-01');
-            const now = new Date();
-            const durationEl = document.getElementById('sigma-duration');
-            if (!durationEl) return;
-            let totalMonths = (now.getFullYear() - startDate.getFullYear()) * 12 + (now.getMonth() - startDate.getMonth()) + 1;
-            if (totalMonths <= 0) {
-                durationEl.textContent = '1 mo';
-                return;
-            }
-            const years = Math.floor(totalMonths / 12);
-            const months = totalMonths % 12;
-            let result = [];
-            if (years > 0) {
-                result.push(`${years} yr${years > 1 ? 's' : ''}`);
-            }
-            if (months > 0) {
-                result.push(`${months} mo${months > 1 ? 's' : ''}`);
-            }
-            durationEl.textContent = result.join(' ');
-        }
-        calculateDuration();
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, {
-            threshold: 0.1
-        });
-        const sections = document.querySelectorAll('.fade-in');
-        sections.forEach(section => {
-            observer.observe(section);
-        });
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>
