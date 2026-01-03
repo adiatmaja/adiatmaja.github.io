@@ -318,6 +318,10 @@ a {
     margin-bottom: 4px;
 }
 
+a.card-value:hover {
+    text-decoration: underline;
+}
+
 .card-sub {
     font-size: 14px;
     color: var(--text-muted);
