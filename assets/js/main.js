@@ -29,11 +29,11 @@
     // ==========================================
     function initTypingAnimation() {
         var roles = [
+            'Machine Learning Engineer',
             'Data Scientist',
-            'ML Engineer',
-            'Deep Learning',
             'Forecasting',
-            'RAG Systems'
+            'Natural Language Processing',
+            'Computer Vision'
         ];
 
         var typingText = document.querySelector('.typing-text');
