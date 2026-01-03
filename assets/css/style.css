@@ -601,15 +601,32 @@ a {
     margin-top: 16px;
     font-size: 14px;
     font-weight: 500;
-    color: var(--text);
-    border-bottom: 1px solid var(--text-dim);
+    color: var(--text-muted); /* Start with muted color */
     padding-bottom: 2px;
-    transition: all 0.3s;
+    position: relative;
+    transition: color 0.3s;
+}
+
+.read-more::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--text);
+    transform: scaleX(0); /* Hidden initially */
+    transform-origin: right;
+    transition: transform 0.3s;
 }
 
 .read-more:hover {
-    color: var(--text-muted);
-    border-color: var(--text-muted);
+    color: var(--text); /* Brighten text on hover */
+}
+
+.read-more:hover::after {
+    transform: scaleX(1); /* Slide in */
+    transform-origin: left;
 }
 
 .project-tags {
