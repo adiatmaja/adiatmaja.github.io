@@ -247,7 +247,43 @@
     // ==========================================
     function initNavigation() {
         var nav = document.querySelector('.nav');
+        var menuToggle = document.querySelector('.menu-toggle');
+        var navLinks = document.querySelector('.nav-links');
+        
         if (!nav) return;
+
+        // Mobile Menu Toggle
+        if (menuToggle && navLinks) {
+            menuToggle.addEventListener('click', function() {
+                menuToggle.classList.toggle('active');
+                navLinks.classList.toggle('active');
+                nav.classList.toggle('nav-open');
+                document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+            });
+
+            // Close menu when clicking a link
+            navLinks.querySelectorAll('a').forEach(function(link) {
+                link.addEventListener('click', function() {
+                    menuToggle.classList.remove('active');
+                    navLinks.classList.remove('active');
+                    nav.classList.remove('nav-open');
+                    document.body.style.overflow = '';
+                });
+            });
+
+            // Close menu when clicking outside (overlay)
+            document.addEventListener('click', function(e) {
+                if (nav.classList.contains('nav-open') && 
+                    !navLinks.contains(e.target) && 
+                    !menuToggle.contains(e.target)) {
+                    
+                    menuToggle.classList.remove('active');
+                    navLinks.classList.remove('active');
+                    nav.classList.remove('nav-open');
+                    document.body.style.overflow = '';
+                }
+            });
+        }
 
         var lastScroll = 0;
         var navHeight = 80; // Approximate height of the fixed nav
@@ -263,7 +299,7 @@
             }
 
             // Hide/show on scroll direction
-            if (currentScroll > lastScroll && currentScroll > 200) {
+            if (currentScroll > lastScroll && currentScroll > 200 && !nav.classList.contains('nav-open')) {
                 nav.classList.add('hidden');
             } else {
                 nav.classList.remove('hidden');
