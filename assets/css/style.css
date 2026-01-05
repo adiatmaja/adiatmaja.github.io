@@ -805,6 +805,8 @@ a {
         transition: transform 0.3s ease-in-out;
         z-index: 101;
         box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+        list-style: none; /* Ensure no dots */
+        margin: 0;
     }
 
     .nav-links.active {
@@ -837,8 +839,20 @@ a {
     }
 
     .hero {
-        padding: 100px 24px 60px; /* Reduced top padding */
-        min-height: auto;
+        padding: 100px 24px 40px; /* Adjusted padding */
+        min-height: 100dvh; /* Use dynamic viewport height */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .scroll-hint {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        transform: none;
+        margin-top: 60px;
+        opacity: 1; /* Ensure visible */
     }
 
     .hero-title {
