@@ -753,7 +753,7 @@ a {
         padding: 16px 24px;
         background: rgba(10, 10, 10, 0.95);
         backdrop-filter: blur(10px);
-        justify-content: space-between; /* Align logo/button */
+        justify-content: flex-end; /* Align button to right */
     }
 
     .menu-toggle {
@@ -767,6 +767,7 @@ a {
         cursor: pointer;
         z-index: 102; /* Above nav-links */
         padding: 0;
+        margin-left: auto; /* Ensure it stays right even if other items added */
     }
 
     .menu-toggle span {
