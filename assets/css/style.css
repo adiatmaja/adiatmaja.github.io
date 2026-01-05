@@ -91,10 +91,6 @@ a {
     opacity: 1;
 }
 
-.menu-toggle {
-    display: none;
-}
-
 /* Hero - Full Screen */
 .hero {
     min-height: 100vh;
@@ -753,95 +749,41 @@ a {
         padding: 16px 24px;
         background: rgba(10, 10, 10, 0.95);
         backdrop-filter: blur(10px);
-        justify-content: flex-end; /* Align button to right */
-    }
-
-    .menu-toggle {
-        display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        width: 30px;
-        height: 21px;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        z-index: 102; /* Above nav-links */
-        padding: 0;
-        margin-left: auto; /* Ensure it stays right even if other items added */
-    }
-
-    .menu-toggle span {
-        display: block;
-        width: 100%;
-        height: 2px;
-        background-color: var(--text);
-        transition: all 0.3s ease;
-    }
-
-    /* Hamburger Animation */
-    .menu-toggle.active span:nth-child(1) {
-        transform: translateY(9.5px) rotate(45deg);
-    }
-    .menu-toggle.active span:nth-child(2) {
-        opacity: 0;
-    }
-    .menu-toggle.active span:nth-child(3) {
-        transform: translateY(-9.5px) rotate(-45deg);
+        gap: 16px;
     }
 
     .nav-links {
-        position: fixed;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        width: 70%;
-        max-width: 300px;
-        background: #111;
-        flex-direction: column;
+        display: flex;
+        gap: 24px;
+        width: 100%;
         justify-content: center;
-        align-items: center;
-        padding: 40px;
-        gap: 32px;
-        transform: translateX(100%);
-        transition: transform 0.3s ease-in-out;
-        z-index: 101;
-        box-shadow: -5px 0 15px rgba(0,0,0,0.5);
-        list-style: none; /* Ensure no dots */
-        margin: 0;
+        flex-wrap: wrap;
+        position: static;
+        background: transparent;
+        padding: 0;
+        transform: none;
+        box-shadow: none;
+        flex-direction: row;
     }
 
     .nav-links.active {
-        transform: translateX(0);
+        transform: none;
     }
 
-    /* Overlay when menu is open */
+    /* Remove Overlay */
     .nav::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0,0,0,0.5);
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s;
-        z-index: 100;
-    }
-
-    .nav.nav-open::before {
-        opacity: 1;
-        pointer-events: all;
+        display: none;
     }
 
     .nav-links a {
-        font-size: 18px;
-        font-weight: 600;
+        font-size: 13px;
+        font-weight: 500;
     }
 
     .hero {
-        padding: 100px 24px 40px; /* Adjusted padding */
-        min-height: 100dvh; /* Use dynamic viewport height */
+        padding: 120px 24px 40px; /* Adjusted padding, enough space for stacked nav */
+        min-height: 100dvh;
         display: flex;
         flex-direction: column;
         justify-content: center;
