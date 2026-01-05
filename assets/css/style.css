@@ -846,7 +846,8 @@ a {
 
     /* Compact Timeline for Mobile */
     .timeline {
-        padding-left: 24px;
+        padding-left: 20px; /* Reduced padding from 32px to 20px */
+        margin-left: 10px; /* Add margin to shift everything right */
     }
 
     .timeline::before {
@@ -855,6 +856,8 @@ a {
 
     .timeline-dot {
         left: -6.5px;
+        /* Ensure dot doesn't shrink or move unexpectedly */
+        flex-shrink: 0; 
     }
 
     .timeline-header {
