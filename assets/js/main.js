@@ -184,7 +184,7 @@
                 delay: i * 0.1,
                 scrollTrigger: {
                     trigger: el,
-                    start: 'top 85%'
+                    start: 'top 95%'
                 }
             });
         });
