@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Distillation Pipeline - Project Details</title>
+    <meta name="description" content="Knowledge distillation pipeline for fine-tuning a 9B Indonesian-Javanese language model using Unsloth and Docker on a restricted GPU server.">
+    <meta name="theme-color" content="#0a0a0a">
+    <link rel="icon" type="image/png" href="../assets/thumbnail.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <nav class="nav">
+        <ul class="nav-links">
+            <li><a href="../index.html#about">About</a></li>
+            <li><a href="../index.html#experience">Experience</a></li>
+            <li><a href="../index.html#projects">Projects</a></li>
+            <li><a href="../index.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <a href="../index.html#projects" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back to Projects
+            </a>
+            <h1 class="page-title">LLM Distillation Pipeline</h1>
+            <p class="page-subtitle">Knowledge Distillation for Indonesian-Javanese Language Models</p>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="container">
+            <div class="article-layout">
+                <div class="article-content">
+                    <p>An end-to-end knowledge distillation pipeline for fine-tuning a 9B-parameter Indonesian-Javanese language model. The core engineering challenge was that the GPU server could not have Python installed, requiring a fully Docker-based training workflow coordinated from a separate laptop.</p>
+
+                    <h3>Problem Statement</h3>
+                    <p>The production GPU server (RTX 5090) operated in a restricted environment with no Python runtime permitted. Standard fine-tuning workflows assume direct script execution on the training machine. The goal was to distill knowledge from a large 70B teacher model into a smaller 9B student model, deployable for low-latency inference — all without violating the server's environment constraints.</p>
+
+                    <h3>Solution: Three-Zone Architecture</h3>
+                    <p>The pipeline is split across three isolated zones, each with a clearly defined responsibility:</p>
+                    <ul>
+                        <li><strong>Zone A — Teacher Inference (LM Studio):</strong> The 70B teacher model runs on a separate machine via LM Studio, exposing an OpenAI-compatible API on port 1234. No Python required here.</li>
+                        <li><strong>Zone B — Orchestration (Laptop):</strong> All Python code — PDF loading, API calls to the teacher, data validation, variation generation — runs on the laptop. This zone produces the JSONL training dataset.</li>
+                        <li><strong>Zone C — Training (Docker on GPU Server):</strong> The Unsloth container receives only the JSONL file and a config. It handles model loading, LoRA fine-tuning, GGUF export, and deployment — entirely inside Docker.</li>
+                    </ul>
+                    <p>This separation means the server never needs Python installed, yet the full pipeline is reproducible and automated with a single command.</p>
+
+                    <h3>Key Features</h3>
+                    <ul>
+                        <li><strong>Automated Data Augmentation:</strong> 8 augmentation strategies (Persona Shift, Adversarial Question, Refusal &amp; Boundary, Creative Rephrase, Emotional Context, Negative Confirmation, Explicit Confirmation, Out-of-Scope Deflection) expand the base dataset ~5x.</li>
+                        <li><strong>Category-Aware Balanced Generation:</strong> Detects ~20 topic categories per conversation and allocates augmentation budget to under-represented categories, preventing training imbalance.</li>
+                        <li><strong>Anti-Fabrication Validation:</strong> A multi-layer validator rejects generated variations containing non-whitelisted URLs, fabricated payment methods, or invented policies — using sentence-level negation awareness to distinguish refusals from hallucinations.</li>
+                        <li><strong>Automatic Deduplication:</strong> Near-duplicate removal at an 85% similarity threshold keeps the dataset diverse after expansion.</li>
+                        <li><strong>One-Command Pipeline:</strong> <code>docker compose up</code> triggers data copy → training → GGUF export → LM Studio deployment, with a diagnostic training report generated automatically at the end.</li>
+                    </ul>
+
+                    <h3>Technical Details</h3>
+                    <p>Training runs inside the <code>unsloth/unsloth:latest</code> Docker image (32.5 GB) using 4-bit quantization to reduce the 9B model from ~18 GB to ~6 GB VRAM footprint, then applies LoRA adapters at rank 64 / alpha 128. The optimized configuration uses a batch size of 8 with 2 gradient accumulation steps, BF16 precision (native on Blackwell architecture), and 200 training steps — covering approximately 3–4 epochs over ~175 high-quality conversations. VRAM usage peaks at ~19–22 GB, safely within the RTX 5090's capacity.</p>
+                    <p>The data generation side uses an OpenAI-compatible client with exponential backoff retry logic, chunking source PDFs into 800-character segments before querying the teacher model. Nucleus sampling (top_p 0.95) on variation generation promotes lexical diversity.</p>
+                    <p>GGUF export uses F16 precision via llama.cpp integration inside the Unsloth container, producing a deployment-ready model that is automatically copied to the LM Studio models directory.</p>
+
+                    <h3>Impact &amp; Results</h3>
+                    <ul>
+                        <li>274 source FAQ entries expanded to ~175 deduplicated, high-quality training conversations after augmentation and validation.</li>
+                        <li>Full training completes in ~15–20 minutes on the RTX 5090.</li>
+                        <li>Automated pipeline eliminates manual steps between data generation and model deployment.</li>
+                        <li>Anti-fabrication validation measurably reduced hallucinated URLs and invented policies in the fine-tuned model's outputs compared to the base student model.</li>
+                    </ul>
+                </div>
+
+                <aside class="meta-sidebar">
+                    <div class="meta-group">
+                        <span class="meta-label">Role</span>
+                        <p>Data Scientist</p>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Timeline</span>
+                        <p>2025 — 2026</p>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Languages</span>
+                        <div class="project-tags">
+                            <span><i class="devicon-python-plain colored"></i> Python</span>
+                            <span><i class="devicon-bash-plain colored"></i> Bash</span>
+                        </div>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Tools &amp; Frameworks</span>
+                        <div class="project-tags">
+                            <span><i class="devicon-docker-plain colored"></i> Docker</span>
+                            <span><i class="devicon-pytorch-original colored"></i> PyTorch</span>
+                            <span>Unsloth</span>
+                            <span>LM Studio</span>
+                            <span>llama.cpp</span>
+                        </div>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Methodologies</span>
+                        <div class="project-tags">
+                            <span>Knowledge Distillation</span>
+                            <span>LoRA Fine-tuning</span>
+                            <span>SFT</span>
+                            <span>Data Augmentation</span>
+                        </div>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Links</span>
+                        <div class="meta-links">
+                            <a href="https://github.com/adiatmaja/llm-distill-pipeline" target="_blank" class="btn btn-secondary">
+                                View on GitHub
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Johannes Baptista Adiatmaja Pambudi</p>
+        </div>
+    </footer>
+</body>
+</html>
