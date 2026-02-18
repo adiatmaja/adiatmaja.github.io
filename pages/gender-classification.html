@@ -38,26 +38,43 @@
         <div class="container">
             <div class="article-layout">
                 <div class="article-content">
-                    <p>This research project focused on exploring the effectiveness of Gabor filters in extracting features from fingerprint images for gender classification. The study aimed to determine if enhancing fingerprint patterns could improve the accuracy of machine learning models in identifying gender.</p>
-                    
-                    <h3>Research Methodology</h3>
-                    <p>The project involved a comparative analysis between raw fingerprint images and those processed with Gabor filters. We experimented with various Gabor filter parameters (frequency, orientation) to find the optimal configuration for feature enhancement.</p>
+                    <p>An undergraduate thesis investigating how Gabor filter preprocessing influences the performance of a CNN-based gender classification system built on fingerprint images. The study ran a controlled comparison across three Gabor parameter configurations — default, high, and low — against a raw-image baseline, evaluated on two publicly available fingerprint datasets.</p>
 
-                    <h3>Results</h3>
+                    <h3>Problem Statement</h3>
+                    <p>Fingerprint images contain rich ridge structure information, but raw scans vary significantly in quality and contrast. The central question was whether Gabor filter-based enhancement — which amplifies ridge patterns by applying oriented frequency-selective filters — could give a CNN more discriminative texture features for soft biometric classification (gender), and if so, which filter configuration strikes the optimal balance.</p>
+
+                    <h3>Approach: Three-Parameter Comparative Study</h3>
+                    <p>Rather than treating Gabor filtering as a binary on/off choice, the study swept three distinct parameter regimes and compared each against the raw baseline across both datasets:</p>
                     <ul>
-                        <li><strong>Performance Boost:</strong> Achieved a 7% improvement in F1-score when using Gabor-filtered images compared to the baseline.</li>
-                        <li><strong>Feature Extraction:</strong> Demonstrated that Gabor filters effectively highlight ridge structures that are discriminative for gender classification.</li>
-                        <li><strong>Model:</strong> Utilized Convolutional Neural Networks (CNN) for the classification task, implemented in Python using TensorFlow/Keras.</li>
+                        <li><strong>Default:</strong> Balanced configuration (block size 16, kx/ky 0.65, angle increment 3°). Moderate ridge enhancement preserving fine detail.</li>
+                        <li><strong>High:</strong> Stronger enhancement (block size 20, kx/ky 0.80, angle increment 4°). Wider filter kernels, more aggressive ridge amplification.</li>
+                        <li><strong>Low:</strong> Subtle enhancement (block size 12, kx/ky 0.50, angle increment 2°). Finer-grained orientation sampling, lower amplification.</li>
+                    </ul>
+                    <p>The Gabor pipeline itself — implemented in <code>FingerprintImageEnhancer</code> — runs four stages per image: ridge segmentation (block-wise standard deviation thresholding), local orientation estimation (gradient of Gaussian), ridge frequency estimation (column-projection peak detection), and finally oriented Gabor filter convolution to produce a binary ridge map.</p>
+
+                    <h3>CNN Architecture &amp; Training</h3>
+                    <p>A custom CNN was built in TensorFlow/Keras with four convolutional blocks (16 → 32 → 64 → 128 filters, 3×3 kernels, ReLU), each followed by Batch Normalization, Max Pooling (2×2), and Dropout (0.2). A Global Max Pooling layer feeds into a Dense(128) + Dropout(0.5) head, terminating in a sigmoid output for binary male/female classification.</p>
+                    <p>Training used Adam with <code>ReduceLROnPlateau</code> (patience 20, factor 0.1) and balanced class weights to handle the uneven gender distribution in both datasets. Performance was assessed via 5-fold stratified cross-validation (100 epochs per fold, batch size 16), with weighted F1-score and AUC as the primary metrics.</p>
+
+                    <h3>Datasets</h3>
+                    <ul>
+                        <li><strong>SOCOFing (Sokoto Coventry Fingerprint Dataset):</strong> Preprocessed from raw BMP scans (90×97 px); Gabor-enhanced outputs at 180×194 px.</li>
+                        <li><strong>Family Fingerprint Dataset:</strong> Higher-resolution source images (512×512 px); Gabor-enhanced outputs resized to 256×256 px.</li>
                     </ul>
 
-                    <h3>Impact</h3>
-                    <p>This thesis contributes to the field of biometrics by providing empirical evidence on the utility of texture analysis techniques like Gabor filtering for soft biometric traits classification.</p>
+                    <h3>Results &amp; Impact</h3>
+                    <ul>
+                        <li><strong>Best configuration:</strong> Default Gabor parameters outperformed both raw baseline and the high/low variants on both datasets, confirming that the enhancement is beneficial but sensitive to over-tuning.</li>
+                        <li><strong>SOCOFing (default):</strong> Mean weighted F1-score of 73.46% and AUC of 69.72% across 5 folds.</li>
+                        <li><strong>Family (default):</strong> Mean weighted F1-score of 70.1% and AUC of 74.41% across 5 folds.</li>
+                        <li>Results provide empirical evidence that Gabor-based ridge enhancement is a meaningful preprocessing step for fingerprint soft-biometric classification, with the filter parameterization meaningfully affecting model outcomes.</li>
+                    </ul>
                 </div>
 
                 <aside class="meta-sidebar">
                     <div class="meta-group">
-                        <span class="meta-label">Type</span>
-                        <p>Undergraduate Thesis</p>
+                        <span class="meta-label">Role</span>
+                        <p>Researcher (Undergraduate Thesis)</p>
                     </div>
                     <div class="meta-group">
                         <span class="meta-label">Timeline</span>
@@ -70,16 +87,21 @@
                         </div>
                     </div>
                     <div class="meta-group">
-                        <span class="meta-label">Tools & Frameworks</span>
+                        <span class="meta-label">Tools &amp; Frameworks</span>
                         <div class="project-tags">
                             <span><i class="devicon-tensorflow-original colored"></i> TensorFlow</span>
                             <span><i class="devicon-opencv-plain colored"></i> OpenCV</span>
+                            <span><i class="devicon-jupyter-plain colored"></i> Jupyter</span>
+                            <span>scikit-learn</span>
                         </div>
                     </div>
                     <div class="meta-group">
                         <span class="meta-label">Methodologies</span>
                         <div class="project-tags">
                             <span>Gabor Filters</span>
+                            <span>CNN</span>
+                            <span>K-Fold Cross-Validation</span>
+                            <span>Biometrics</span>
                         </div>
                     </div>
                     <div class="meta-group">
