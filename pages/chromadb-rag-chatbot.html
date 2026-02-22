@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChromaDB RAG Chatbot - Project Details</title>
+    <meta name="description" content="Dockerized RAG-based chatbot using ChromaDB and sentence-transformers for B2B FMCG semantic product search and intent classification.">
+    <meta name="theme-color" content="#0a0a0a">
+    <link rel="icon" type="image/png" href="../assets/thumbnail.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <nav class="nav">
+        <ul class="nav-links">
+            <li><a href="../index.html#about">About</a></li>
+            <li><a href="../index.html#experience">Experience</a></li>
+            <li><a href="../index.html#projects">Projects</a></li>
+            <li><a href="../index.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <a href="../index.html#projects" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back to Projects
+            </a>
+            <h1 class="page-title">ChromaDB RAG Chatbot</h1>
+            <p class="page-subtitle">B2B FMCG Semantic Search &amp; Intent Classification</p>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="container">
+            <div class="article-layout">
+                <div class="article-content">
+                    <p>A Dockerized Retrieval-Augmented Generation (RAG) system built as the foundational chatbot layer for a B2B FMCG e-commerce platform. The system enables intelligent customer interaction in Indonesian language — resolving the core challenge that customers use colloquial and regional product names that don't match official catalog entries.</p>
+
+                    <h3>Problem Statement</h3>
+                    <p>In Indonesian B2B commerce, customers refer to products by colloquial names, brand abbreviations, or regional terms. A standard keyword search fails completely — "indomie kuning" or "mie soto" won't match "Indomie Mi Instan Rasa Kaldu Ayam" in a traditional catalog. The platform also needed to handle 35+ distinct customer intent types (from cart operations to profile inquiries) and answer FAQ questions without hardcoding lookup tables.</p>
+
+                    <h3>Solution: Unified RAG Architecture</h3>
+                    <p>The system uses a three-collection ChromaDB setup with semantic embeddings (sentence-transformers <code>all-MiniLM-L6-v2</code>) to resolve queries across three knowledge domains in parallel:</p>
+                    <ul>
+                        <li><strong>Product collection</strong> — each product is embedded with its official name, colloquial aliases, pack size, and Indonesian description, enabling fuzzy semantic matching regardless of naming variation.</li>
+                        <li><strong>FAQ collection</strong> — FAQs are sourced from ClickHouse and indexed into ChromaDB, enabling semantic question matching that handles paraphrase and spelling variation.</li>
+                        <li><strong>Intent collection</strong> — 35 e-commerce intent types with example phrases are embedded, allowing the system to classify the customer's action intent before routing to the LLM.</li>
+                    </ul>
+                    <p>A single <code>UnifiedRetriever</code> searches all three collections and returns the best match ranked by <code>relevance_score = 1.0 - cosine_distance</code>. The <code>UnifiedRAGOrchestrator</code> then builds a targeted LLM context from the matched result and generates an Indonesian-language response.</p>
+
+                    <h3>Architecture</h3>
+                    <pre><code>  User Query (Indonesian / colloquial)
+          │
+  ┌───────▼───────────────────────────────┐
+  │  UnifiedRetriever                     │
+  │  Embedding → parallel ChromaDB search │
+  └───┬───────────────┬───────────────┬───┘
+      ▼               ▼               ▼
+  [Products]      [FAQs]         [Intents]
+  colloquial      ClickHouse     35 types
+  name mapping    sourced
+      │               │               │
+      └───────┬───────┴───────────────┘
+              │  best match by relevance_score
+              ▼
+  ┌───────────────────────────────────────┐
+  │  UnifiedRAGOrchestrator               │
+  │  LLM context build + response         │
+  │  Function calling: check_inventory()  │
+  └───────────────────────────────────────┘
+              │
+              ▼
+  Response + Order Tracking (JSON)</code></pre>
+
+                    <h3>Key Features</h3>
+                    <ul>
+                        <li><strong>Colloquial name resolution:</strong> Products are indexed with semicolon-separated colloquial alias lists. A query for "mie goreng bungkusan merah" correctly resolves to the official product via semantic similarity, with no explicit alias lookup table.</li>
+                        <li><strong>LLM function calling for inventory:</strong> When a product query includes a quantity, the orchestrator enables a <code>check_inventory(sku, requested_quantity)</code> function call. The LLM invokes it automatically, and the result is captured by <code>OrderTracker</code> and persisted to JSON — simulating an order capture flow.</li>
+                        <li><strong>ClickHouse FAQ integration:</strong> FAQ data is fetched from a ClickHouse database at index time and stored in ChromaDB, decoupling the vector search from live database queries during runtime.</li>
+                        <li><strong>Docker-first deployment:</strong> The entire system runs inside a single Docker container. Indexing scripts are run as one-time setup commands inside the container, with ChromaDB persisted to a mounted volume. No Python installation required on the host server.</li>
+                        <li><strong>Windows compatibility:</strong> All scripts include UTF-8 reconfiguration for Windows console output, and dependency versions are pinned to avoid onnxruntime DLL issues specific to Windows + torch 2.8.0.</li>
+                    </ul>
+
+                    <h3>Technical Challenges</h3>
+                    <p>The primary compatibility challenge was ChromaDB version locking. ChromaDB 1.3.4 causes segmentation faults on Windows when paired with torch 2.8.0 — the version required for sentence-transformers 2.7.0. The fix was to pin <code>chromadb==0.5.0</code> and document the constraint explicitly. Similarly, <code>onnxruntime</code> was removed from <code>requirements.txt</code> entirely (Docker uses PyTorch backend; Windows developers install 1.16.3 locally), preventing DLL load failures in the Docker image.</p>
+                    <p>Intent classification required careful data design: the intent collection indexes not just intent names but concrete example customer phrases, so the embedding captures linguistic variation rather than just categorical labels. This keeps the system adaptable — adding a new intent requires only adding example phrases to <code>data/intent.txt</code> and re-indexing.</p>
+
+                    <h3>Impact</h3>
+                    <ul>
+                        <li>Established the semantic retrieval baseline for the platform's chatbot — covering product search, FAQ, and intent classification in a single unified pipeline.</li>
+                        <li>35+ intent types classified with no hardcoded keyword matching, using only semantic similarity against example phrases.</li>
+                        <li>Dockerized deployment makes the system reproducible across environments with a single <code>docker-compose up</code>.</li>
+                        <li>Colloquial name resolution removes the need for a manually maintained alias lookup table, reducing ongoing maintenance overhead.</li>
+                    </ul>
+                </div>
+
+                <aside class="meta-sidebar">
+                    <div class="meta-group">
+                        <span class="meta-label">Role</span>
+                        <p>Data Scientist</p>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Timeline</span>
+                        <p>2024 — 2025</p>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Languages</span>
+                        <div class="project-tags">
+                            <span><i class="devicon-python-plain colored"></i> Python</span>
+                        </div>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Tools &amp; Frameworks</span>
+                        <div class="project-tags">
+                            <span><i class="devicon-mongodb-plain colored"></i> ChromaDB</span>
+                            <span><i class="devicon-docker-plain colored"></i> Docker</span>
+                            <span>sentence-transformers</span>
+                            <span>ClickHouse</span>
+                            <span>OpenAI SDK</span>
+                        </div>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Methodologies</span>
+                        <div class="project-tags">
+                            <span>RAG</span>
+                            <span>Semantic Search</span>
+                            <span>Intent Classification</span>
+                            <span>Vector Embeddings</span>
+                        </div>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Links</span>
+                        <div class="meta-links">
+                            <a href="https://github.com/adiatmaja/chromadb-rag-chatbot" target="_blank" class="btn btn-secondary">
+                                View on GitHub
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Johannes Baptista Adiatmaja Pambudi</p>
+        </div>
+    </footer>
+</body>
+</html>

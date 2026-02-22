@@ -38,18 +38,19 @@
         <div class="container">
             <div class="article-layout">
                 <div class="article-content">
-                    <p>At Sigma Solusi Indonesia, I serve as a Data Scientist focusing on supply chain optimization and intelligent system development. My primary responsibility is to leverage data to improve operational efficiency and decision-making processes.</p>
-                    
-                    <h3>Key Responsibilities & Achievements</h3>
-                    <ul>
-                        <li><strong>Demand Forecasting:</strong> Designed and implemented end-to-end forecasting pipelines using PyTorch and SQL. The models predict demand and sales trends, enabling better inventory planning and reducing stockouts.</li>
-                        <li><strong>Stock Balancing:</strong> Developed a stock balancing system that utilizes sales forecasts and warehouse simulations. This system optimizes the distribution of goods across the warehouse network, minimizing holding costs and transfer times.</li>
-                        <li><strong>RAG System Development:</strong> Built a Retrieval-Augmented Generation (RAG) system using ChromaDB. I implemented knowledge distillation techniques to improve retrieval accuracy and automated the entire workflow using n8n, making organizational knowledge more accessible.</li>
-                        <li><strong>Containerization:</strong> Containerized applications using Docker to ensure reproducible environments and streamline the deployment process.</li>
-                    </ul>
+                    <p>At Sigma Solusi Indonesia, I work as a Data Scientist building end-to-end ML solutions for supply chain optimization and intelligent automation. The work spans demand forecasting, conversational AI, LLM fine-tuning, and automated retraining — all serving a B2B FMCG distribution platform.</p>
 
-                    <h3>Technologies Used</h3>
-                    <p>I rely heavily on Python and SQL for data manipulation and modeling. For deep learning tasks, I utilize PyTorch. The RAG system involves vector databases (ChromaDB) and workflow automation tools (n8n). Docker is used for containerization and deployment.</p>
+                    <h3>RAG Chatbot for B2B FMCG</h3>
+                    <p>Architected the foundational chatbot layer for the platform using a Dockerized RAG system built on ChromaDB and sentence-transformers. The core challenge was that customers use colloquial and regional product names that don't match official catalog entries — "mie goreng bungkusan merah" won't keyword-match any SKU. The solution uses semantic embeddings across three unified collections (products, FAQs, intents) to resolve queries regardless of naming variation. The system handles <strong>35+ customer intent types</strong> through semantic similarity against example phrases — no hardcoded keyword matching.</p>
+
+                    <h3>LLM Fine-tuning for WhatsApp Deployment</h3>
+                    <p>Engineered a specialized FAQ model for WhatsApp deployment using knowledge distillation and LoRA fine-tuning — distilling a <strong>Llama-3.1 70B teacher</strong> into a <strong>Gemma-2 9B student</strong>. The goal was to reduce inference latency while maintaining response quality for Indonesian-Javanese customer support. The pipeline includes 8 augmentation strategies that expand the base dataset ~5x, category-aware balancing across ~20 topic types, and multi-layer anti-fabrication validation that rejects hallucinated URLs, invented payment methods, and fabricated policies. Training runs entirely inside Docker — the GPU server requires no Python installation.</p>
+
+                    <h3>MLOps Retraining Pipeline</h3>
+                    <p>Built an automated MLOps retraining pipeline via <strong>n8n</strong>, enabling iterative model improvement with rigorous evaluation. The pipeline has completed <strong>10+ retraining rounds</strong> with <strong>A/B validation</strong> across <strong>154 structured test scenarios</strong> — covering product queries, FAQ answering, intent classification, and out-of-scope handling. Each round produces a diagnostic training report with loss curves, inference tests, and automated recommendations, enabling remote collaboration between analyst and server admin.</p>
+
+                    <h3>Demand Forecasting & BI Solutions</h3>
+                    <p>Developed end-to-end demand and sales forecasting pipelines using <strong>PyTorch</strong> and <strong>SQL</strong>, enabling better inventory planning across 6 darkstores and 2,240+ SKUs. Designed complementary <strong>BI solutions</strong> including warehouse simulations and a stock balancing system that optimizes goods distribution across the warehouse network — minimizing holding costs and reducing transfer times.</p>
                 </div>
 
                 <aside class="meta-sidebar">
@@ -82,10 +83,21 @@
                         </div>
                     </div>
                     <div class="meta-group">
+                        <span class="meta-label">Related Projects</span>
+                        <div class="meta-links">
+                            <a href="chromadb-rag-chatbot.html" class="btn btn-secondary">ChromaDB RAG Chatbot</a>
+                            <a href="llm-distill-pipeline.html" class="btn btn-secondary" style="margin-top: 8px;">LLM Distillation Pipeline</a>
+                        </div>
+                    </div>
+                    <div class="meta-group">
                         <span class="meta-label">Methodologies</span>
                         <div class="project-tags">
-                            <span>Forecasting</span>
                             <span>RAG</span>
+                            <span>Knowledge Distillation</span>
+                            <span>LoRA Fine-tuning</span>
+                            <span>MLOps</span>
+                            <span>Forecasting</span>
+                            <span>A/B Validation</span>
                         </div>
                     </div>
                 </aside>

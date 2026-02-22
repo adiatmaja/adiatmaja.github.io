@@ -218,14 +218,15 @@
                             <span class="date">Aug 2024 — Present</span>
                         </div>
                         <ul class="timeline-list">
-                            <li>Built <strong>end-to-end forecasting pipelines</strong> using <strong>PyTorch</strong> and <strong>SQL</strong> for demand/sales prediction</li>
-                            <li>Designed <strong>stock balancing system</strong> using sales forecasts and warehouse simulations</li>
-                            <li>Built <strong>RAG system</strong> using <strong>ChromaDB</strong> with <strong>knowledge distillation</strong>, automated via <strong>n8n</strong></li>
-                            <li>Containerized applications using <strong>Docker</strong> for reproducible environments and deployment</li>
+                            <li>Architected <strong>Dockerized RAG chatbot</strong> (<strong>ChromaDB</strong>, sentence-transformers) for B2B FMCG platform — <strong>semantic product search</strong> and <strong>35+ intent classification types</strong></li>
+                            <li>Fine-tuned a <strong>9B model</strong> for <strong>WhatsApp deployment</strong> via <strong>knowledge distillation</strong> (Llama-3.1 70B → Gemma-2 9B) with <strong>LoRA</strong></li>
+                            <li>Built <strong>MLOps retraining pipeline</strong> via <strong>n8n</strong> — <strong>10+ iterations</strong> with <strong>A/B validation</strong> across <strong>154 structured test scenarios</strong></li>
+                            <li>Developed <strong>demand forecasting pipelines</strong> (<strong>PyTorch</strong>, SQL) and <strong>BI solutions</strong> including warehouse simulations and stock balancing</li>
                         </ul>
                         <div class="timeline-related">
                             <span class="related-label">Related Projects</span>
                             <div class="related-links">
+                                <a href="#proj-chromadb-rag" class="related-project">ChromaDB RAG Chatbot</a>
                                 <a href="#proj-llm-distill" class="related-project">LLM Distillation Pipeline</a>
                             </div>
                         </div>
@@ -257,6 +258,26 @@
         <div class="container">
             <h2 class="section-title">Projects</h2>
             <div class="projects-grid">
+                <article class="project-card" id="proj-chromadb-rag">
+                    <div class="project-header">
+                        <span class="project-year">2025</span>
+                        <a href="https://github.com/adiatmaja/chromadb-rag-chatbot" class="project-link" target="_blank" aria-label="View ChromaDB RAG Chatbot on GitHub">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <h3 class="project-title"><a href="pages/chromadb-rag-chatbot.html">ChromaDB RAG Chatbot</a></h3>
+                    <p class="project-sub">B2B FMCG Semantic Search & Intent Classification</p>
+                    <p class="project-desc">Architected a <strong>Dockerized RAG system</strong> using <strong>ChromaDB</strong> and <strong>sentence-transformers</strong> for a B2B platform — enabling semantic product search across colloquial Indonesian names and <strong>35+ intent classification types</strong>.</p>
+                    <div class="project-tags">
+                        <span>RAG</span>
+                        <span>ChromaDB</span>
+                        <span>sentence-transformers</span>
+                        <span>Docker</span>
+                    </div>
+                    <a href="pages/chromadb-rag-chatbot.html" class="read-more">Read more &rarr;</a>
+                </article>
                 <article class="project-card" id="proj-llm-distill">
                     <div class="project-header">
                         <span class="project-year">2026</span>

@@ -52,6 +52,72 @@
                     </ul>
                     <p>This separation means the server never needs Python installed, yet the full pipeline is reproducible and automated with a single command.</p>
 
+                    <h3>Architecture</h3>
+                    <pre><code>  ┌──────────────────────────────────────────────────────────────────────┐
+  │  ZONE A — TEACHER INFERENCE (LM Studio)                              │
+  │                                                                      │
+  │  llama-sahabat-ai 70B ──▶ OpenAI-compatible API (:1234)             │
+  └──────────────────────────────────┬───────────────────────────────────┘
+                                     │  HTTP
+  ┌──────────────────────────────────▼───────────────────────────────────┐
+  │  ZONE B — ORCHESTRATION (Laptop / Python)                            │
+  │                                                                      │
+  │  ClickHouse DB ──▶ fetch_faq_to_pdf.py ──▶ PDFs                     │
+  │                                                │                     │
+  │  PDFs ──▶ PDFLoader ──▶ DataGenerator ──▶ train_dataset.jsonl       │
+  │                                                │                     │
+  │                                  generate_variations.py              │
+  │                                  (8 strategies, ~5x expansion,       │
+  │                                   dedup, anti-fabrication)           │
+  │                                                │                     │
+  │                                  train_dataset_expanded.jsonl        │
+  └──────────────────────────────────────────────┬─┘─────────────────────┘
+                                                 │  Volume mount
+  ┌──────────────────────────────────────────────▼───────────────────────┐
+  │  ZONE C — TRAINING (Docker + GPU, no Python on host)                 │
+  │                                                                      │
+  │  ┌────────────────────────────────────────────────────────────────┐  │
+  │  │  Unsloth Container (unsloth/unsloth:latest)                    │  │
+  │  │  Load gemma2-9B (4-bit) ──▶ Apply LoRA (r=64, α=128)          │  │
+  │  │  SFTTrainer (200 steps, ~15–20 min on RTX 5090)               │  │
+  │  │  ──▶ Merge ──▶ GGUF export (F16) ──▶ Training report          │  │
+  │  └────────────────────────────────────────────────────────────────┘  │
+  │                                              │                        │
+  │                              Auto-deploy to LM Studio                 │
+  └──────────────────────────────────────────────────────────────────────┘</code></pre>
+
+                    <h3>Data Augmentation Pipeline</h3>
+                    <pre><code>  274 base conversations (FAQs from ClickHouse)
+         │
+         ▼
+  ┌──────────────────────────────────────────────────────────┐
+  │  8 Augmentation Strategies                               │
+  │  ├── Persona Shift                                       │
+  │  ├── Adversarial Question                                │
+  │  ├── Refusal &amp; Boundary                                  │
+  │  ├── Creative Rephrase                                   │
+  │  ├── Emotional Context                                   │
+  │  ├── Negative Confirmation                               │
+  │  ├── Explicit Confirmation                               │
+  │  └── Out-of-Scope Deflection                             │
+  └─────────────────────────┬────────────────────────────────┘
+                            │  ~5x expansion
+                            ▼
+              Category-Aware Balancing
+              (~20 topic categories, prioritize under-represented)
+                            │
+                            ▼
+              Anti-Fabrication Validation
+              ├── URL whitelist check
+              ├── Fabricated payment method detection
+              └── Sentence-level negation awareness
+                            │
+                            ▼
+              Deduplication (85% similarity threshold)
+                            │
+                            ▼
+              ~175 high-quality training conversations</code></pre>
+
                     <h3>Key Features</h3>
                     <ul>
                         <li><strong>Automated Data Augmentation:</strong> 8 augmentation strategies (Persona Shift, Adversarial Question, Refusal &amp; Boundary, Creative Rephrase, Emotional Context, Negative Confirmation, Explicit Confirmation, Out-of-Scope Deflection) expand the base dataset ~5x.</li>
