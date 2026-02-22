@@ -636,6 +636,7 @@ a {
 
 .read-more {
     display: inline-block;
+    align-self: flex-start;
     margin-top: 16px;
     font-size: 14px;
     font-weight: 500;
