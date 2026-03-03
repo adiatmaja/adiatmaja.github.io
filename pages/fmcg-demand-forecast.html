@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FMCG Demand Forecast - Project Details</title>
+    <meta name="description" content="Portfolio-ready FMCG demand & sales forecasting pipeline with LSTM encoder + autoregressive GRU decoder, probabilistic quantile outputs, and Indonesian market calendar features.">
+    <meta name="theme-color" content="#0a0a0a">
+    <link rel="icon" type="image/png" href="../assets/thumbnail.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <nav class="nav">
+        <ul class="nav-links">
+            <li><a href="../index.html#about">About</a></li>
+            <li><a href="../index.html#experience">Experience</a></li>
+            <li><a href="../index.html#projects">Projects</a></li>
+            <li><a href="../index.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <a href="../index.html#projects" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back to Projects
+            </a>
+            <h1 class="page-title">FMCG Demand Forecast</h1>
+            <p class="page-subtitle">Dual-Pipeline Deep Learning for Indonesian FMCG Inventory Planning</p>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="container">
+            <div class="article-layout">
+                <div class="article-content">
+                    <p>A dual-pipeline deep learning system for Fast-Moving Consumer Goods (FMCG) inventory planning, extracted and sanitized from a production system serving an Indonesian distributor operating 6 darkstores. All database dependencies are replaced with a synthetic data generator — fully runnable out of the box.</p>
+
+                    <h3>Problem Statement</h3>
+                    <p>Accurate demand forecasting in Indonesian FMCG is complicated by pronounced cultural seasonality — Ramadan, Eid al-Fitr (Lebaran), payday periods, and rainy seasons create irregular demand spikes that naive models miss. The challenge was to build a forecasting system that handles these patterns while also producing calibrated uncertainty bounds for safety-stock sizing, and to package it as a portfolio project that runs without any live database connection.</p>
+
+                    <h3>Solution: Dual-Pipeline Architecture</h3>
+                    <p>The system is split into two independent pipelines sharing a common data layer and calendar module:</p>
+                    <ul>
+                        <li><strong>Pipeline 1 — Demand:</strong> Unit-level, per-product-warehouse daily demand forecasting. Uses an LSTM encoder with Bahdanau-style additive attention feeding into an autoregressive GRU decoder, trained with quantile loss to produce probabilistic P10/P50/P90 outputs. STL decomposition separates trend from residual before training; trend is linearly extrapolated at inference time.</li>
+                        <li><strong>Pipeline 2 — Sales:</strong> Revenue and COGS forecasting with two sub-models: a per-region <code>SeasonalFinancialForecaster</code> (LSTM + MultiheadAttention, sinusoidal seasonal features) and an aggregated <code>FinancialForecaster</code> (plain LSTM, day-of-week one-hots). Followed by a purchase recommendation engine that redistributes non-working-day orders using a 60/40 split to preceding business days.</li>
+                    </ul>
+
+                    <h3>Architecture</h3>
+                    <pre><code>  ┌─────────────────────────────────────────────────────────────────────────┐
+  │  DATA LAYER                                                             │
+  │                                                                         │
+  │  scripts/generate_data.py ──▶ data/synthetic/                          │
+  │    ├── products.csv  (80 SKUs, 5 categories)                           │
+  │    ├── orders.csv    (daily orders, payday spikes, seasonal patterns)   │
+  │    ├── sales.csv     (aggregated sales + COGS with realistic noise)     │
+  │    └── calendar.csv  (Indonesian FMCG features, 13+ columns)           │
+  └─────────────────────────────────────────────────────────────────────────┘
+                          │
+          ┌───────────────┴────────────────┐
+          ▼                                ▼
+  ┌───────────────────────┐    ┌──────────────────────────────┐
+  │  PIPELINE 1: DEMAND   │    │  PIPELINE 2: SALES           │
+  │                       │    │                              │
+  │  preprocess_demand    │    │  preprocess_raw_data()       │
+  │    ├─ OOS detection   │    │    └─ date adjustment        │
+  │    ├─ outlier removal │    │       (Sundays/holidays)     │
+  │    ├─ lag features    │    │                              │
+  │    └─ Lebaran signal  │    │  ┌─────────┬──────────────┐ │
+  │          │            │    │  │Individual│  Merged      │ │
+  │  TimeSeriesForecaster │    │  │(per R-G) │  (aggregate) │ │
+  │    ├─ STL decomp.     │    │  │SeasonalF.│  FinancialF. │ │
+  │    ├─ MinMaxScaler    │    │  │LSTM+MHA  │  Plain LSTM  │ │
+  │    ├─ TimeSeriesSplit │    │  │sin/cos   │  DOW one-hot │ │
+  │    └─ LSTM+GRU decoder│    │  └────┬────┴──────┬───────┘ │
+  │          │            │    │       │ sales+COGS│          │
+  │  demand_forecast.csv  │    │       ▼           ▼          │
+  └───────────────────────┘    │  recommendations.py          │
+                                │    └─ 60/40 redistribution   │
+                                │  sales_forecast/ + rec_buy/  │
+                                └──────────────────────────────┘</code></pre>
+
+                    <h3>Model Architecture — Demand Pipeline</h3>
+                    <pre><code>  LSTM Encoder + Autoregressive GRU Decoder
+  ──────────────────────────────────────────
+
+  Input features (19 total):
+    ├── sales lags (1,2,3,7,14,21 days)
+    ├── rolling stats (mean/std 7,14,28 days)
+    ├── STL residual
+    ├── cyclical encodings (dow_sin/cos, month_sin/cos)
+    └── calendar flags (Ramadan, Lebaran, payday, rainy season, ...)
+
+  Categorical embeddings:
+    product_embed (dim=8) ─┐
+    gudang_embed  (dim=4) ─┼─▶ concat with continuous features
+
+  ┌─────────────────────────────────────────────────────┐
+  │  LSTM Encoder                                       │
+  │  input_dim=19+12, hidden_dim=64, num_layers=2       │
+  │  dropout=0.15, unidirectional                       │
+  └──────┬───────────────────────┬──────────────────────┘
+         │ hidden state h_n      │ all hidden states
+         │                       ▼
+         │            ┌──────────────────────┐
+         │            │  Additive Attention  │  Bahdanau-style
+         │            │  (weights over seq)  │
+         │            └──────────┬───────────┘
+         │                       │ context vector
+         ▼                       │
+  ┌──────────────────────────────┘
+  │  enc_to_dec projection (64 → 64)
+  │  GRU Decoder  hidden_dim=64, num_layers=1
+  │  Autoregressive: each step's output fed as next step's input
+  └──────────────────────────────────────────────────────────┐
+                                                             ▼
+  Output: (batch, horizon=30, quantiles=3)  →  P10 / P50 / P90</code></pre>
+
+                    <h3>Indonesian FMCG Calendar</h3>
+                    <p>A custom calendar module encodes 13+ Indonesian market-specific features as model inputs. These are the dominant drivers of demand spikes and troughs in Indonesian FMCG:</p>
+                    <ul>
+                        <li><strong>Ramadan/Lebaran:</strong> <code>is_ramadan_month</code>, <code>is_lebaran_peak_week</code>, <code>is_thr_payout_week</code>, plus a continuous <code>lebaran_proximity_signal</code> (0→1 ramp starting 60 days before Eid) to model the gradual demand build-up.</li>
+                        <li><strong>Payday period:</strong> <code>is_payday_period</code> covers the 25th to 5th of the next month, capturing discretionary spending surges.</li>
+                        <li><strong>Seasonal patterns:</strong> Rainy season (Oct–Apr), back-to-school periods, Chinese New Year week, Idul Adha week, long weekends, and year-end holiday period.</li>
+                    </ul>
+
+                    <h3>Key Engineering Decisions</h3>
+                    <ul>
+                        <li><strong>Autoregressive GRU decoder over single FC layer:</strong> A simple fully-connected output layer produced constant forecasts across the 30-day horizon. The GRU decoder feeds each step's output as the next step's input, producing non-constant multi-step sequences.</li>
+                        <li><strong>Separate target scalers per series:</strong> Fitting <code>MinMaxScaler</code> on the full feature matrix caused near-zero range on the target column, producing flat forecasts. Scalers are fit only on the detrended target series per product-warehouse pair.</li>
+                        <li><strong>All-fold CV with best model selection:</strong> All 5 <code>TimeSeriesSplit</code> folds are trained; the fold with the lowest validation loss is kept — not just the last fold. Prevents lucky or unlucky folds from dominating.</li>
+                        <li><strong>STL decomposition before scaling:</strong> Separating trend from residual before <code>MinMaxScaler</code> prevents the trend from dominating the feature range. Trend is linearly extrapolated (slope-clamped) at inference time.</li>
+                        <li><strong>No database dependencies:</strong> All ClickHouse/MySQL connections replaced with CSV-based I/O and a synthetic data generator that reproduces realistic FMCG patterns (payday spikes, Ramadan surge, rainy-season dip, day-of-week seasonality, stock-outs, outliers).</li>
+                    </ul>
+
+                    <h3>Results</h3>
+                    <p>Evaluated on the final 30 business days held out from training (backtest window):</p>
+                    <pre><code>  Backtest  RMSE=18.4 | MAE=13.2 | MAPE=22.4% | WAPE=18.1% | Bias=-2.3% | Skill=0.31
+  Backtest  80% PI coverage = 76.4%</code></pre>
+                    <ul>
+                        <li><strong>Naive Skill = 0.31</strong> — 31% lower MAE than a 7-day rolling average baseline.</li>
+                        <li><strong>WAPE = 18.1%</strong> — strong for intermittent FMCG demand; target is &lt;15% for the full production dataset.</li>
+                        <li><strong>80% PI coverage = 76.4%</strong> — the P10/P90 uncertainty band is well-calibrated on held-out data.</li>
+                        <li><strong>Best validation loss ~0.037</strong> (quantile pinball loss, normalised), with early stopping at 30–190 epochs depending on fold.</li>
+                        <li><strong>54 tests, 93% coverage</strong> across both pipelines.</li>
+                    </ul>
+                </div>
+
+                <aside class="meta-sidebar">
+                    <div class="meta-group">
+                        <span class="meta-label">Role</span>
+                        <p>Data Scientist</p>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Timeline</span>
+                        <p>2024 — 2025</p>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Languages</span>
+                        <div class="project-tags">
+                            <span><i class="devicon-python-plain colored"></i> Python</span>
+                        </div>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Tools &amp; Frameworks</span>
+                        <div class="project-tags">
+                            <span><i class="devicon-pytorch-original colored"></i> PyTorch</span>
+                            <span><i class="devicon-pandas-plain colored"></i> Pandas</span>
+                            <span><i class="devicon-numpy-plain colored"></i> NumPy</span>
+                            <span><i class="devicon-docker-plain colored"></i> Docker</span>
+                            <span>statsmodels</span>
+                            <span>scikit-learn</span>
+                        </div>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Methodologies</span>
+                        <div class="project-tags">
+                            <span>Quantile Regression</span>
+                            <span>STL Decomposition</span>
+                            <span>Time-Series CV</span>
+                            <span>Attention Mechanism</span>
+                            <span>Probabilistic Forecasting</span>
+                        </div>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Links</span>
+                        <div class="meta-links">
+                            <a href="https://github.com/adiatmaja/fmcg-demand-forecast" target="_blank" class="btn btn-secondary">
+                                View on GitHub
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Johannes Baptista Adiatmaja Pambudi</p>
+        </div>
+    </footer>
+</body>
+</html>
