@@ -102,6 +102,7 @@
 
                     <div class="chart-box">
                         <div class="product-switch" id="productSwitch"></div>
+                        <div class="product-switch" id="scaleToggle" style="margin-top:2px"></div>
                         <p class="product-story" id="productStory"></p>
                         <div class="chart-svg-wrap" style="position:relative">
                             <div class="fc-tooltip" id="fcTooltip"></div>
@@ -113,7 +114,7 @@
                             <span class="lg-band">80% confidence band (P10&ndash;P90)</span>
                             <span class="lg-forward">30-day forward forecast</span>
                         </div>
-                        <p class="chart-note" style="margin-top:8px">Units = daily order quantities summed across the four warehouses. Gaps in the white line are Sundays and public holidays (warehouses closed). Data: production run of 2026-06-12.</p>
+                        <p class="chart-note" style="margin-top:8px">Units = preprocessed daily order quantities summed across the four warehouses (closed-day orders rolled forward to the next open day, outliers removed — the same series the models train on). Normalized view rescales each day to that product's average day (100% = typical day), making products comparable regardless of volume. Gaps are Sundays and public holidays. Data: production run of 2026-06-12.</p>
                     </div>
 
                     <div class="callout">
@@ -180,11 +181,12 @@
                     <h3>Encoding how Indonesia actually shops</h3>
                     <ul>
                         <li><strong>18 Indonesian calendar features</strong> — Ramadan month, Lebaran peak week, a continuous 60-day "Lebaran approaching" ramp, THR (holiday bonus) payout week, payday window (25th&ndash;5th), Chinese New Year, Idul Adha, back-to-school, rainy season (Oct&ndash;Apr), long weekends. Islamic dates are computed automatically from the Hijri calendar — zero annual maintenance.</li>
-                        <li><strong>Closed-day redistribution</strong> — warehouses close Sundays and holidays, but shop demand doesn't pause; it lands on the preceding days. Closed-day rows are removed and their demand is pushed 60/40 onto the two prior working days, mirroring how orders actually arrive:
-                        <pre><code>   Fri        Sat        SUN (closed)
-  ┌────┐    ┌────┐         ┌╌╌╌╌┐
-  │    │+40%│    │+60%  ◀──┊ X  ┊   Sunday's demand doesn't vanish —
-  └────┘    └────┘         └╌╌╌╌┘   it shifts to Friday & Saturday</code></pre></li>
+                        <li><strong>Closed-day redistribution</strong> — warehouses close on Sundays and holidays, but shops keep placing orders; those orders are fulfilled on the next open day. The preprocessing mirrors that reality: closed-day rows are removed and their demand is rolled forward onto the first subsequent open day — which is why Mondays (and post-holiday days) run hot in the charts above:
+                        <pre><code>   Sat        SUN (closed)      MON
+  ┌────┐       ┌╌╌╌╌┐        ┌──────┐
+  │    │       ┊ X  ┊  ──▶   │ +Sun │   Sunday's orders don't vanish —
+  └────┘       └╌╌╌╌┘        └──────┘   they're fulfilled on Monday</code></pre>
+                        (The companion <em>sales</em> pipeline uses a different rule — a 60/40 split onto the two preceding working days — because revenue is booked differently from warehouse fulfilment.)</li>
                         <li><strong>Live weather</strong> — daily rainfall and temperature per warehouse location (historical + 16-day forecast from Open-Meteo), because a rainy week measurably suppresses restocking trips.</li>
                     </ul>
 
@@ -362,6 +364,11 @@
     const fcSvg = d3.select("#forecastChart");
     const tooltip = d3.select("#fcTooltip");
     let currentProduct = Object.keys(PRODUCT_META)[0];
+    let scaleMode = "units"; // "units" | "norm"
+    const SCALE_MODES = [
+        {id: "units", label: "Actual daily sales (units)"},
+        {id: "norm", label: "Normalized (% of this product's average day)"}
+    ];
 
     function renderSwitch() {
         const sw = d3.select("#productSwitch");
@@ -371,6 +378,13 @@
             .text(p => PRODUCT_META[p].short)
             .classed("active", p => p === currentProduct)
             .on("click", (e, p) => { currentProduct = p; renderSwitch(); renderForecast(); });
+        const st = d3.select("#scaleToggle");
+        st.selectAll("button")
+            .data(SCALE_MODES)
+            .join("button")
+            .text(m => m.label)
+            .classed("active", m => m.id === scaleMode)
+            .on("click", (e, m) => { scaleMode = m.id; renderSwitch(); renderForecast(); });
     }
 
     function renderForecast() {
@@ -385,9 +399,15 @@
         const g = fcSvg.append("g").attr("transform", `translate(${fcMargin.left},${fcMargin.top})`);
         const parse = d3.timeParse("%Y-%m-%d");
 
-        const hist = data.history.map(d => ({date: parse(d.d), a: d.a}));
-        const bt = data.backtest.map(d => ({date: parse(d.d), a: d.a, f: d.f, lo: d.lo, hi: d.hi}));
-        const fwd = data.forward.map(d => ({date: parse(d.d), f: d.f, lo: d.lo, hi: d.hi}));
+        // normalization base: this product's average historical day
+        const avgDay = d3.mean(data.history, d => d.a) || 1;
+        const k = scaleMode === "norm" ? 100 / avgDay : 1;
+        const unit = scaleMode === "norm" ? "%" : " units";
+        const rnd = v => scaleMode === "norm" ? Math.round(v) : v;
+
+        const hist = data.history.map(d => ({date: parse(d.d), a: d.a * k}));
+        const bt = data.backtest.map(d => ({date: parse(d.d), a: d.a * k, f: d.f * k, lo: d.lo * k, hi: d.hi * k}));
+        const fwd = data.forward.map(d => ({date: parse(d.d), f: d.f * k, lo: d.lo * k, hi: d.hi * k}));
         const today = fwd.length ? fwd[0].date : d3.max(hist, d => d.date);
 
         const allDates = hist.map(d => d.date).concat(fwd.map(d => d.date));
@@ -397,7 +417,15 @@
 
         g.append("g").attr("class", "axis").attr("transform", `translate(0,${ih})`)
             .call(d3.axisBottom(x).ticks(width < 600 ? 4 : 7).tickFormat(d3.timeFormat("%b %d")));
-        g.append("g").attr("class", "axis").call(d3.axisLeft(y).ticks(6));
+        g.append("g").attr("class", "axis")
+            .call(d3.axisLeft(y).ticks(6).tickFormat(v => scaleMode === "norm" ? v + "%" : v));
+
+        if (scaleMode === "norm") {
+            g.append("line").attr("x1", 0).attr("x2", iw).attr("y1", y(100)).attr("y2", y(100))
+                .attr("stroke", "#444").attr("stroke-dasharray", "2,4");
+            g.append("text").attr("x", iw - 4).attr("y", y(100) - 5).attr("text-anchor", "end")
+                .attr("fill", "#777").attr("font-size", 10.5).text("average day = 100%");
+        }
 
         const band = d3.area().x(d => x(d.date)).y0(d => y(d.lo)).y1(d => y(d.hi)).curve(d3.curveMonotoneX);
         const lineF = d3.line().x(d => x(d.date)).y(d => y(d.f)).curve(d3.curveMonotoneX);
@@ -429,11 +457,11 @@
             let pick = h, lines = [];
             if (f && Math.abs(f.date - date) < Math.abs((h ? h.date : 0) - date)) {
                 pick = f;
-                lines = [fmt(f.date), `Forecast: ${f.f} units`, `Range: ${f.lo} – ${f.hi}`];
+                lines = [fmt(f.date), `Forecast: ${rnd(f.f)}${unit}`, `Range: ${rnd(f.lo)} – ${rnd(f.hi)}${unit}`];
                 focus.attr("cx", x(f.date)).attr("cy", y(f.f));
             } else if (h) {
-                lines = [fmt(h.date), `Actual: ${h.a} units`];
-                if (b && b.date.getTime() === h.date.getTime()) lines.push(`Predicted: ${b.f} (${b.lo}–${b.hi})`);
+                lines = [fmt(h.date), `Actual: ${rnd(h.a)}${unit}`];
+                if (b && b.date.getTime() === h.date.getTime()) lines.push(`Predicted: ${rnd(b.f)} (${rnd(b.lo)}–${rnd(b.hi)})${unit}`);
                 focus.attr("cx", x(h.date)).attr("cy", y(h.a));
             }
             if (!pick) return;
