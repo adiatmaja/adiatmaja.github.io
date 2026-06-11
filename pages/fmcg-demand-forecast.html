@@ -170,6 +170,13 @@
                     <p>If a product is out of stock for a week, the sales ledger records zero — but demand wasn't zero, it was <em>invisible</em>. A model trained naively on that data learns "this product sometimes sells nothing for a week" and forecasts low, which causes under-ordering, which causes more stock-outs: a self-fulfilling death spiral for the product.</p>
                     <p>This pipeline cross-references the <strong>stock ledger</strong> (1.2M+ records) against sales: days where end-of-day stock was zero are flagged on 70,559 product-days (2.3% of all data). The neural tier receives the flag as a "don't trust this day" signal, the boosting tier drops those days as training targets, and the averaging tier excludes them from its statistics. Censored data is a statistics problem; pretending it isn't one is how forecasting systems quietly fail.</p>
 
+                    <div class="chart-box">
+                        <h4>A real stock-out, caught by the ledger — Teh Pucuk Harum 350ml, warehouse 1</h4>
+                        <p class="chart-note">Daily sales (white bars) with days the stock ledger shows zero end-of-day stock shaded red. Spring 2026, production data.</p>
+                        <svg id="oosChart" width="100%" height="240"></svg>
+                        <p class="chart-note" style="margin-top:8px">This product normally sells ~140 units/day here. In the red zones sales flatline at zero — and the first days after restocking spike to <strong>452</strong> and <strong>347</strong> units as shops catch up (pent-up demand, visible proof the zeros weren't real). A naive model reads those zeros as "demand collapsed"; this pipeline flags them as <em>unobservable</em> instead. It's also one reason this product is the hardest case in the showcase above.</p>
+                    </div>
+
                     <h3>Encoding how Indonesia actually shops</h3>
                     <ul>
                         <li><strong>18 Indonesian calendar features</strong> — Ramadan month, Lebaran peak week, a continuous 60-day "Lebaran approaching" ramp, THR (holiday bonus) payout week, payday window (25th&ndash;5th), Chinese New Year, Idul Adha, back-to-school, rainy season (Oct&ndash;Apr), long weekends. Islamic dates are computed automatically from the Hijri calendar — zero annual maintenance.</li>
@@ -323,6 +330,24 @@
         {label: "Product grade & trend", val: 2.4, group: "attrs"},
     ];
 
+    // Teh Pucuk Harum 350ml @ warehouse 1, daily sales + OOS flag (stock ledger), spring 2026
+    const OOS_DATA = [
+        ["2026-03-02",97,0],["2026-03-03",164,0],["2026-03-04",71,0],["2026-03-05",73,0],["2026-03-06",51,0],
+        ["2026-03-07",58,0],["2026-03-08",1,0],["2026-03-09",100,0],["2026-03-10",87,0],["2026-03-11",15,0],
+        ["2026-03-12",176,0],["2026-03-13",134,0],["2026-03-14",206,0],["2026-03-15",16,0],["2026-03-16",276,0],
+        ["2026-03-17",137,0],["2026-03-18",152,0],["2026-03-19",181,0],["2026-03-20",24,0],["2026-03-21",0,0],
+        ["2026-03-22",31,0],["2026-03-23",103,0],["2026-03-24",98,0],["2026-03-25",81,0],["2026-03-26",159,0],
+        ["2026-03-27",284,0],["2026-03-28",195,0],["2026-03-29",15,0],["2026-03-30",345,0],["2026-03-31",138,0],
+        ["2026-04-01",0,1],["2026-04-02",0,1],["2026-04-03",0,1],["2026-04-04",0,1],["2026-04-05",0,1],
+        ["2026-04-06",0,1],["2026-04-07",0,1],["2026-04-08",0,1],["2026-04-09",0,1],["2026-04-10",122,0],
+        ["2026-04-11",452,0],["2026-04-12",18,0],["2026-04-13",267,0],["2026-04-14",347,0],["2026-04-15",140,0],
+        ["2026-04-16",124,0],["2026-04-17",127,0],["2026-04-18",113,1],["2026-04-19",0,1],["2026-04-20",0,1],
+        ["2026-04-21",0,1],["2026-04-22",0,1],["2026-04-23",34,0],["2026-04-24",303,0],["2026-04-25",167,0],
+        ["2026-04-26",54,0],["2026-04-27",394,0],["2026-04-28",174,0],["2026-04-29",122,0],["2026-04-30",77,0],
+        ["2026-05-01",71,0],["2026-05-02",273,0],["2026-05-03",56,0],["2026-05-04",333,0],["2026-05-05",159,0],
+        ["2026-05-06",115,0],["2026-05-07",77,0],["2026-05-08",45,1],["2026-05-09",0,0],["2026-05-10",87,0]
+    ];
+
     const PRODUCT_META = {
         "Indomie Goreng Original / Bks": {short: "Indomie Goreng", story: "The anchor case: the distributor's best-selling product is also its best-predicted — backtest error 28.5% WAPE. Steady staple demand is where the model shines."},
         "AQUVIVA Air Mineral 700ml": {short: "AQUVIVA Water", story: "House-brand bottled water moving ~240 units/day. Weather-sensitive: rainfall features measurably shift its demand."},
@@ -444,10 +469,51 @@
             .attr("dominant-baseline", "middle").text(d => d.val.toFixed(1) + "%");
     }
 
+    // ───────────────────────── OOS mini-chart ─────────────────────────
+    function renderOOS() {
+        const svg = d3.select("#oosChart");
+        svg.selectAll("*").remove();
+        const width = svg.node().clientWidth || 800;
+        const height = 240;
+        const margin = {top: 14, right: 12, bottom: 26, left: 42};
+        const iw = width - margin.left - margin.right;
+        const ih = height - margin.top - margin.bottom;
+        const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+        const parse = d3.timeParse("%Y-%m-%d");
+        const data = OOS_DATA.map(d => ({date: parse(d[0]), s: d[1], oos: d[2]}));
+
+        const x = d3.scaleTime().domain(d3.extent(data, d => d.date)).range([0, iw]);
+        const y = d3.scaleLinear().domain([0, d3.max(data, d => d.s) * 1.08]).nice().range([ih, 0]);
+        const dayW = iw / data.length;
+
+        // OOS shading
+        data.filter(d => d.oos).forEach(d => {
+            g.append("rect").attr("x", x(d.date) - dayW / 2).attr("width", dayW + 0.5)
+                .attr("y", 0).attr("height", ih).attr("fill", "rgba(226,113,111,0.18)");
+        });
+        g.append("g").attr("class", "axis").attr("transform", `translate(0,${ih})`)
+            .call(d3.axisBottom(x).ticks(width < 600 ? 4 : 6).tickFormat(d3.timeFormat("%b %d")));
+        g.append("g").attr("class", "axis").call(d3.axisLeft(y).ticks(5));
+
+        g.selectAll("rect.sale").data(data).join("rect")
+            .attr("x", d => x(d.date) - dayW * 0.35).attr("width", dayW * 0.7)
+            .attr("y", d => y(d.s)).attr("height", d => ih - y(d.s))
+            .attr("fill", "#fff").attr("opacity", 0.85).attr("rx", 1);
+
+        // annotations on the two main gaps
+        const gap1 = data.find(d => d.date.getTime() === parse("2026-04-05").getTime());
+        g.append("text").attr("x", x(gap1.date)).attr("y", 14).attr("text-anchor", "middle")
+            .attr("fill", "#e2716f").attr("font-size", 11.5).attr("font-weight", 600).text("out of stock — 9 days");
+        const rebound = data.find(d => d.s === 452);
+        g.append("text").attr("x", x(rebound.date) + 6).attr("y", y(452) - 6)
+            .attr("fill", "#ffc861").attr("font-size", 11).text("restock rebound: 452");
+    }
+
     renderSwitch();
     renderForecast();
     renderImportance();
-    let rs; window.addEventListener("resize", () => { clearTimeout(rs); rs = setTimeout(() => { renderForecast(); renderImportance(); }, 150); });
+    renderOOS();
+    let rs; window.addEventListener("resize", () => { clearTimeout(rs); rs = setTimeout(() => { renderForecast(); renderImportance(); renderOOS(); }, 150); });
     </script>
 </body>
 </html>
