@@ -38,12 +38,20 @@
         <div class="container">
             <div class="article-layout">
                 <div class="article-content">
-                    <p>An end-to-end knowledge distillation pipeline for fine-tuning a 9B-parameter Indonesian-Javanese language model. The core engineering challenge was that the GPU server could not have Python installed, requiring a fully Docker-based training workflow coordinated from a separate laptop.</p>
+                    <h3>TL;DR — A 70B Model's Knowledge, Shipped in a 9B Model, Trained in ~15 Minutes</h3>
+                    <p>An end-to-end knowledge distillation pipeline that compresses a <strong>70B teacher</strong> into a deployable <strong>9B Indonesian-Javanese student model</strong> — on a locked-down GPU server with <strong>no Python runtime allowed</strong>. A three-zone Docker architecture sidesteps the constraint entirely: <strong>274 source FAQs</strong> expand to <strong>~175 validated training conversations</strong>, training finishes in <strong>~15–20 min on an RTX 5090</strong>, and anti-fabrication validation measurably cuts hallucinated URLs and invented policies. One command runs the whole thing.</p>
 
-                    <h3>Problem Statement</h3>
+                    <pre><code>  ZONE A            ZONE B               ZONE C
+  70B teacher  ──▶  laptop (Python)  ──▶  Docker GPU (no Python)
+  LM Studio API     gen + augment +       Unsloth + LoRA → GGUF
+                    validate → JSONL      → auto-deploy to LM Studio
+                          │
+                274 FAQs ─┴─▶ ~175 high-quality conversations</code></pre>
+
+                    <h3>The Problem</h3>
                     <p>The production GPU server (RTX 5090) operated in a restricted environment with no Python runtime permitted. Standard fine-tuning workflows assume direct script execution on the training machine. The goal was to distill knowledge from a large 70B teacher model into a smaller 9B student model, deployable for low-latency inference — all without violating the server's environment constraints.</p>
 
-                    <h3>Solution: Three-Zone Architecture</h3>
+                    <h3>The Approach — Three-Zone Architecture</h3>
                     <p>The pipeline is split across three isolated zones, each with a clearly defined responsibility:</p>
                     <ul>
                         <li><strong>Zone A — Teacher Inference (LM Studio):</strong> The 70B teacher model runs on a separate machine via LM Studio, exposing an OpenAI-compatible API on port 1234. No Python required here.</li>
@@ -191,7 +199,7 @@
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 Johannes Baptista Adiatmaja Pambudi</p>
+            <p>&copy; 2026 Johannes Baptista Adiatmaja Pambudi</p>
         </div>
     </footer>
 </body>

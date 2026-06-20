@@ -38,12 +38,20 @@
         <div class="container">
             <div class="article-layout">
                 <div class="article-content">
-                    <p>An undergraduate thesis investigating how Gabor filter preprocessing influences the performance of a CNN-based gender classification system built on fingerprint images. The study ran a controlled comparison across three Gabor parameter configurations — default, high, and low — against a raw-image baseline, evaluated on two publicly available fingerprint datasets.</p>
+                    <h3>TL;DR — Tuned Ridge Enhancement Beats Raw Fingerprints, but Over-Tuning Hurts</h3>
+                    <p>An undergraduate thesis proving that <strong>Gabor filter preprocessing measurably improves CNN-based gender classification</strong> from fingerprints — but only when tuned correctly. A controlled comparison of <strong>three Gabor configurations vs a raw baseline</strong>, evaluated with <strong>5-fold cross-validation on two datasets</strong>, found the <strong>default</strong> parameter set wins (up to <strong>73.46% weighted F1</strong>), while more aggressive enhancement degrades results — enhancement helps, but is sensitive to over-tuning.</p>
 
-                    <h3>Problem Statement</h3>
-                    <p>Fingerprint images contain rich ridge structure information, but raw scans vary significantly in quality and contrast. The central question was whether Gabor filter-based enhancement — which amplifies ridge patterns by applying oriented frequency-selective filters — could give a CNN more discriminative texture features for soft biometric classification (gender), and if so, which filter configuration strikes the optimal balance.</p>
+                    <pre><code>  WEIGHTED F1 BY GABOR CONFIG  (best = Default)
 
-                    <h3>Approach: Three-Parameter Comparative Study</h3>
+  Default  ████████████████████  73.5%  ◀ winner
+  Low      ████████████████      ~
+  High     ███████████████       ~      over-amplified, weaker
+  Raw      █████████████         baseline</code></pre>
+
+                    <h3>The Problem</h3>
+                    <p>Fingerprint images contain rich ridge structure, but raw scans vary widely in quality and contrast. The central question: can Gabor filter enhancement — which amplifies ridge patterns via oriented frequency-selective filters — give a CNN more discriminative texture features for soft-biometric (gender) classification, and which filter configuration strikes the optimal balance?</p>
+
+                    <h3>The Approach — Three-Parameter Comparative Study</h3>
                     <p>Rather than treating Gabor filtering as a binary on/off choice, the study swept three distinct parameter regimes and compared each against the raw baseline across both datasets:</p>
                     <ul>
                         <li><strong>Default:</strong> Balanced configuration (block size 16, kx/ky 0.65, angle increment 3°). Moderate ridge enhancement preserving fine detail.</li>
@@ -119,7 +127,7 @@
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 Johannes Baptista Adiatmaja Pambudi</p>
+            <p>&copy; 2026 Johannes Baptista Adiatmaja Pambudi</p>
         </div>
     </footer>
 </body>

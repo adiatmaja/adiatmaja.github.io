@@ -108,6 +108,10 @@
                                 <span>Java</span>
                             </div>
                             <div class="skill-item">
+                                <i class="devicon-typescript-plain colored"></i>
+                                <span>TypeScript</span>
+                            </div>
+                            <div class="skill-item">
                                 <i class="devicon-php-plain colored"></i>
                                 <span>PHP</span>
                             </div>
@@ -171,6 +175,10 @@
                             <div class="skill-item">
                                 <i class="devicon-java-plain colored"></i>
                                 <span>Java</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="devicon-typescript-plain colored"></i>
+                                <span>TypeScript</span>
                             </div>
                             <div class="skill-item">
                                 <i class="devicon-php-plain colored"></i>
@@ -283,6 +291,26 @@
         <div class="container">
             <h2 class="section-title">Projects</h2>
             <div class="projects-grid">
+                <article class="project-card" id="proj-fmcg-forecast">
+                    <div class="project-header">
+                        <span class="project-year">2024&ndash;2026</span>
+                        <a href="https://github.com/adiatmaja/fmcg-demand-forecast" class="project-link" target="_blank" aria-label="View FMCG Demand Forecast on GitHub">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <h3 class="project-title"><a href="pages/fmcg-demand-forecast.html">FMCG Demand Forecast</a></h3>
+                    <p class="project-sub">Production Demand Forecasting — In Production, Fully Automated</p>
+                    <p class="project-desc">Production pipeline forecasting <strong>1,300+ products and 4,000+ product-warehouse series, 30 days ahead</strong> on ~8 years of live data — tiered <strong>NHITS + LightGBM</strong> models with P10/P90 confidence bands, out-of-stock-aware training, bias calibration, and <strong>unattended weekly GPU retraining</strong>.</p>
+                    <div class="project-tags">
+                        <span>NHITS</span>
+                        <span>Probabilistic Forecasting</span>
+                        <span>LightGBM</span>
+                        <span>MLOps</span>
+                    </div>
+                    <a href="pages/fmcg-demand-forecast.html" class="read-more">Read more &rarr;</a>
+                </article>
                 <article class="project-card" id="proj-llm-distill">
                     <div class="project-header">
                         <span class="project-year">2026</span>
@@ -323,25 +351,41 @@
                     </div>
                     <a href="pages/chromadb-rag-chatbot.html" class="read-more">Read more &rarr;</a>
                 </article>
-                <article class="project-card" id="proj-fmcg-forecast">
+                <article class="project-card" id="proj-praxis">
                     <div class="project-header">
-                        <span class="project-year">2024&ndash;2026</span>
-                        <a href="https://github.com/adiatmaja/fmcg-demand-forecast" class="project-link" target="_blank" aria-label="View FMCG Demand Forecast on GitHub">
+                        <span class="project-year">2026</span>
+                        <span class="tag">Private</span>
+                    </div>
+                    <h3 class="project-title"><a href="pages/praxis.html">Praxis</a></h3>
+                    <p class="project-sub">AI Agent Orchestrator — Plan, Implement, Review, Merge</p>
+                    <p class="project-desc">An orchestrator that turns a spec into <strong>merged, reviewed code</strong> — <strong>Claude Opus</strong> plans and reviews while cheap <strong>local LLMs</strong> implement via <strong>Aider</strong> on isolated branches, with an autonomous self-improvement loop. <strong>101 tests, 88% coverage</strong>.</p>
+                    <div class="project-tags">
+                        <span>Agent Orchestration</span>
+                        <span>FastAPI</span>
+                        <span>Aider</span>
+                        <span>Docker</span>
+                    </div>
+                    <a href="pages/praxis.html" class="read-more">Read more &rarr;</a>
+                </article>
+                <article class="project-card" id="proj-trading-bot">
+                    <div class="project-header">
+                        <span class="project-year">2026</span>
+                        <a href="https://github.com/adiatmaja/trading-bot" class="project-link" target="_blank" aria-label="View Crypto Trading Bot on GitHub">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
                             </svg>
                         </a>
                     </div>
-                    <h3 class="project-title"><a href="pages/fmcg-demand-forecast.html">FMCG Demand Forecast</a></h3>
-                    <p class="project-sub">Production Demand Forecasting — In Production, Fully Automated</p>
-                    <p class="project-desc">Production pipeline forecasting <strong>1,300+ products across 4 warehouses, 30 days ahead</strong> on 8 years of live data — tiered <strong>NHITS + LightGBM</strong> models with P10/P90 confidence bands, out-of-stock-aware training, bias calibration, and <strong>unattended weekly GPU retraining</strong> with interactive real-data results.</p>
+                    <h3 class="project-title"><a href="pages/openclaw-trading-bot.html">Crypto Swing Trading Bot</a></h3>
+                    <p class="project-sub">Fully Deterministic BTC/ETH Trading on Binance</p>
+                    <p class="project-desc">An LLM-assisted swing bot whose decisions are <strong>100% deterministic TypeScript</strong> — the LLM only routes commands. Backtested across <strong>10 market regimes</strong>: profits in clean trends (<strong>+6.52%</strong>) while keeping <strong>max drawdown under ~5%</strong> through every crash.</p>
                     <div class="project-tags">
-                        <span>NHITS</span>
-                        <span>Probabilistic Forecasting</span>
-                        <span>LightGBM</span>
-                        <span>MLOps</span>
+                        <span>Algorithmic Trading</span>
+                        <span>TypeScript</span>
+                        <span>Risk Management</span>
+                        <span>Backtesting</span>
                     </div>
-                    <a href="pages/fmcg-demand-forecast.html" class="read-more">Read more &rarr;</a>
+                    <a href="pages/openclaw-trading-bot.html" class="read-more">Read more &rarr;</a>
                 </article>
                 <article class="project-card" id="proj-gender">
                     <div class="project-header">
@@ -412,7 +456,7 @@
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 Johannes Baptista Adiatmaja Pambudi</p>
+            <p>&copy; 2026 Johannes Baptista Adiatmaja Pambudi</p>
         </div>
     </footer>
 

@@ -963,6 +963,7 @@ a {
     font-size: 18px;
     line-height: 1.8;
     color: #ccc;
+    min-width: 0;
 }
 
 .article-content h3 {
@@ -982,6 +983,26 @@ a {
 
 .article-content li {
     margin-bottom: 12px;
+}
+
+.article-content pre {
+    max-width: 100%;
+    overflow-x: auto;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 24px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.article-content pre code {
+    display: block;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #bbb;
+    white-space: pre;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 }
 
 .meta-sidebar {

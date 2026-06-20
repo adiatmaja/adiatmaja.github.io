@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Swing Trading Bot - Project Details</title>
+    <meta name="description" content="LLM-assisted, fully deterministic crypto swing trading bot for BTC/ETH on Binance — backtested across 10 market regimes with capital preservation under 5% max drawdown.">
+    <meta name="theme-color" content="#0a0a0a">
+    <link rel="icon" type="image/png" href="../assets/thumbnail.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <nav class="nav">
+        <ul class="nav-links">
+            <li><a href="../index.html#about">About</a></li>
+            <li><a href="../index.html#experience">Experience</a></li>
+            <li><a href="../index.html#projects">Projects</a></li>
+            <li><a href="../index.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <a href="../index.html#projects" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back to Projects
+            </a>
+            <h1 class="page-title">Crypto Swing Trading Bot</h1>
+            <p class="page-subtitle">LLM-Assisted, Fully Deterministic BTC/ETH Trading on Binance</p>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="container">
+            <div class="article-layout">
+                <div class="article-content">
+                    <h3>TL;DR — Built to Win in Trends, Lose Small Everywhere Else</h3>
+                    <p>A swing trading bot for BTC and ETH whose trading decisions are <strong>100% deterministic TypeScript</strong> — the LLM only routes Telegram commands, never picks trades. Backtested across <strong>10 historical market regimes</strong>, it profits in clean trends (<strong>+6.52%</strong> over the last 6 months, <strong>+3.34%</strong> shorting an ETF-outflow downtrend) and bleeds slowly in chop and crashes — while <strong>max drawdown never exceeds ~5%</strong>, even through the FTX collapse and the Oct-2025 flash crash. Paper-only by design until graduation gates pass.</p>
+
+                    <pre><code>  NET P&amp;L BY SCENARIO  (backtest replay of one deterministic engine)
+
+  6-Month Window      ████████████████████  +6.52%   ◀ flagship trend run
+  ETF Outflow (short) ██████████             +3.34%
+  Carry Unwind        █████                  +1.81%
+  Early 2024 Bull     ███                    +0.97%
+  Failed Breakout     ██                     +0.65%
+                    ──┼──────────────────────────────  0%
+  Post-Crash Range   ▕█                      -0.51%
+  FTX Catastrophe    █▏                      -0.93%   ◀ worst tail in crypto
+  Mid-2023 Chop     ██▏                      -1.79%
+  Flash Crash 2025  ███                      -2.31%
+  12-Month Window  ████▏                     -4.21%   ◀ honest worst case</code></pre>
+
+                    <h3>The Problem</h3>
+                    <p>Most "AI trading bots" hand the trading decision to an LLM — which makes them non-reproducible, hard to audit, and prone to hallucinated reasoning at the worst possible moment. Crypto is also brutally regime-dependent: a strategy that prints money in a bull run can quietly give it all back in six months of chop. The goal was a bot that is <strong>fully auditable</strong>, behaves <strong>identically</strong> on the same inputs, and — above all — <strong>preserves capital</strong> when the market turns against it.</p>
+
+                    <h3>The Approach — LLM at the Edge, Math at the Core</h3>
+                    <p>The LLM is pushed to the very edge of the system. Every trading decision is deterministic TypeScript, fully logged to append-only JSONL.</p>
+                    <pre><code>  ┌──────────────┐   /run, /status     ┌───────────────────────────┐
+  │   Telegram   │────────────────────▶│  LLM (OpenClaw + LM Studio)│
+  └──────────────┘                     │  ONLY routes the command   │
+                                       └─────────────┬─────────────┘
+                                          run_pipeline (called once)
+                                                     ▼
+  ┌──────────────────────────────────────────────────────────────────┐
+  │  DETERMINISTIC TYPESCRIPT PIPELINE  (one 4H cycle)                │
+  │                                                                  │
+  │  1. Manage open positions  ─ stops, partial TP, trailing runner  │
+  │  2. Safety brakes          ─ circuit breaker, cooldowns, heat cap │
+  │  3. Build signals          ─ trend, ATR, CVD, OI, funding, F&amp;G    │
+  │  4. analyzeSignal()        ─ long / short / no_trade             │
+  │  5. Regime + family router ─ block chase, downsize chop          │
+  │  6. applyRisk()            ─ size so a full stop ≈ 0.5% of equity │
+  │  7. Paper execute          ─ positions.json + trade_log.jsonl     │
+  └──────────────────────────────────────────────────────────────────┘</code></pre>
+                    <ul>
+                        <li><strong>Defensive risk model:</strong> every trade is sized so a full stop-out loses only ~0.5% of capital, with a minimum 2:1 reward-to-risk and a portfolio heat cap.</li>
+                        <li><strong>Regime-aware gating:</strong> a market-mode router classifies bull / bear / range / stress and blocks counter-trend trades and over-extended chases — the engine refuses to overtrade sideways tape.</li>
+                        <li><strong>Trailing runner:</strong> takes 50% profit early, then trails the rest with a volatility-scaled Chandelier stop to let winners run while locking in gains.</li>
+                        <li><strong>Fully auditable:</strong> every signal value, rejection reason, and trade is written to append-only JSONL — nothing is hidden inside the model.</li>
+                    </ul>
+
+                    <h3>Results — Regime-Dependent, Not a Money Printer</h3>
+                    <p>Each scenario replays the <em>same engine</em> over a different historical regime, generated from committed backtest data:</p>
+                    <pre><code>  Scenario              Window            Trades  Net P&amp;L  Win%  Max DD
+  ──────────────────────────────────────────────────────────────────────
+  6-Month Window        2025-11 → 2026-05   26    +6.52%   54%   4.55%
+  ETF Outflow Downtrend 2025-12 → 2026-02   13    +3.34%   62%   1.98%
+  Carry Unwind          2024-07 → 2024-08    3    +1.81%   67%   0.58%
+  Early 2024 Bull       2024-01 → 2024-06   12    +0.97%   50%   3.82%
+  Failed Breakout       2026-04 → 2026-05    1    +0.65%  100%   0.01%
+  Post-Crash Range      2026-02 → 2026-04   13    -0.51%   46%   2.89%
+  FTX Catastrophe       2022-10 → 2022-12    3    -0.93%   33%   2.03%
+  Mid-2023 Chop         2023-04 → 2023-09    2    -1.79%    0%   1.79%
+  Flash Crash 2025      2025-09 → 2025-10    5    -2.31%   20%   2.45%
+  12-Month Window       2025-05 → 2026-05   14    -4.21%   29%   5.00%</code></pre>
+                    <ul>
+                        <li><strong>Capital preservation holds:</strong> max drawdown stayed under ~5% in every single window — including the FTX implosion and the Oct-2025 liquidation cascade.</li>
+                        <li><strong>The edge is directional:</strong> profitable both long (6-Month +6.52%) and short (ETF Outflow +3.34%) when trend structure is clean.</li>
+                        <li><strong>The honest worst case</strong> is the full 12-Month mixed-regime window at -4.21% — proof the edge is regime-dependent, and the reason the bot stays in paper mode.</li>
+                        <li><strong>The chop tax:</strong> in directionless markets it takes few trades and loses small (Mid-2023 Chop -1.79% on just 2 trades) rather than churning capital.</li>
+                    </ul>
+                    <p>Philosophy: missing a large winner is acceptable if the alternative is clustered losses or oversized drawdown.</p>
+                </div>
+
+                <aside class="meta-sidebar">
+                    <div class="meta-group">
+                        <span class="meta-label">Role</span>
+                        <p>Solo Developer</p>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Timeline</span>
+                        <p>2026</p>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Status</span>
+                        <p>Paper trading (live-gated)</p>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Languages</span>
+                        <div class="project-tags">
+                            <span><i class="devicon-typescript-plain colored"></i> TypeScript</span>
+                            <span><i class="devicon-python-plain colored"></i> Python</span>
+                        </div>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Tools &amp; Frameworks</span>
+                        <div class="project-tags">
+                            <span><i class="devicon-docker-plain colored"></i> Docker</span>
+                            <span>OpenClaw</span>
+                            <span>MCP</span>
+                            <span>Binance API</span>
+                            <span>LM Studio</span>
+                        </div>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Concepts</span>
+                        <div class="project-tags">
+                            <span>Deterministic Strategy</span>
+                            <span>Risk Management</span>
+                            <span>Regime Detection</span>
+                            <span>Backtesting</span>
+                        </div>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Links</span>
+                        <div class="meta-links">
+                            <a href="https://github.com/adiatmaja/trading-bot" target="_blank" class="btn btn-secondary">
+                                View on GitHub
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Johannes Baptista Adiatmaja Pambudi</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -38,19 +38,29 @@
         <div class="container">
             <div class="article-layout">
                 <div class="article-content">
-                    <p>A Dockerized Retrieval-Augmented Generation (RAG) system built as the foundational chatbot layer for a B2B FMCG e-commerce platform. The system enables intelligent customer interaction in Indonesian language — resolving the core challenge that customers use colloquial and regional product names that don't match official catalog entries.</p>
+                    <h3>TL;DR — Understands How Indonesians Actually Talk About Products</h3>
+                    <p>A Dockerized RAG chatbot for a B2B FMCG e-commerce platform that resolves <strong>colloquial Indonesian product names</strong> keyword search can't ("indomie kuning" → "Indomie Mi Instan Rasa Kaldu Ayam"), classifies <strong>35+ customer intent types</strong>, and answers FAQs — all from a single semantic pipeline with <strong>no hardcoded keyword or alias tables</strong>. Ships as one <code>docker-compose up</code>.</p>
 
-                    <h3>Problem Statement</h3>
-                    <p>In Indonesian B2B commerce, customers refer to products by colloquial names, brand abbreviations, or regional terms. A standard keyword search fails completely — "indomie kuning" or "mie soto" won't match "Indomie Mi Instan Rasa Kaldu Ayam" in a traditional catalog. The platform also needed to handle 35+ distinct customer intent types (from cart operations to profile inquiries) and answer FAQ questions without hardcoding lookup tables.</p>
+                    <pre><code>  "mie goreng bungkusan merah"          ← colloquial query
+            │  embed + parallel semantic search
+   ┌────────┼─────────────────┐
+   ▼        ▼                 ▼
+ PRODUCTS  FAQs            INTENTS
+ (aliases) (ClickHouse)   (35+ types)
+   └────────┴───── best match ──────────▶  correct SKU + Indonesian reply
+                  (no keyword tables)</code></pre>
 
-                    <h3>Solution: Unified RAG Architecture</h3>
-                    <p>The system uses a three-collection ChromaDB setup with semantic embeddings (sentence-transformers <code>all-MiniLM-L6-v2</code>) to resolve queries across three knowledge domains in parallel:</p>
+                    <h3>The Problem</h3>
+                    <p>In Indonesian B2B commerce, customers refer to products by colloquial names, brand abbreviations, or regional terms. Standard keyword search fails completely — "indomie kuning" or "mie soto" won't match the official catalog entry. The platform also needed to handle 35+ distinct customer intent types (cart operations to profile inquiries) and answer FAQs without maintaining brittle lookup tables.</p>
+
+                    <h3>The Approach — One Unified RAG Pipeline</h3>
+                    <p>A three-collection ChromaDB setup with semantic embeddings (sentence-transformers <code>all-MiniLM-L6-v2</code>) resolves queries across three knowledge domains in parallel:</p>
                     <ul>
-                        <li><strong>Product collection</strong> — each product is embedded with its official name, colloquial aliases, pack size, and Indonesian description, enabling fuzzy semantic matching regardless of naming variation.</li>
-                        <li><strong>FAQ collection</strong> — FAQs are sourced from ClickHouse and indexed into ChromaDB, enabling semantic question matching that handles paraphrase and spelling variation.</li>
-                        <li><strong>Intent collection</strong> — 35 e-commerce intent types with example phrases are embedded, allowing the system to classify the customer's action intent before routing to the LLM.</li>
+                        <li><strong>Product collection</strong> — each product embedded with its official name, colloquial aliases, pack size, and description, enabling fuzzy matching regardless of naming variation.</li>
+                        <li><strong>FAQ collection</strong> — sourced from ClickHouse and indexed into ChromaDB, handling paraphrase and spelling variation.</li>
+                        <li><strong>Intent collection</strong> — 35 intent types embedded as concrete example phrases, classifying the customer's action before routing to the LLM.</li>
                     </ul>
-                    <p>A single <code>UnifiedRetriever</code> searches all three collections and returns the best match ranked by <code>relevance_score = 1.0 - cosine_distance</code>. The <code>UnifiedRAGOrchestrator</code> then builds a targeted LLM context from the matched result and generates an Indonesian-language response.</p>
+                    <p>A single <code>UnifiedRetriever</code> searches all three and returns the best match by <code>relevance_score = 1.0 - cosine_distance</code>; the <code>UnifiedRAGOrchestrator</code> builds targeted LLM context and generates the Indonesian-language response.</p>
 
                     <h3>Architecture</h3>
                     <pre><code>  User Query (Indonesian / colloquial)
@@ -147,7 +157,7 @@
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 Johannes Baptista Adiatmaja Pambudi</p>
+            <p>&copy; 2026 Johannes Baptista Adiatmaja Pambudi</p>
         </div>
     </footer>
 </body>

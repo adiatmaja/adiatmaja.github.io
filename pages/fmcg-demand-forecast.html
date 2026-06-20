@@ -4,58 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FMCG Demand Forecast - Project Details</title>
-    <meta name="description" content="Production demand forecasting pipeline for an Indonesian FMCG distributor: tiered NHITS + LightGBM models, probabilistic P10/P90 forecasts, out-of-stock awareness, automated weekly GPU runs, and an honest v1-v9 experiment trail.">
+    <meta name="description" content="Production dual-pipeline FMCG demand & sales forecasting — tiered NHITS/LightGBM models with probabilistic output, bias correction shipped via A/B gating, and unattended weekly GPU retraining.">
     <meta name="theme-color" content="#0a0a0a">
     <link rel="icon" type="image/png" href="../assets/thumbnail.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <style>
-        /* Page-scoped chart styles */
-        .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 28px 0; }
-        .stat-chip { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 14px; text-align: center; }
-        .stat-chip .num { font-size: 22px; font-weight: 700; display: block; }
-        .stat-chip .lbl { font-size: 12px; color: var(--text-muted); }
-        .chart-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin: 24px 0; }
-        .chart-box h4 { font-size: 15px; margin-bottom: 4px; }
-        .chart-note { font-size: 13px; color: var(--text-muted); margin-bottom: 10px; }
-        .product-switch { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
-        .product-switch button { background: transparent; border: 1px solid var(--border); color: var(--text-muted); border-radius: 20px; padding: 6px 14px; font-family: inherit; font-size: 12.5px; cursor: pointer; transition: all .2s; }
-        .product-switch button:hover { color: var(--text); border-color: var(--text-dim); }
-        .product-switch button.active { background: var(--text); color: var(--bg); border-color: var(--text); font-weight: 600; }
-        .product-story { font-size: 13.5px; color: var(--text-muted); min-height: 40px; margin-bottom: 6px; }
-        .chart-svg-wrap { width: 100%; overflow-x: auto; }
-        .chart-legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 12px; color: var(--text-muted); margin-top: 8px; }
-        .chart-legend span::before { content: ""; display: inline-block; width: 18px; height: 3px; margin-right: 6px; vertical-align: middle; border-radius: 2px; }
-        .lg-actual::before { background: #fff; }
-        .lg-forecast::before { background: #6ea8fe; }
-        .lg-band::before { background: rgba(110,168,254,.25); height: 10px !important; }
-        .lg-forward::before { background: #ffc861; }
-        .fc-tooltip { position: absolute; pointer-events: none; background: #1a1a1a; border: 1px solid #333; border-radius: 6px; padding: 8px 10px; font-size: 12px; line-height: 1.5; color: #ddd; opacity: 0; transition: opacity .1s; z-index: 10; white-space: nowrap; }
-        .callout { border-left: 3px solid #6ea8fe; background: var(--bg-card); border-radius: 0 8px 8px 0; padding: 16px 18px; margin: 22px 0; font-size: 14.5px; }
-        .callout strong { color: var(--text); }
-        .metric-table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 18px 0; }
-        .metric-table th, .metric-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
-        .metric-table th { color: var(--text-muted); font-weight: 500; font-size: 12.5px; text-transform: uppercase; letter-spacing: .04em; }
-        .metric-table td:first-child { white-space: nowrap; font-weight: 600; }
-        .vtimeline { margin: 18px 0; }
-        .vtimeline .vrow { display: flex; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
-        .vtimeline .vtag { flex: 0 0 44px; font-weight: 700; color: #6ea8fe; }
-        .vtimeline .vrow.rejected .vtag { color: #e2716f; }
-        .vtimeline .vrow.shipped .vtag { color: #69d489; }
-        .vtimeline .vrow p { margin: 0; color: var(--text-muted); }
-        .vtimeline .vrow p strong { color: var(--text); }
-        .axis text { fill: #888; font-size: 11px; font-family: 'Inter', sans-serif; }
-        .axis line, .axis path { stroke: #2a2a2a; }
-        .imp-bar { fill: #6ea8fe; }
-        .imp-bar.weather { fill: #69d489; }
-        .imp-bar.calendar { fill: #ffc861; }
-        .imp-bar.attrs { fill: #b58cf2; }
-        .imp-label { fill: #ccc; font-size: 12px; }
-        .imp-value { fill: #888; font-size: 11.5px; }
-        @media (max-width: 640px) { .stat-chip .num { font-size: 18px; } }
-    </style>
 </head>
 <body>
     <nav class="nav">
@@ -76,7 +30,7 @@
                 Back to Projects
             </a>
             <h1 class="page-title">FMCG Demand Forecast</h1>
-            <p class="page-subtitle">A production AI system that tells an Indonesian distributor how much of 1,300+ products to stock — 30 days ahead, every week, automatically</p>
+            <p class="page-subtitle">Production Dual-Pipeline Demand &amp; Sales Forecasting — In Production, Fully Automated</p>
         </div>
     </header>
 
@@ -84,171 +38,56 @@
         <div class="container">
             <div class="article-layout">
                 <div class="article-content">
+                    <h3>TL;DR — Probabilistic Forecasts for 1,300+ Products, Retraining Itself Weekly</h3>
+                    <p>A production forecasting system for an Indonesian FMCG distributor that predicts daily <strong>demand</strong> (units, 30 days ahead) and <strong>sales revenue</strong> (90 days ahead) across <strong>1,300+ products and 4,000+ product-warehouse series</strong> on ~8 years of live data. It ships <strong>P10/P50/P90 probabilistic</strong> output, runs the full pipeline in <strong>~7.4 min on an RTX 5090</strong>, and <strong>retrains itself unattended every week</strong>. A disciplined 9-round A/B trail produced the headline win: a pooled bias correction that <strong>halved chronic under-forecast (−28.7% → −13.0%)</strong> without regressing accuracy.</p>
 
-                    <p>An Indonesian FMCG distributor runs four "dark stores" — small warehouses that deliver everyday goods (instant noodles, bottled water, cigarettes, rice, syrup) to thousands of small shops. Every week, buyers must decide how much of each product to purchase. Order too little and shelves go empty; order too much and capital is frozen in slow stock. This project replaces gut-feel ordering with a deep-learning forecasting pipeline that runs in production: every Sunday night it reads eight years of live sales data, retrains itself on a GPU, and writes a 30-day demand forecast for every product in every warehouse back into the company database.</p>
+                    <pre><code>  DEMAND ACCURACY  —  raw vs bias-corrected (v9 rolling-origin backtest)
 
-                    <div class="stat-grid">
-                        <div class="stat-chip"><span class="num">8 yrs</span><span class="lbl">sales history (2018&ndash;2026)</span></div>
-                        <div class="stat-chip"><span class="num">4.6M</span><span class="lbl">raw rows &rarr; 3.1M clean</span></div>
-                        <div class="stat-chip"><span class="num">4,083</span><span class="lbl">product &times; warehouse series</span></div>
-                        <div class="stat-chip"><span class="num">30 days</span><span class="lbl">forecast horizon</span></div>
-                        <div class="stat-chip"><span class="num">7.4 min</span><span class="lbl">full GPU pipeline run</span></div>
-                        <div class="stat-chip"><span class="num">Weekly</span><span class="lbl">fully automated, no human</span></div>
-                    </div>
+                Raw        Corrected
+  WAPE        48.7%  ──▶  46.0%     ✓ lower error
+  Bias       −28.7%  ──▶ −13.0%     ✓ halved toward 0
+  Naive Skill  0.007 ──▶  0.056     ✓ beats "repeat last week" 8×
+  CRPS        3.844  ──▶  3.713     ✓ sharper distribution
 
-                    <h3>See it work: forecast vs. reality</h3>
-                    <p>The chart below shows <strong>real output from the live system</strong> (June 2026 run). The white line is what actually sold each day. The blue line is what the model predicted <em>before seeing those days</em>, during backtesting — a dress rehearsal where the model is trained only on older data and graded against days it has never seen. The shaded band is the model's stated uncertainty: it says "I expect sales between these two values 80% of the time." After the dashed "today" line, the orange line is the genuine 30-day forecast the business uses.</p>
-                    <p>I picked six products deliberately — not just bestsellers, but products that each stress the model differently:</p>
+  Ship gate: "drive Bias → 0 without WAPE/CRPS regressing"  → PASSED, on by default</code></pre>
 
-                    <div class="chart-box">
-                        <div class="product-switch" id="productSwitch"></div>
-                        <div class="product-switch" id="scaleToggle" style="margin-top:2px"></div>
-                        <p class="product-story" id="productStory"></p>
-                        <div class="chart-svg-wrap" style="position:relative">
-                            <div class="fc-tooltip" id="fcTooltip"></div>
-                            <svg id="forecastChart" width="100%" height="380"></svg>
-                        </div>
-                        <div class="chart-legend">
-                            <span class="lg-actual">Actual daily sales (units)</span>
-                            <span class="lg-forecast">Model prediction (backtest)</span>
-                            <span class="lg-band">80% confidence band (P10&ndash;P90)</span>
-                            <span class="lg-forward">30-day forward forecast</span>
-                        </div>
-                        <p class="chart-note" style="margin-top:8px">Units = preprocessed daily order quantities summed across the four warehouses (closed-day orders rolled forward to the next open day, outliers removed — the same series the models train on). Normalized view rescales each day to that product's average day (100% = typical day), making products comparable regardless of volume. Gaps are Sundays and public holidays. Data: production run of 2026-06-12.</p>
-                    </div>
+                    <h3>The Problem</h3>
+                    <p>FMCG demand is brutally hard to forecast: a distributor stocks thousands of SKUs across multiple darkstores, most with sparse, intermittent sales. Over-forecast and capital rots in dead stock; under-forecast and shelves go empty during the exact festive spikes (Lebaran drives <strong>300%+</strong> surges) that matter most. Two structural traps compounded it: <strong>52% of product-warehouse pairs have under 90 days of history</strong> (too little for any sequence model), and demand grew ~46% over two years, so any history-anchored model <strong>chronically under-forecasts</strong> a rising series.</p>
 
-                    <div class="callout">
-                        <strong>Why a range instead of one number?</strong> Look at the rice (Beras Raja Lele): shops buy it in unpredictable bulk — quiet for days, then a spike. A single-number forecast is almost guaranteed wrong on any given day. Instead the model outputs a <em>low estimate (P10)</em> and a <em>high estimate (P90)</em>. A planner stocks near the high end for must-never-run-out products and near the middle for expensive slow movers. The range <em>is</em> the product — it converts a guess into a decision tool for safety stock.
-                    </div>
+                    <h3>The Approach — Match the Model to the Data, Then Quantify Everything</h3>
+                    <p>Two pipelines (demand in units, sales in revenue) share one calendar-aware feature layer. The core idea: don't force one global model onto wildly uneven data — <strong>tier it</strong>.</p>
+                    <pre><code>  DATA DENSITY  (15,896 product-warehouse pairs)            TIER → MODEL
 
-                    <h3>How it works: the right model for each product</h3>
-                    <p>Not every product deserves the same treatment. A noodle brand with eight years of history can feed a neural network; a product launched last month cannot. The pipeline sorts every product&times;warehouse series into a tier:</p>
-                    <pre><code>                      8 years of sales data (ClickHouse + MySQL)
-                                        │
-                     cleaning: outliers, out-of-stock flags,
-                     calendar + weather merge, closed-day shifts
-                                        │
-                       ┌────────────────┼────────────────────┐
-                       ▼                ▼                    ▼
-              ≥ 1 year history    90–364 days            < 90 days
-              ┌─────────────┐    ┌──────────────┐    ┌──────────────┐
-              │    NHITS    │    │   LightGBM   │    │  Weighted    │
-              │ neural net  │    │   gradient   │    │  day-of-week │
-              │ (98.8% of   │    │   boosting   │    │  average     │
-              │  series)    │    │              │    │              │
-              └──────┬──────┘    └──────┬───────┘    └──────┬───────┘
-                     └──────────────────┼───────────────────┘
-                                        ▼
-                       30-day P10 / P50 / P90 forecast per
-                       product × warehouse → company database</code></pre>
-
-                    <h3>Why NHITS — and why not the alternatives?</h3>
+  &lt;90 days    ████████████████████████████  52.2%   ─▶  T3  DOW-naive
+  90–365 days ██████████                     20.0%   ─▶  T2  LightGBM
+  1–2 years   █████                          10.9%   ─▶  T1  NHITS
+  2+ years    ████████                       16.9%   ─▶  T1  NHITS</code></pre>
                     <ul>
-                        <li><strong>Why not classic statistics (ARIMA, Prophet, exponential smoothing)?</strong> They fit one model per product, in isolation. With 4,000+ series — many noisy or short — each tiny model overfits its own noise and none can use signals like "Ramadan starts in 20 days" or "it rained 3 days straight." A single <em>global</em> neural model learns shared patterns across all products at once: what payday does to noodles also teaches it what payday does to coffee.</li>
-                        <li><strong>Why not a plain LSTM?</strong> That was the first production version (LSTM encoder + GRU decoder). It worked, but tended toward flat multi-day forecasts and was slow to train per series. It was superseded, not abandoned blindly — the comparison was measured.</li>
-                        <li><strong>Why not the Temporal Fusion Transformer (TFT)?</strong> I migrated to TFT first — it's the textbook choice. In practice its data-loading machinery, not the GPU, was the bottleneck: ~130 seconds per epoch with the RTX 5090 sitting nearly idle. <strong>NHITS</strong> (a hierarchical-interpolation network from Nixtla's neuralforecast) trains the entire 1,320-series tier in <strong>~45 seconds total</strong> with equal-or-better accuracy, while still accepting the same calendar, weather, and out-of-stock signals. Speed matters here: a fast model makes weekly retraining and honest A/B experiments affordable.</li>
-                        <li><strong>Why keep LightGBM and a weighted average at all?</strong> Neural networks need history. For young products, gradient boosting on lag features is more reliable; for brand-new ones, a day-of-week weighted average beats any model pretending to know more than it does.</li>
+                        <li><strong>Tier 1 — NHITS</strong> (data-rich series): a global neural model with full calendar/weather/static exogenous channels and direct multi-horizon quantile output. Trains the entire tier in <strong>~45s</strong> (replaced a Temporal Fusion Transformer that was data-loading bound).</li>
+                        <li><strong>Tier 2 — LightGBM</strong> (medium history): tree model on expanding-window features — no need for continuous sequences, leakage-safe lags.</li>
+                        <li><strong>Tier 3 — DOW-weighted naive</strong> (sparse): an honest day-of-week baseline instead of false precision.</li>
+                        <li><strong>Out-of-stock censoring:</strong> an <code>is_oos</code> flag stops the model from learning stock-out zeros as real demand (a major under-forecast driver).</li>
+                        <li><strong>Indonesian calendar features:</strong> Ramadan, Lebaran peak week, THR payout, payday window, rainy season — the single biggest accuracy lever for FMCG.</li>
+                        <li><strong>Evidence-driven shipping:</strong> every change passed (or failed) a rolling-origin backtest gate before merging — no change ships on vibes.</li>
                     </ul>
 
-                    <h3>What actually drives demand</h3>
-                    <p>The chart below shows which signals the gradient-boosting tier leans on when predicting, measured on the real data (share of total "gain" — how much each feature improves predictions across all 90 trained models):</p>
+                    <pre><code>  THE EXPERIMENT TRAIL  (why each decision shipped)
 
-                    <div class="chart-box">
-                        <h4>Feature importance — what the model pays attention to</h4>
-                        <p class="chart-note">From the LightGBM tier (gradient boosting exposes importance directly; the neural tier consumes the same signals but doesn't report per-feature numbers).</p>
-                        <svg id="importanceChart" width="100%" height="430"></svg>
-                        <div class="chart-legend">
-                            <span style="color:#6ea8fe">&#9632; Recent sales history</span>
-                            <span style="color:#69d489">&#9632; Weather</span>
-                            <span style="color:#ffc861">&#9632; Calendar &amp; timing</span>
-                            <span style="color:#b58cf2">&#9632; Product attributes</span>
-                        </div>
-                    </div>
+  v4  single-holdout bias fix .... WAPE/CRPS ↑  → REJECTED (unstable estimator)
+  v6  scaler=standard A/B ......... bias worse  → REJECTED (kept robust scaler)
+  v7  365-day history trim ........ variance 3× tighter → KEPT for speed
+  v8  pooled + shrinkage bias fix . Bias −28.7→−13.0%, all metrics ↑ → SHIPPED
+  v9  reproduction + persistence .. corrected metrics in registry → BASELINE</code></pre>
 
-                    <p>The honest reading: <strong>~85% of predictive power comes from recent sales momentum</strong> (rolling averages over the last 1&ndash;4 weeks). Weather contributes a real but modest ~6% (rain keeps shop owners from restocking trips), and calendar timing ~5%. The big cultural events — Ramadan, Lebaran — score low <em>here</em> because this tier only sees young products with under a year of history, often not even one full Ramadan. The neural tier, trained on up to two years per series plus a continuous "days until Lebaran" ramp, is where seasonal signals do their work — visible in the Syrup Kartika chart above, a product that effectively exists for Lebaran gift baskets.</p>
-
-                    <h3>The trap most forecasts fall into: empty shelves look like zero demand</h3>
-                    <p>If a product is out of stock for a week, the sales ledger records zero — but demand wasn't zero, it was <em>invisible</em>. A model trained naively on that data learns "this product sometimes sells nothing for a week" and forecasts low, which causes under-ordering, which causes more stock-outs: a self-fulfilling death spiral for the product.</p>
-                    <p>This pipeline cross-references the <strong>stock ledger</strong> (1.2M+ records) against sales: days where end-of-day stock was zero are flagged on 70,559 product-days (2.3% of all data). The neural tier receives the flag as a "don't trust this day" signal, the boosting tier drops those days as training targets, and the averaging tier excludes them from its statistics. Censored data is a statistics problem; pretending it isn't one is how forecasting systems quietly fail.</p>
-
-                    <div class="chart-box">
-                        <h4>A real stock-out, caught by the ledger — Teh Pucuk Harum 350ml, warehouse 1</h4>
-                        <p class="chart-note">Daily sales (white bars) with days the stock ledger shows zero end-of-day stock shaded red. Spring 2026, production data.</p>
-                        <svg id="oosChart" width="100%" height="240"></svg>
-                        <p class="chart-note" style="margin-top:8px">This product normally sells ~140 units/day here. In the red zones sales flatline at zero — and the first days after restocking spike to <strong>452</strong> and <strong>347</strong> units as shops catch up (pent-up demand, visible proof the zeros weren't real). A naive model reads those zeros as "demand collapsed"; this pipeline flags them as <em>unobservable</em> instead. It's also one reason this product is the hardest case in the showcase above.</p>
-                    </div>
-
-                    <h3>Encoding how Indonesia actually shops</h3>
+                    <h3>Results</h3>
                     <ul>
-                        <li><strong>18 Indonesian calendar features</strong> — Ramadan month, Lebaran peak week, a continuous 60-day "Lebaran approaching" ramp, THR (holiday bonus) payout week, payday window (25th&ndash;5th), Chinese New Year, Idul Adha, back-to-school, rainy season (Oct&ndash;Apr), long weekends. Islamic dates are computed automatically from the Hijri calendar — zero annual maintenance.</li>
-                        <li><strong>Closed-day redistribution</strong> — warehouses close on Sundays and holidays, but shops keep placing orders; those orders are fulfilled on the next open day. The preprocessing mirrors that reality: closed-day rows are removed and their demand is rolled forward onto the first subsequent open day — which is why Mondays (and post-holiday days) run hot in the charts above:
-                        <pre><code>   Sat        SUN (closed)      MON
-  ┌────┐       ┌╌╌╌╌┐        ┌──────┐
-  │    │       ┊ X  ┊  ──▶   │ +Sun │   Sunday's orders don't vanish —
-  └────┘       └╌╌╌╌┘        └──────┘   they're fulfilled on Monday</code></pre>
-                        (The companion <em>sales</em> pipeline uses a different rule — a 60/40 split onto the two preceding working days — because revenue is booked differently from warehouse fulfilment.)</li>
-                        <li><strong>Live weather</strong> — daily rainfall and temperature per warehouse location (historical + 16-day forecast from Open-Meteo), because a rainy week measurably suppresses restocking trips.</li>
+                        <li><strong>Demand:</strong> all four headline metrics improved when bias correction was switched on — so it ships enabled by default. Zero quantile-ordering violations, zero negative forecasts.</li>
+                        <li><strong>Sales:</strong> per-darkstore daily revenue forecasts land within <strong>~7–13%</strong> of the actual recent run-rate, biased slightly high (safer for a distributor than running out), with P10–P90 bands calibrated to <strong>~80% coverage</strong>.</li>
+                        <li><strong>Structural-break handling:</strong> when one darkstore absorbed another and nearly doubled overnight, the model tracked the new level (<strong>+9%</strong> on-level) instead of the <strong>−24%</strong> under-forecast a naive history-follower would produce.</li>
+                        <li><strong>From forecast to action:</strong> the revenue forecast is converted to cost (COGS) and redistributed around closed days into a daily <strong>purchase plan</strong> a buyer can order against.</li>
+                        <li><strong>Operational:</strong> full pipeline runs in ~7.4 min on an RTX 5090 and retrains unattended weekly via Task Scheduler, writing probabilistic results back for the reporting dashboards.</li>
                     </ul>
-
-                    <h3>How good is it? Metrics, in plain language</h3>
-                    <p>All numbers below come from <strong>rolling-origin backtesting</strong> on the live production data: the model is repeatedly trained on history up to a cutoff, asked to predict the next 30 days blind, and graded — three separate test months, results averaged. This is the strictest honest test short of waiting a month in real time.</p>
-
-                    <table class="metric-table">
-                        <thead><tr><th>Metric</th><th>Result</th><th>What it means</th></tr></thead>
-                        <tbody>
-                            <tr><td>WAPE 46.0%</td><td>volume-weighted error</td><td>For every 100 units that sold, the daily per-product forecast was off by ~46 units on average. Sounds high — but this is <em>daily, per-product, per-warehouse</em> granularity, the hardest possible cut. Over a full month per product (what a buyer actually orders against), the aggregate error drops to ~33%.</td></tr>
-                            <tr><td>Bias &minus;13%</td><td>systematic tilt</td><td>The model under-forecasts by 13% overall — down from &minus;29% raw, halved by a calibration layer (below). Bias is the metric a buyer <em>feels</em>: it's the difference between consistently empty and consistently overstocked shelves.</td></tr>
-                            <tr><td>PI80 = 74.8%</td><td>band honesty</td><td>The "80% confidence band" actually contained the true value 74.8% of the time. A band that claims 80% and delivers ~75% is slightly overconfident but usable; many systems claim 80% and deliver 50%.</td></tr>
-                            <tr><td>Skill &gt; 0</td><td>beats the baseline</td><td>Better than the naive strategy ("next month = recent weekly pattern"). Naive baselines are embarrassingly strong in FMCG; any system that doesn't report this comparison is hiding something.</td></tr>
-                        </tbody>
-                    </table>
-
-                    <p><strong>Why these metrics and not the usual suspects?</strong> MAPE — the most commonly quoted forecasting metric — divides by actual sales, so slow products with near-zero sales explode the average and dominate the score; it rewards models for being accurate on products nobody buys. RMSE squares errors, so one bestseller spike outweighs a hundred meaningful misses, and it says nothing about <em>direction</em>. WAPE weights error by sales volume (being right on Indomie matters more than on candles), and Bias captures the systematic tilt that actually drives inventory cost. For the uncertainty bands, coverage checks honesty and CRPS (a proper scoring rule) checks sharpness — both improved in the shipped configuration.</p>
-
-                    <h3>The calibration layer: fixing bias without lying to yourself</h3>
-                    <p>The raw neural model consistently under-forecast (~&minus;29%) — largely because demand grew ~46% over two years and a model anchored on history lags a growth trend. The obvious fix, "multiply forecasts up by the recent error," is dangerous: measured on a single month, that correction factor is noise. The first version (v4) did exactly that and <strong>failed its ship gate</strong> — the factor even flipped sign between test windows. The version that shipped (v8) pools the estimate across <em>multiple</em> backtest windows, shrinks it toward 1.0 in proportion to evidence, and is only allowed to scale <em>up</em>, never down, capped at +30%. Deliberately under-correcting beats overconfidently overshooting. Result: bias halved, every other metric improved or held.</p>
-
-                    <h3>It runs itself</h3>
-                    <p>A forecast that needs a human to run it will stop being run. Every Sunday at midnight, fully unattended:</p>
-                    <pre><code>  Sunday 00:00 — Windows Task Scheduler
-       │
-       ▼
-  1. Snapshot & unload local LLM models        (the same GPU serves an
-     to free the RTX 5090's 32 GB VRAM          AI assistant on weekdays)
-       │
-       ▼
-  2. Docker container (CUDA 13):
-     fetch live ClickHouse + MySQL ─▶ clean ─▶ train all 3 tiers
-     ─▶ 3-window backtest ─▶ bias calibration ─▶ 30-day forecast
-     ─▶ write 40,590 forecast rows back to ClickHouse
-       │
-       ▼
-  3. Restore the LLM models — even if the      (try/finally: the GPU is
-     pipeline failed                            never left empty)
-       │
-       ▼
-  4. Run registry: config + git commit + all
-     metrics appended to an index — every run
-     comparable to every previous run</code></pre>
-                    <p>The run registry turned tuning from guesswork into bookkeeping: every experiment below is a row in that index, with identical data and seeds where it matters.</p>
-
-                    <h3>Nine versions, two rejections, one shipped</h3>
-                    <p>This is the part of ML work that rarely makes it into portfolios: most experiments fail, and the discipline is in <em>measuring</em> that. Every change had to pass a pre-declared ship gate ("bias must move toward zero without accuracy or band quality regressing") on the rolling backtest before touching production:</p>
-
-                    <div class="vtimeline">
-                        <div class="vrow"><span class="vtag">v1&ndash;2</span><p><strong>Is the model undertrained?</strong> Quadrupled the training budget — bias barely moved. Training time was not the lever. Also exposed that a single test month gives wildly unstable bias estimates.</p></div>
-                        <div class="vrow"><span class="vtag">v3</span><p><strong>Rolling-origin backtesting introduced.</strong> Three test months instead of one. Bias estimate stabilized at &minus;26&plusmn;4% — now trustworthy enough to act on.</p></div>
-                        <div class="vrow rejected"><span class="vtag">v4</span><p><strong>Bias correction, take one — REJECTED.</strong> Correction factor estimated from one validation month flipped sign between windows (scaled up 1.3&times; in one, down 0.8&times; in another). Accuracy regressed. Gate failed; feature stayed off in production.</p></div>
-                        <div class="vrow"><span class="vtag">v5</span><p><strong>Clean baseline locked.</strong> Re-ran with correction off; metrics reproduced bit-for-bit (seeded). Also first run with out-of-stock flags live: 70,559 censored days detected.</p></div>
-                        <div class="vrow rejected"><span class="vtag">v6</span><p><strong>Scaler A/B — REJECTED.</strong> Standard scaling worsened bias. Same run caught a config knob that silently did nothing — found <em>because</em> the registry logs effective config, not intended config.</p></div>
-                        <div class="vrow"><span class="vtag">v7</span><p><strong>Shorter training window A/B.</strong> 365 days vs 730: accuracy flat, variance 3&times; tighter. Kept for stability; disproved the favored "growth-anchoring" hypothesis as the main bias driver.</p></div>
-                        <div class="vrow shipped"><span class="vtag">v8</span><p><strong>Bias correction, take two — SHIPPED.</strong> Pooled multi-window estimate + shrinkage toward 1.0 + asymmetric clip (only scale up, max +30%). Gate passed: bias &minus;29% &rarr; &minus;13%, accuracy <em>and</em> band quality improved simultaneously.</p></div>
-                        <div class="vrow"><span class="vtag">v9</span><p><strong>Production verification.</strong> Reproduced v8 exactly; corrected metrics now persisted to the run registry. The configuration running every Sunday since.</p></div>
-                    </div>
-
-                    <h3>Beyond demand</h3>
-                    <p>The demand forecast is half the system: a companion sales pipeline (per-region LSTM with multi-head attention) forecasts revenue and cost-of-goods, feeding a purchase-recommendation engine. A sanitized, fully-runnable version of the architecture — live databases replaced by a synthetic Indonesian-FMCG data generator — is open-sourced on GitHub.</p>
-
+                    <p><em>Portfolio note: this describes the production system built for an Indonesian FMCG distributor. A companion public repository reproduces the full architecture on a synthetic data generator; figures shown here are model-performance metrics, with client revenue and infrastructure details omitted.</em></p>
                 </div>
 
                 <aside class="meta-sidebar">
@@ -258,40 +97,37 @@
                     </div>
                     <div class="meta-group">
                         <span class="meta-label">Timeline</span>
-                        <p>2024 &mdash; 2026 (in production)</p>
+                        <p>2024 — 2026</p>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Status</span>
+                        <p>In production, fully automated</p>
                     </div>
                     <div class="meta-group">
                         <span class="meta-label">Languages</span>
                         <div class="project-tags">
                             <span><i class="devicon-python-plain colored"></i> Python</span>
+                            <span><i class="devicon-mysql-plain colored"></i> SQL</span>
                         </div>
                     </div>
                     <div class="meta-group">
                         <span class="meta-label">Tools &amp; Frameworks</span>
                         <div class="project-tags">
                             <span><i class="devicon-pytorch-original colored"></i> PyTorch</span>
-                            <span>neuralforecast (NHITS)</span>
+                            <span>NHITS / neuralforecast</span>
                             <span>LightGBM</span>
-                            <span><i class="devicon-pandas-plain colored"></i> Pandas</span>
                             <span><i class="devicon-docker-plain colored"></i> Docker</span>
                             <span>ClickHouse</span>
-                            <span><i class="devicon-mysql-plain colored"></i> MySQL</span>
                         </div>
                     </div>
                     <div class="meta-group">
                         <span class="meta-label">Methodologies</span>
                         <div class="project-tags">
                             <span>Probabilistic Forecasting</span>
-                            <span>Rolling-Origin Backtesting</span>
-                            <span>Censored Demand (OOS)</span>
-                            <span>Bias Calibration</span>
-                            <span>Global Deep Models</span>
-                            <span>MLOps / Run Registry</span>
+                            <span>Time Series</span>
+                            <span>Bias Correction</span>
+                            <span>MLOps</span>
                         </div>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Production Scale</span>
-                        <p style="font-size:13.5px;color:var(--text-muted)">1,353 products &middot; 4 warehouses &middot; 40,590 forecast rows weekly &middot; RTX 5090 &middot; unattended since 2026</p>
                     </div>
                     <div class="meta-group">
                         <span class="meta-label">Links</span>
@@ -311,237 +147,5 @@
             <p>&copy; 2026 Johannes Baptista Adiatmaja Pambudi</p>
         </div>
     </footer>
-
-    <script>
-    // ───────────────────────── real production data (run 2026-06-12) ─────────────────────────
-    const CHART_DATA = {"Indomie Goreng Original / Bks":{"history":[{"d":"2026-02-01","a":369.0},{"d":"2026-02-02","a":2476.0},{"d":"2026-02-03","a":2030.0},{"d":"2026-02-04","a":1859.0},{"d":"2026-02-05","a":1727.0},{"d":"2026-02-06","a":1524.0},{"d":"2026-02-07","a":1293.0},{"d":"2026-02-08","a":401.0},{"d":"2026-02-09","a":1927.0},{"d":"2026-02-10","a":1709.0},{"d":"2026-02-11","a":1383.0},{"d":"2026-02-12","a":1437.0},{"d":"2026-02-13","a":1547.0},{"d":"2026-02-14","a":1186.0},{"d":"2026-02-15","a":382.0},{"d":"2026-02-16","a":1725.0},{"d":"2026-02-17","a":1404.0},{"d":"2026-02-18","a":1961.0},{"d":"2026-02-19","a":1602.0},{"d":"2026-02-20","a":1203.0},{"d":"2026-02-21","a":1082.0},{"d":"2026-02-22","a":266.0},{"d":"2026-02-23","a":1527.0},{"d":"2026-02-24","a":1010.0},{"d":"2026-02-25","a":1187.0},{"d":"2026-02-26","a":1049.0},{"d":"2026-02-27","a":1220.0},{"d":"2026-02-28","a":1350.0},{"d":"2026-03-01","a":348.0},{"d":"2026-03-02","a":1753.0},{"d":"2026-03-03","a":1236.0},{"d":"2026-03-04","a":1069.0},{"d":"2026-03-05","a":1137.0},{"d":"2026-03-06","a":1921.0},{"d":"2026-03-07","a":1136.0},{"d":"2026-03-08","a":250.0},{"d":"2026-03-09","a":2047.0},{"d":"2026-03-10","a":1777.0},{"d":"2026-03-11","a":1243.0},{"d":"2026-03-12","a":1299.0},{"d":"2026-03-13","a":1232.0},{"d":"2026-03-14","a":1716.0},{"d":"2026-03-15","a":215.0},{"d":"2026-03-16","a":1846.0},{"d":"2026-03-17","a":1495.0},{"d":"2026-03-18","a":1441.0},{"d":"2026-03-19","a":1282.0},{"d":"2026-03-20","a":37.0},{"d":"2026-03-22","a":143.0},{"d":"2026-03-23","a":1492.0},{"d":"2026-03-24","a":1334.0},{"d":"2026-03-25","a":1351.0},{"d":"2026-03-26","a":1779.0},{"d":"2026-03-27","a":1506.0},{"d":"2026-03-28","a":1169.0},{"d":"2026-03-29","a":261.0},{"d":"2026-03-30","a":2188.0},{"d":"2026-03-31","a":2060.0},{"d":"2026-04-01","a":1305.0},{"d":"2026-04-02","a":1431.0},{"d":"2026-04-03","a":371.0},{"d":"2026-04-04","a":1486.0},{"d":"2026-04-05","a":234.0},{"d":"2026-04-06","a":1670.0},{"d":"2026-04-07","a":1492.0},{"d":"2026-04-08","a":1494.0},{"d":"2026-04-09","a":1087.0},{"d":"2026-04-10","a":1494.0},{"d":"2026-04-11","a":1426.0},{"d":"2026-04-12","a":354.0},{"d":"2026-04-13","a":2358.0},{"d":"2026-04-14","a":1614.0},{"d":"2026-04-15","a":1455.0},{"d":"2026-04-16","a":1337.0},{"d":"2026-04-17","a":1672.0},{"d":"2026-04-18","a":1175.0},{"d":"2026-04-19","a":408.0},{"d":"2026-04-20","a":2124.0},{"d":"2026-04-21","a":1482.0},{"d":"2026-04-22","a":1417.0},{"d":"2026-04-23","a":1371.0},{"d":"2026-04-24","a":1694.0},{"d":"2026-04-25","a":1311.0},{"d":"2026-04-26","a":378.0},{"d":"2026-04-27","a":1884.0},{"d":"2026-04-28","a":1879.0},{"d":"2026-04-29","a":1900.0},{"d":"2026-04-30","a":1787.0},{"d":"2026-05-01","a":388.0},{"d":"2026-05-02","a":1652.0},{"d":"2026-05-03","a":428.0},{"d":"2026-05-04","a":1980.0},{"d":"2026-05-05","a":1679.0},{"d":"2026-05-06","a":1690.0},{"d":"2026-05-07","a":1258.0},{"d":"2026-05-08","a":1360.0},{"d":"2026-05-09","a":1244.0},{"d":"2026-05-10","a":567.0},{"d":"2026-05-11","a":2013.0},{"d":"2026-05-12","a":1665.0},{"d":"2026-05-13","a":1242.0},{"d":"2026-05-14","a":414.0},{"d":"2026-05-15","a":2248.0},{"d":"2026-05-16","a":1652.0},{"d":"2026-05-17","a":360.0},{"d":"2026-05-18","a":2258.0},{"d":"2026-05-19","a":1760.0},{"d":"2026-05-20","a":1731.0},{"d":"2026-05-21","a":1272.0},{"d":"2026-05-22","a":1415.0},{"d":"2026-05-23","a":1350.0},{"d":"2026-05-24","a":432.0},{"d":"2026-05-25","a":2555.0},{"d":"2026-05-26","a":1678.0},{"d":"2026-05-27","a":382.0},{"d":"2026-05-28","a":1960.0},{"d":"2026-05-29","a":1875.0},{"d":"2026-05-30","a":1385.0},{"d":"2026-05-31","a":131.0},{"d":"2026-06-01","a":618.0},{"d":"2026-06-02","a":1438.0},{"d":"2026-06-03","a":2106.0},{"d":"2026-06-04","a":1740.0},{"d":"2026-06-05","a":1632.0},{"d":"2026-06-06","a":1157.0},{"d":"2026-06-07","a":287.0},{"d":"2026-06-08","a":2420.0},{"d":"2026-06-09","a":917.0}],"backtest":[{"d":"2026-03-14","a":1716.0,"f":1277.0,"lo":900.0,"hi":2061.0},{"d":"2026-03-16","a":2061.0,"f":1374.0,"lo":917.0,"hi":2166.0},{"d":"2026-03-17","a":1495.0,"f":1264.0,"lo":911.0,"hi":2014.0},{"d":"2026-03-18","a":1441.0,"f":1136.0,"lo":860.0,"hi":1784.0},{"d":"2026-03-23","a":1635.0,"f":1610.0,"lo":1023.0,"hi":2543.0},{"d":"2026-03-24","a":1334.0,"f":1274.0,"lo":911.0,"hi":1983.0},{"d":"2026-03-25","a":1351.0,"f":1289.0,"lo":937.0,"hi":2012.0},{"d":"2026-03-26","a":1779.0,"f":1314.0,"lo":938.0,"hi":2051.0},{"d":"2026-03-27","a":1506.0,"f":1272.0,"lo":923.0,"hi":2040.0},{"d":"2026-03-28","a":1169.0,"f":1214.0,"lo":887.0,"hi":1949.0},{"d":"2026-03-30","a":2449.0,"f":1487.0,"lo":983.0,"hi":2414.0},{"d":"2026-03-31","a":2060.0,"f":1297.0,"lo":907.0,"hi":2136.0},{"d":"2026-04-01","a":1305.0,"f":1332.0,"lo":907.0,"hi":2135.0},{"d":"2026-04-02","a":1431.0,"f":1275.0,"lo":899.0,"hi":2080.0},{"d":"2026-04-04","a":1486.0,"f":1412.0,"lo":950.0,"hi":2260.0},{"d":"2026-04-06","a":1904.0,"f":1282.0,"lo":892.0,"hi":2063.0},{"d":"2026-04-07","a":1492.0,"f":1331.0,"lo":907.0,"hi":2211.0},{"d":"2026-04-08","a":1494.0,"f":1247.0,"lo":888.0,"hi":1999.0},{"d":"2026-04-09","a":1087.0,"f":1282.0,"lo":890.0,"hi":2049.0},{"d":"2026-04-10","a":1494.0,"f":1336.0,"lo":923.0,"hi":2113.0},{"d":"2026-04-11","a":1426.0,"f":1280.0,"lo":909.0,"hi":1989.0},{"d":"2026-04-13","a":2712.0,"f":1792.0,"lo":1060.0,"hi":2785.0},{"d":"2026-04-14","a":1614.0,"f":1379.0,"lo":911.0,"hi":2165.0},{"d":"2026-04-15","a":1455.0,"f":1383.0,"lo":920.0,"hi":2173.0},{"d":"2026-04-16","a":1337.0,"f":1344.0,"lo":908.0,"hi":2106.0},{"d":"2026-04-17","a":1672.0,"f":1367.0,"lo":917.0,"hi":2104.0},{"d":"2026-04-18","a":1175.0,"f":927.0,"lo":614.0,"hi":1437.0},{"d":"2026-04-20","a":2532.0,"f":1604.0,"lo":984.0,"hi":2458.0},{"d":"2026-04-21","a":1482.0,"f":1348.0,"lo":889.0,"hi":2135.0},{"d":"2026-04-22","a":1417.0,"f":1256.0,"lo":842.0,"hi":2025.0},{"d":"2026-04-23","a":1371.0,"f":1236.0,"lo":843.0,"hi":1977.0},{"d":"2026-04-24","a":1694.0,"f":1290.0,"lo":895.0,"hi":2052.0},{"d":"2026-04-25","a":1311.0,"f":1248.0,"lo":841.0,"hi":2064.0},{"d":"2026-04-27","a":2262.0,"f":1414.0,"lo":937.0,"hi":2266.0},{"d":"2026-04-28","a":1879.0,"f":1371.0,"lo":908.0,"hi":2316.0},{"d":"2026-04-29","a":1900.0,"f":1393.0,"lo":935.0,"hi":2311.0},{"d":"2026-04-30","a":1787.0,"f":1338.0,"lo":879.0,"hi":2263.0},{"d":"2026-05-02","a":1652.0,"f":1409.0,"lo":916.0,"hi":2298.0},{"d":"2026-05-04","a":2408.0,"f":1404.0,"lo":887.0,"hi":2342.0},{"d":"2026-05-05","a":1679.0,"f":1408.0,"lo":895.0,"hi":2290.0},{"d":"2026-05-06","a":1690.0,"f":1353.0,"lo":887.0,"hi":2191.0},{"d":"2026-05-07","a":1258.0,"f":1395.0,"lo":907.0,"hi":2284.0},{"d":"2026-05-08","a":1360.0,"f":1352.0,"lo":878.0,"hi":2166.0},{"d":"2026-05-09","a":1244.0,"f":1286.0,"lo":860.0,"hi":2044.0},{"d":"2026-05-11","a":2580.0,"f":1406.0,"lo":931.0,"hi":2289.0},{"d":"2026-05-12","a":1665.0,"f":1272.0,"lo":851.0,"hi":2085.0},{"d":"2026-05-13","a":1242.0,"f":1498.0,"lo":1056.0,"hi":2428.0},{"d":"2026-05-16","a":1652.0,"f":1567.0,"lo":1079.0,"hi":2476.0},{"d":"2026-05-18","a":2618.0,"f":1437.0,"lo":1046.0,"hi":2290.0},{"d":"2026-05-19","a":1760.0,"f":1614.0,"lo":1073.0,"hi":2624.0},{"d":"2026-05-20","a":1731.0,"f":1492.0,"lo":1042.0,"hi":2380.0},{"d":"2026-05-21","a":1272.0,"f":1538.0,"lo":1074.0,"hi":2446.0},{"d":"2026-05-22","a":1415.0,"f":1457.0,"lo":1045.0,"hi":2351.0},{"d":"2026-05-23","a":1350.0,"f":1428.0,"lo":1031.0,"hi":2260.0},{"d":"2026-05-25","a":2987.0,"f":1468.0,"lo":1053.0,"hi":2323.0},{"d":"2026-05-26","a":1678.0,"f":1410.0,"lo":1026.0,"hi":2225.0},{"d":"2026-05-28","a":1960.0,"f":1427.0,"lo":1052.0,"hi":2252.0},{"d":"2026-05-29","a":1875.0,"f":1405.0,"lo":1023.0,"hi":2216.0},{"d":"2026-05-30","a":1385.0,"f":1338.0,"lo":997.0,"hi":2105.0},{"d":"2026-06-02","a":1438.0,"f":1120.0,"lo":816.0,"hi":1722.0},{"d":"2026-06-03","a":2106.0,"f":1197.0,"lo":853.0,"hi":1832.0},{"d":"2026-06-04","a":1740.0,"f":1116.0,"lo":799.0,"hi":1700.0},{"d":"2026-06-05","a":1632.0,"f":1152.0,"lo":818.0,"hi":1793.0},{"d":"2026-06-06","a":1157.0,"f":1079.0,"lo":793.0,"hi":1652.0},{"d":"2026-06-08","a":2707.0,"f":1247.0,"lo":859.0,"hi":1993.0},{"d":"2026-06-09","a":1542.0,"f":1155.0,"lo":824.0,"hi":1873.0},{"d":"2026-06-10","a":1380.0,"f":1132.0,"lo":822.0,"hi":1771.0},{"d":"2026-06-11","a":381.0,"f":1126.0,"lo":832.0,"hi":1756.0}],"forward":[{"d":"2026-06-12","f":1703.8,"lo":912.7,"hi":2820.1},{"d":"2026-06-13","f":1702.5,"lo":914.0,"hi":2772.9},{"d":"2026-06-17","f":2199.2,"lo":1154.9,"hi":3554.0},{"d":"2026-06-18","f":1713.7,"lo":912.7,"hi":2854.9},{"d":"2026-06-19","f":1619.3,"lo":882.9,"hi":2807.7},{"d":"2026-06-20","f":1548.5,"lo":861.8,"hi":2744.4},{"d":"2026-06-22","f":1701.3,"lo":938.8,"hi":3003.9},{"d":"2026-06-23","f":1667.7,"lo":906.5,"hi":2917.0},{"d":"2026-06-24","f":1834.1,"lo":1058.0,"hi":3138.0},{"d":"2026-06-25","f":1682.6,"lo":976.1,"hi":2885.9},{"d":"2026-06-26","f":1637.9,"lo":937.6,"hi":2840.0},{"d":"2026-06-27","f":1600.7,"lo":915.2,"hi":2822.6},{"d":"2026-06-29","f":2119.8,"lo":1085.3,"hi":3614.9},{"d":"2026-06-30","f":1696.3,"lo":907.8,"hi":3049.9},{"d":"2026-07-01","f":1666.5,"lo":914.0,"hi":2953.0},{"d":"2026-07-02","f":1639.2,"lo":927.6,"hi":2879.7},{"d":"2026-07-03","f":1719.9,"lo":931.4,"hi":2920.7},{"d":"2026-07-04","f":1616.8,"lo":880.4,"hi":2771.7},{"d":"2026-07-06","f":1999.3,"lo":1000.9,"hi":3357.8},{"d":"2026-07-07","f":1789.4,"lo":957.4,"hi":3036.2},{"d":"2026-07-08","f":1741.0,"lo":940.0,"hi":2987.8},{"d":"2026-07-09","f":1634.2,"lo":918.9,"hi":2872.3},{"d":"2026-07-10","f":1597.0,"lo":900.3,"hi":2779.2},{"d":"2026-07-11","f":1573.4,"lo":880.4,"hi":2650.0},{"d":"2026-07-13","f":1830.4,"lo":973.6,"hi":3188.9},{"d":"2026-07-14","f":1603.2,"lo":882.9,"hi":2805.2},{"d":"2026-07-15","f":1758.4,"lo":973.6,"hi":2986.5},{"d":"2026-07-16","f":1707.5,"lo":941.3,"hi":2877.3},{"d":"2026-07-17","f":1565.9,"lo":887.9,"hi":2641.3},{"d":"2026-07-18","f":1562.2,"lo":865.5,"hi":2647.5}]},"AQUVIVA Air Mineral 700ml":{"history":[{"d":"2026-02-01","a":41.0},{"d":"2026-02-02","a":362.0},{"d":"2026-02-03","a":243.0},{"d":"2026-02-04","a":155.0},{"d":"2026-02-05","a":162.0},{"d":"2026-02-06","a":146.0},{"d":"2026-02-07","a":216.0},{"d":"2026-02-08","a":91.0},{"d":"2026-02-09","a":131.0},{"d":"2026-02-10","a":250.0},{"d":"2026-02-11","a":176.0},{"d":"2026-02-12","a":248.0},{"d":"2026-02-13","a":201.0},{"d":"2026-02-14","a":250.0},{"d":"2026-02-15","a":68.0},{"d":"2026-02-16","a":240.0},{"d":"2026-02-17","a":167.0},{"d":"2026-02-18","a":209.0},{"d":"2026-02-19","a":125.0},{"d":"2026-02-20","a":293.0},{"d":"2026-02-21","a":148.0},{"d":"2026-02-22","a":34.0},{"d":"2026-02-23","a":166.0},{"d":"2026-02-24","a":97.0},{"d":"2026-02-25","a":94.0},{"d":"2026-02-26","a":109.0},{"d":"2026-02-27","a":180.0},{"d":"2026-02-28","a":214.0},{"d":"2026-03-01","a":94.0},{"d":"2026-03-02","a":217.0},{"d":"2026-03-03","a":251.0},{"d":"2026-03-04","a":135.0},{"d":"2026-03-05","a":122.0},{"d":"2026-03-06","a":109.0},{"d":"2026-03-07","a":81.0},{"d":"2026-03-08","a":21.0},{"d":"2026-03-09","a":239.0},{"d":"2026-03-10","a":165.0},{"d":"2026-03-11","a":169.0},{"d":"2026-03-12","a":224.0},{"d":"2026-03-13","a":230.0},{"d":"2026-03-14","a":131.0},{"d":"2026-03-15","a":32.0},{"d":"2026-03-16","a":295.0},{"d":"2026-03-17","a":261.0},{"d":"2026-03-18","a":346.0},{"d":"2026-03-19","a":194.0},{"d":"2026-03-22","a":12.0},{"d":"2026-03-23","a":153.0},{"d":"2026-03-24","a":149.0},{"d":"2026-03-25","a":213.0},{"d":"2026-03-26","a":214.0},{"d":"2026-03-27","a":308.0},{"d":"2026-03-28","a":146.0},{"d":"2026-03-29","a":85.0},{"d":"2026-03-30","a":392.0},{"d":"2026-03-31","a":390.0},{"d":"2026-04-01","a":288.0},{"d":"2026-04-02","a":416.0},{"d":"2026-04-03","a":197.0},{"d":"2026-04-04","a":450.0},{"d":"2026-04-05","a":133.0},{"d":"2026-04-06","a":508.0},{"d":"2026-04-07","a":636.0},{"d":"2026-04-08","a":187.0},{"d":"2026-04-09","a":168.0},{"d":"2026-04-10","a":678.0},{"d":"2026-04-11","a":374.0},{"d":"2026-04-12","a":84.0},{"d":"2026-04-13","a":560.0},{"d":"2026-04-14","a":329.0},{"d":"2026-04-15","a":306.0},{"d":"2026-04-16","a":290.0},{"d":"2026-04-17","a":337.0},{"d":"2026-04-18","a":211.0},{"d":"2026-04-19","a":20.0},{"d":"2026-04-20","a":256.0},{"d":"2026-04-21","a":473.0},{"d":"2026-04-22","a":189.0},{"d":"2026-04-23","a":288.0},{"d":"2026-04-24","a":182.0},{"d":"2026-04-25","a":374.0},{"d":"2026-04-26","a":45.0},{"d":"2026-04-27","a":626.0},{"d":"2026-04-28","a":401.0},{"d":"2026-04-29","a":308.0},{"d":"2026-04-30","a":284.0},{"d":"2026-05-01","a":75.0},{"d":"2026-05-02","a":256.0},{"d":"2026-05-03","a":21.0},{"d":"2026-05-04","a":406.0},{"d":"2026-05-05","a":396.0},{"d":"2026-05-06","a":226.0},{"d":"2026-05-07","a":312.0},{"d":"2026-05-08","a":381.0},{"d":"2026-05-09","a":252.0},{"d":"2026-05-10","a":21.0},{"d":"2026-05-11","a":404.0},{"d":"2026-05-12","a":612.0},{"d":"2026-05-13","a":410.0},{"d":"2026-05-14","a":113.0},{"d":"2026-05-15","a":300.0},{"d":"2026-05-16","a":403.0},{"d":"2026-05-17","a":60.0},{"d":"2026-05-18","a":376.0},{"d":"2026-05-19","a":230.0},{"d":"2026-05-20","a":350.0},{"d":"2026-05-21","a":402.0},{"d":"2026-05-22","a":281.0},{"d":"2026-05-23","a":178.0},{"d":"2026-05-24","a":92.0},{"d":"2026-05-25","a":480.0},{"d":"2026-05-26","a":347.0},{"d":"2026-05-27","a":12.0},{"d":"2026-05-28","a":297.0},{"d":"2026-05-29","a":401.0},{"d":"2026-05-30","a":345.0},{"d":"2026-05-31","a":13.0},{"d":"2026-06-01","a":174.0},{"d":"2026-06-02","a":469.0},{"d":"2026-06-03","a":163.0},{"d":"2026-06-04","a":641.0},{"d":"2026-06-05","a":383.0},{"d":"2026-06-06","a":299.0},{"d":"2026-06-07","a":48.0},{"d":"2026-06-08","a":366.0},{"d":"2026-06-09","a":180.0}],"backtest":[{"d":"2026-03-14","a":131.0,"f":156.0,"lo":77.0,"hi":317.0},{"d":"2026-03-16","a":327.0,"f":168.0,"lo":79.0,"hi":326.0},{"d":"2026-03-17","a":261.0,"f":157.0,"lo":82.0,"hi":311.0},{"d":"2026-03-18","a":346.0,"f":134.0,"lo":73.0,"hi":272.0},{"d":"2026-03-23","a":165.0,"f":224.0,"lo":102.0,"hi":419.0},{"d":"2026-03-24","a":149.0,"f":157.0,"lo":83.0,"hi":305.0},{"d":"2026-03-25","a":213.0,"f":153.0,"lo":85.0,"hi":300.0},{"d":"2026-03-26","a":214.0,"f":174.0,"lo":89.0,"hi":333.0},{"d":"2026-03-27","a":308.0,"f":156.0,"lo":80.0,"hi":319.0},{"d":"2026-03-28","a":146.0,"f":148.0,"lo":75.0,"hi":300.0},{"d":"2026-03-30","a":477.0,"f":189.0,"lo":89.0,"hi":367.0},{"d":"2026-03-31","a":390.0,"f":159.0,"lo":81.0,"hi":325.0},{"d":"2026-04-01","a":288.0,"f":173.0,"lo":84.0,"hi":339.0},{"d":"2026-04-02","a":416.0,"f":162.0,"lo":84.0,"hi":328.0},{"d":"2026-04-04","a":450.0,"f":176.0,"lo":87.0,"hi":354.0},{"d":"2026-04-06","a":641.0,"f":165.0,"lo":83.0,"hi":331.0},{"d":"2026-04-07","a":636.0,"f":159.0,"lo":77.0,"hi":331.0},{"d":"2026-04-08","a":187.0,"f":113.0,"lo":53.0,"hi":233.0},{"d":"2026-04-09","a":168.0,"f":165.0,"lo":81.0,"hi":328.0},{"d":"2026-04-10","a":678.0,"f":162.0,"lo":80.0,"hi":320.0},{"d":"2026-04-11","a":374.0,"f":161.0,"lo":82.0,"hi":308.0},{"d":"2026-04-13","a":644.0,"f":422.0,"lo":166.0,"hi":827.0},{"d":"2026-04-14","a":329.0,"f":297.0,"lo":126.0,"hi":637.0},{"d":"2026-04-15","a":306.0,"f":273.0,"lo":118.0,"hi":598.0},{"d":"2026-04-16","a":290.0,"f":246.0,"lo":106.0,"hi":542.0},{"d":"2026-04-17","a":337.0,"f":243.0,"lo":99.0,"hi":553.0},{"d":"2026-04-18","a":211.0,"f":146.0,"lo":63.0,"hi":317.0},{"d":"2026-04-20","a":276.0,"f":376.0,"lo":145.0,"hi":753.0},{"d":"2026-04-21","a":473.0,"f":261.0,"lo":100.0,"hi":594.0},{"d":"2026-04-22","a":189.0,"f":239.0,"lo":90.0,"hi":547.0},{"d":"2026-04-23","a":288.0,"f":224.0,"lo":99.0,"hi":506.0},{"d":"2026-04-24","a":182.0,"f":216.0,"lo":103.0,"hi":489.0},{"d":"2026-04-25","a":374.0,"f":215.0,"lo":94.0,"hi":481.0},{"d":"2026-04-27","a":671.0,"f":279.0,"lo":128.0,"hi":582.0},{"d":"2026-04-28","a":401.0,"f":268.0,"lo":116.0,"hi":593.0},{"d":"2026-04-29","a":308.0,"f":246.0,"lo":120.0,"hi":545.0},{"d":"2026-04-30","a":284.0,"f":227.0,"lo":103.0,"hi":526.0},{"d":"2026-05-02","a":256.0,"f":248.0,"lo":112.0,"hi":520.0},{"d":"2026-05-04","a":427.0,"f":262.0,"lo":107.0,"hi":541.0},{"d":"2026-05-05","a":396.0,"f":258.0,"lo":111.0,"hi":524.0},{"d":"2026-05-06","a":226.0,"f":233.0,"lo":109.0,"hi":473.0},{"d":"2026-05-07","a":312.0,"f":240.0,"lo":108.0,"hi":492.0},{"d":"2026-05-08","a":381.0,"f":224.0,"lo":93.0,"hi":441.0},{"d":"2026-05-09","a":252.0,"f":199.0,"lo":86.0,"hi":396.0},{"d":"2026-05-11","a":425.0,"f":263.0,"lo":108.0,"hi":511.0},{"d":"2026-05-12","a":612.0,"f":194.0,"lo":80.0,"hi":413.0},{"d":"2026-05-13","a":410.0,"f":294.0,"lo":136.0,"hi":652.0},{"d":"2026-05-16","a":403.0,"f":327.0,"lo":146.0,"hi":692.0},{"d":"2026-05-18","a":436.0,"f":296.0,"lo":140.0,"hi":639.0},{"d":"2026-05-19","a":230.0,"f":338.0,"lo":148.0,"hi":712.0},{"d":"2026-05-20","a":350.0,"f":296.0,"lo":136.0,"hi":626.0},{"d":"2026-05-21","a":402.0,"f":309.0,"lo":146.0,"hi":638.0},{"d":"2026-05-22","a":281.0,"f":282.0,"lo":132.0,"hi":616.0},{"d":"2026-05-23","a":178.0,"f":272.0,"lo":127.0,"hi":591.0},{"d":"2026-05-25","a":572.0,"f":266.0,"lo":127.0,"hi":579.0},{"d":"2026-05-26","a":347.0,"f":263.0,"lo":129.0,"hi":557.0},{"d":"2026-05-28","a":297.0,"f":259.0,"lo":125.0,"hi":561.0},{"d":"2026-05-29","a":401.0,"f":240.0,"lo":119.0,"hi":521.0},{"d":"2026-05-30","a":345.0,"f":232.0,"lo":117.0,"hi":503.0},{"d":"2026-06-02","a":469.0,"f":207.0,"lo":96.0,"hi":419.0},{"d":"2026-06-03","a":163.0,"f":234.0,"lo":102.0,"hi":457.0},{"d":"2026-06-04","a":641.0,"f":205.0,"lo":86.0,"hi":407.0},{"d":"2026-06-05","a":383.0,"f":224.0,"lo":96.0,"hi":458.0},{"d":"2026-06-06","a":299.0,"f":189.0,"lo":87.0,"hi":407.0},{"d":"2026-06-08","a":414.0,"f":261.0,"lo":117.0,"hi":533.0},{"d":"2026-06-09","a":274.0,"f":212.0,"lo":96.0,"hi":473.0},{"d":"2026-06-10","a":341.0,"f":211.0,"lo":97.0,"hi":451.0},{"d":"2026-06-11","a":186.0,"f":204.0,"lo":96.0,"hi":435.0}],"forward":[{"d":"2026-06-12","f":357.6,"lo":157.7,"hi":675.5},{"d":"2026-06-13","f":351.4,"lo":154.0,"hi":651.9},{"d":"2026-06-17","f":525.3,"lo":226.0,"hi":937.6},{"d":"2026-06-18","f":372.5,"lo":163.9,"hi":706.6},{"d":"2026-06-19","f":347.7,"lo":151.5,"hi":674.3},{"d":"2026-06-20","f":342.7,"lo":151.5,"hi":678.0},{"d":"2026-06-22","f":401.1,"lo":176.3,"hi":791.0},{"d":"2026-06-23","f":363.8,"lo":150.3,"hi":716.5},{"d":"2026-06-24","f":391.2,"lo":176.3,"hi":741.4},{"d":"2026-06-25","f":373.8,"lo":163.9,"hi":712.8},{"d":"2026-06-26","f":365.1,"lo":160.2,"hi":709.1},{"d":"2026-06-27","f":363.8,"lo":163.9,"hi":728.9},{"d":"2026-06-29","f":468.2,"lo":192.5,"hi":889.1},{"d":"2026-06-30","f":377.5,"lo":160.2,"hi":758.7},{"d":"2026-07-01","f":385.0,"lo":162.7,"hi":756.3},{"d":"2026-07-02","f":378.7,"lo":171.4,"hi":746.3},{"d":"2026-07-03","f":370.1,"lo":160.2,"hi":721.5},{"d":"2026-07-04","f":358.9,"lo":157.7,"hi":709.1},{"d":"2026-07-06","f":402.3,"lo":173.9,"hi":769.9},{"d":"2026-07-07","f":372.5,"lo":170.1,"hi":731.4},{"d":"2026-07-08","f":366.3,"lo":156.5,"hi":715.3},{"d":"2026-07-09","f":344.0,"lo":154.0,"hi":694.2},{"d":"2026-07-10","f":345.2,"lo":160.2,"hi":670.6},{"d":"2026-07-11","f":337.8,"lo":150.3,"hi":642.0},{"d":"2026-07-13","f":413.5,"lo":168.9,"hi":794.8},{"d":"2026-07-14","f":332.8,"lo":141.6,"hi":671.8},{"d":"2026-07-15","f":377.5,"lo":163.9,"hi":720.2},{"d":"2026-07-16","f":360.1,"lo":157.7,"hi":694.2},{"d":"2026-07-17","f":326.6,"lo":139.1,"hi":642.0},{"d":"2026-07-18","f":320.4,"lo":135.4,"hi":637.0}]},"Syrup Kartika Frambozen 620ml / Botol":{"history":[{"d":"2026-02-01","a":2.0},{"d":"2026-02-02","a":3.0},{"d":"2026-02-03","a":10.0},{"d":"2026-02-04","a":3.0},{"d":"2026-02-05","a":6.0},{"d":"2026-02-06","a":8.0},{"d":"2026-02-07","a":3.0},{"d":"2026-02-08","a":3.0},{"d":"2026-02-09","a":4.0},{"d":"2026-02-10","a":4.0},{"d":"2026-02-12","a":2.0},{"d":"2026-02-13","a":18.0},{"d":"2026-02-14","a":13.0},{"d":"2026-02-15","a":17.0},{"d":"2026-02-16","a":24.0},{"d":"2026-02-17","a":31.0},{"d":"2026-02-18","a":27.0},{"d":"2026-02-19","a":54.0},{"d":"2026-02-20","a":16.0},{"d":"2026-02-21","a":32.0},{"d":"2026-02-22","a":5.0},{"d":"2026-02-23","a":29.0},{"d":"2026-02-24","a":38.0},{"d":"2026-02-25","a":26.0},{"d":"2026-02-26","a":17.0},{"d":"2026-02-27","a":42.0},{"d":"2026-02-28","a":56.0},{"d":"2026-03-01","a":33.0},{"d":"2026-03-02","a":35.0},{"d":"2026-03-03","a":59.0},{"d":"2026-03-04","a":33.0},{"d":"2026-03-05","a":44.0},{"d":"2026-03-06","a":44.0},{"d":"2026-03-07","a":17.0},{"d":"2026-03-08","a":10.0},{"d":"2026-03-09","a":49.0},{"d":"2026-03-10","a":63.0},{"d":"2026-03-11","a":16.0},{"d":"2026-03-12","a":53.0},{"d":"2026-03-13","a":16.0},{"d":"2026-03-14","a":12.0},{"d":"2026-03-15","a":6.0},{"d":"2026-03-16","a":51.0},{"d":"2026-03-17","a":22.0},{"d":"2026-03-18","a":20.0},{"d":"2026-03-19","a":20.0},{"d":"2026-03-22","a":2.0},{"d":"2026-03-23","a":1.0},{"d":"2026-03-24","a":11.0},{"d":"2026-03-25","a":18.0},{"d":"2026-03-26","a":25.0},{"d":"2026-03-27","a":26.0},{"d":"2026-03-28","a":5.0},{"d":"2026-03-29","a":2.0},{"d":"2026-03-30","a":7.0},{"d":"2026-03-31","a":18.0},{"d":"2026-04-01","a":23.0},{"d":"2026-04-02","a":7.0},{"d":"2026-04-03","a":1.0},{"d":"2026-04-04","a":8.0},{"d":"2026-04-05","a":3.0},{"d":"2026-04-06","a":4.0},{"d":"2026-04-07","a":12.0},{"d":"2026-04-08","a":7.0},{"d":"2026-04-09","a":11.0},{"d":"2026-04-10","a":7.0},{"d":"2026-04-11","a":9.0},{"d":"2026-04-13","a":4.0},{"d":"2026-04-14","a":10.0},{"d":"2026-04-15","a":4.0},{"d":"2026-04-16","a":7.0},{"d":"2026-04-17","a":9.0},{"d":"2026-04-18","a":9.0},{"d":"2026-04-19","a":6.0},{"d":"2026-04-20","a":11.0},{"d":"2026-04-21","a":7.0},{"d":"2026-04-22","a":17.0},{"d":"2026-04-23","a":8.0},{"d":"2026-04-24","a":19.0},{"d":"2026-04-25","a":6.0},{"d":"2026-04-26","a":2.0},{"d":"2026-04-27","a":24.0},{"d":"2026-04-28","a":7.0},{"d":"2026-04-29","a":22.0},{"d":"2026-04-30","a":9.0},{"d":"2026-05-01","a":9.0},{"d":"2026-05-02","a":24.0},{"d":"2026-05-03","a":4.0},{"d":"2026-05-04","a":9.0},{"d":"2026-05-05","a":10.0},{"d":"2026-05-06","a":14.0},{"d":"2026-05-07","a":9.0},{"d":"2026-05-08","a":12.0},{"d":"2026-05-09","a":16.0},{"d":"2026-05-10","a":1.0},{"d":"2026-05-11","a":16.0},{"d":"2026-05-12","a":15.0},{"d":"2026-05-13","a":12.0},{"d":"2026-05-14","a":5.0},{"d":"2026-05-15","a":15.0},{"d":"2026-05-16","a":17.0},{"d":"2026-05-17","a":5.0},{"d":"2026-05-18","a":15.0},{"d":"2026-05-19","a":9.0},{"d":"2026-05-20","a":6.0},{"d":"2026-05-21","a":10.0},{"d":"2026-05-22","a":6.0},{"d":"2026-05-23","a":19.0},{"d":"2026-05-24","a":2.0},{"d":"2026-05-25","a":6.0},{"d":"2026-05-26","a":9.0},{"d":"2026-05-27","a":1.0},{"d":"2026-05-28","a":20.0},{"d":"2026-05-29","a":13.0},{"d":"2026-05-30","a":8.0},{"d":"2026-06-01","a":12.0},{"d":"2026-06-02","a":8.0},{"d":"2026-06-03","a":11.0},{"d":"2026-06-04","a":11.0},{"d":"2026-06-05","a":7.0},{"d":"2026-06-06","a":7.0},{"d":"2026-06-08","a":12.0},{"d":"2026-06-09","a":15.0}],"backtest":[{"d":"2026-03-14","a":12.0,"f":19.0,"lo":7.0,"hi":48.0},{"d":"2026-03-16","a":57.0,"f":26.0,"lo":9.0,"hi":61.0},{"d":"2026-03-17","a":22.0,"f":18.0,"lo":7.0,"hi":44.0},{"d":"2026-03-18","a":20.0,"f":17.0,"lo":7.0,"hi":44.0},{"d":"2026-03-23","a":1.0,"f":8.0,"lo":3.0,"hi":23.0},{"d":"2026-03-24","a":13.0,"f":20.0,"lo":7.0,"hi":46.0},{"d":"2026-03-25","a":18.0,"f":17.0,"lo":8.0,"hi":38.0},{"d":"2026-03-26","a":25.0,"f":16.0,"lo":6.0,"hi":33.0},{"d":"2026-03-27","a":26.0,"f":22.0,"lo":9.0,"hi":50.0},{"d":"2026-03-28","a":5.0,"f":21.0,"lo":8.0,"hi":49.0},{"d":"2026-03-30","a":8.0,"f":18.0,"lo":8.0,"hi":36.0},{"d":"2026-03-31","a":19.0,"f":22.0,"lo":7.0,"hi":53.0},{"d":"2026-04-01","a":23.0,"f":18.0,"lo":5.0,"hi":39.0},{"d":"2026-04-02","a":7.0,"f":5.0,"lo":2.0,"hi":10.0},{"d":"2026-04-04","a":8.0,"f":26.0,"lo":11.0,"hi":55.0},{"d":"2026-04-06","a":7.0,"f":21.0,"lo":9.0,"hi":46.0},{"d":"2026-04-07","a":12.0,"f":15.0,"lo":5.0,"hi":34.0},{"d":"2026-04-08","a":7.0,"f":12.0,"lo":4.0,"hi":25.0},{"d":"2026-04-09","a":11.0,"f":20.0,"lo":7.0,"hi":45.0},{"d":"2026-04-10","a":7.0,"f":9.0,"lo":3.0,"hi":18.0},{"d":"2026-04-11","a":9.0,"f":20.0,"lo":7.0,"hi":40.0},{"d":"2026-04-13","a":4.0,"f":23.0,"lo":7.0,"hi":48.0},{"d":"2026-04-14","a":10.0,"f":16.0,"lo":6.0,"hi":39.0},{"d":"2026-04-15","a":4.0,"f":13.0,"lo":4.0,"hi":33.0},{"d":"2026-04-16","a":7.0,"f":17.0,"lo":6.0,"hi":41.0},{"d":"2026-04-17","a":9.0,"f":10.0,"lo":4.0,"hi":21.0},{"d":"2026-04-18","a":9.0,"f":12.0,"lo":4.0,"hi":26.0},{"d":"2026-04-20","a":17.0,"f":20.0,"lo":8.0,"hi":44.0},{"d":"2026-04-21","a":7.0,"f":8.0,"lo":3.0,"hi":20.0},{"d":"2026-04-22","a":17.0,"f":12.0,"lo":4.0,"hi":31.0},{"d":"2026-04-23","a":8.0,"f":12.0,"lo":5.0,"hi":28.0},{"d":"2026-04-24","a":19.0,"f":14.0,"lo":4.0,"hi":34.0},{"d":"2026-04-25","a":6.0,"f":18.0,"lo":5.0,"hi":43.0},{"d":"2026-04-27","a":25.0,"f":14.0,"lo":6.0,"hi":36.0},{"d":"2026-04-28","a":8.0,"f":20.0,"lo":7.0,"hi":49.0},{"d":"2026-04-29","a":22.0,"f":19.0,"lo":7.0,"hi":48.0},{"d":"2026-04-30","a":9.0,"f":20.0,"lo":6.0,"hi":50.0},{"d":"2026-05-02","a":24.0,"f":20.0,"lo":6.0,"hi":49.0},{"d":"2026-05-04","a":12.0,"f":16.0,"lo":5.0,"hi":41.0},{"d":"2026-05-05","a":11.0,"f":17.0,"lo":5.0,"hi":43.0},{"d":"2026-05-06","a":14.0,"f":20.0,"lo":8.0,"hi":50.0},{"d":"2026-05-07","a":9.0,"f":19.0,"lo":8.0,"hi":49.0},{"d":"2026-05-08","a":12.0,"f":13.0,"lo":4.0,"hi":35.0},{"d":"2026-05-09","a":16.0,"f":17.0,"lo":5.0,"hi":46.0},{"d":"2026-05-11","a":17.0,"f":24.0,"lo":9.0,"hi":58.0},{"d":"2026-05-12","a":15.0,"f":18.0,"lo":5.0,"hi":48.0},{"d":"2026-05-13","a":12.0,"f":18.0,"lo":7.0,"hi":44.0},{"d":"2026-05-16","a":17.0,"f":20.0,"lo":8.0,"hi":45.0},{"d":"2026-05-18","a":20.0,"f":19.0,"lo":8.0,"hi":44.0},{"d":"2026-05-19","a":9.0,"f":16.0,"lo":5.0,"hi":37.0},{"d":"2026-05-20","a":6.0,"f":12.0,"lo":5.0,"hi":28.0},{"d":"2026-05-21","a":10.0,"f":12.0,"lo":4.0,"hi":30.0},{"d":"2026-05-22","a":6.0,"f":14.0,"lo":6.0,"hi":31.0},{"d":"2026-05-23","a":19.0,"f":17.0,"lo":7.0,"hi":42.0},{"d":"2026-05-25","a":7.0,"f":14.0,"lo":5.0,"hi":31.0},{"d":"2026-05-26","a":9.0,"f":13.0,"lo":5.0,"hi":28.0},{"d":"2026-05-28","a":20.0,"f":20.0,"lo":8.0,"hi":46.0},{"d":"2026-05-29","a":13.0,"f":20.0,"lo":8.0,"hi":45.0},{"d":"2026-05-30","a":8.0,"f":11.0,"lo":5.0,"hi":28.0},{"d":"2026-06-02","a":8.0,"f":16.0,"lo":7.0,"hi":35.0},{"d":"2026-06-03","a":11.0,"f":15.0,"lo":7.0,"hi":32.0},{"d":"2026-06-04","a":11.0,"f":14.0,"lo":7.0,"hi":32.0},{"d":"2026-06-05","a":7.0,"f":15.0,"lo":7.0,"hi":33.0},{"d":"2026-06-06","a":7.0,"f":7.0,"lo":3.0,"hi":17.0},{"d":"2026-06-08","a":12.0,"f":15.0,"lo":7.0,"hi":34.0},{"d":"2026-06-09","a":19.0,"f":14.0,"lo":7.0,"hi":32.0},{"d":"2026-06-10","a":17.0,"f":14.0,"lo":7.0,"hi":32.0}],"forward":[{"d":"2026-06-12","f":18.6,"lo":7.5,"hi":38.5},{"d":"2026-06-13","f":17.4,"lo":7.5,"hi":36.0},{"d":"2026-06-17","f":24.8,"lo":9.9,"hi":48.4},{"d":"2026-06-18","f":19.9,"lo":7.5,"hi":38.5},{"d":"2026-06-19","f":17.4,"lo":7.5,"hi":37.3},{"d":"2026-06-20","f":18.6,"lo":7.5,"hi":39.7},{"d":"2026-06-22","f":23.6,"lo":9.9,"hi":44.7},{"d":"2026-06-23","f":19.9,"lo":7.5,"hi":42.2},{"d":"2026-06-24","f":19.9,"lo":7.5,"hi":39.7},{"d":"2026-06-25","f":19.9,"lo":7.5,"hi":39.7},{"d":"2026-06-26","f":17.4,"lo":7.5,"hi":41.0},{"d":"2026-06-27","f":19.9,"lo":7.5,"hi":41.0},{"d":"2026-06-29","f":23.6,"lo":8.7,"hi":48.4},{"d":"2026-06-30","f":19.9,"lo":7.5,"hi":43.5},{"d":"2026-07-01","f":21.1,"lo":7.5,"hi":44.7},{"d":"2026-07-02","f":21.1,"lo":7.5,"hi":45.9},{"d":"2026-07-03","f":21.1,"lo":7.5,"hi":44.7},{"d":"2026-07-04","f":19.9,"lo":7.5,"hi":44.7},{"d":"2026-07-06","f":22.4,"lo":8.7,"hi":45.9},{"d":"2026-07-07","f":21.1,"lo":7.5,"hi":45.9},{"d":"2026-07-08","f":19.9,"lo":7.5,"hi":43.5},{"d":"2026-07-09","f":19.9,"lo":7.5,"hi":41.0},{"d":"2026-07-10","f":19.9,"lo":7.5,"hi":41.0},{"d":"2026-07-11","f":19.9,"lo":7.5,"hi":39.7},{"d":"2026-07-13","f":22.4,"lo":8.7,"hi":45.9},{"d":"2026-07-14","f":16.1,"lo":7.5,"hi":39.7},{"d":"2026-07-15","f":18.6,"lo":7.5,"hi":41.0},{"d":"2026-07-16","f":19.9,"lo":7.5,"hi":39.7},{"d":"2026-07-17","f":16.1,"lo":7.5,"hi":38.5},{"d":"2026-07-18","f":16.1,"lo":7.5,"hi":37.3}]},"Beras Raja Lele 2.5 kg pcs":{"history":[{"d":"2026-02-01","a":16.0},{"d":"2026-02-02","a":20.0},{"d":"2026-02-03","a":2.0},{"d":"2026-02-04","a":7.0},{"d":"2026-02-05","a":17.0},{"d":"2026-02-06","a":42.0},{"d":"2026-02-07","a":7.0},{"d":"2026-02-08","a":2.0},{"d":"2026-02-09","a":30.0},{"d":"2026-02-10","a":19.0},{"d":"2026-02-11","a":15.0},{"d":"2026-02-12","a":7.0},{"d":"2026-02-13","a":12.0},{"d":"2026-02-14","a":9.0},{"d":"2026-02-15","a":14.0},{"d":"2026-02-16","a":28.0},{"d":"2026-02-17","a":9.0},{"d":"2026-02-18","a":28.0},{"d":"2026-02-19","a":14.0},{"d":"2026-02-20","a":32.0},{"d":"2026-02-21","a":20.0},{"d":"2026-02-22","a":4.0},{"d":"2026-02-23","a":45.0},{"d":"2026-02-24","a":19.0},{"d":"2026-02-25","a":10.0},{"d":"2026-02-26","a":13.0},{"d":"2026-02-27","a":35.0},{"d":"2026-02-28","a":35.0},{"d":"2026-03-01","a":37.0},{"d":"2026-03-02","a":53.0},{"d":"2026-03-03","a":65.0},{"d":"2026-03-04","a":31.0},{"d":"2026-03-05","a":42.0},{"d":"2026-03-06","a":17.0},{"d":"2026-03-07","a":21.0},{"d":"2026-03-08","a":17.0},{"d":"2026-03-09","a":69.0},{"d":"2026-03-10","a":65.0},{"d":"2026-03-11","a":87.0},{"d":"2026-03-12","a":42.0},{"d":"2026-03-13","a":91.0},{"d":"2026-03-14","a":31.0},{"d":"2026-03-15","a":32.0},{"d":"2026-03-16","a":70.0},{"d":"2026-03-17","a":59.0},{"d":"2026-03-18","a":56.0},{"d":"2026-03-19","a":16.0},{"d":"2026-03-23","a":1.0},{"d":"2026-03-24","a":7.0},{"d":"2026-03-25","a":6.0},{"d":"2026-03-26","a":17.0},{"d":"2026-03-27","a":9.0},{"d":"2026-03-28","a":12.0},{"d":"2026-03-29","a":3.0},{"d":"2026-03-30","a":8.0},{"d":"2026-03-31","a":8.0},{"d":"2026-04-01","a":3.0},{"d":"2026-04-02","a":2.0},{"d":"2026-04-03","a":2.0},{"d":"2026-04-04","a":3.0},{"d":"2026-04-06","a":8.0},{"d":"2026-04-07","a":7.0},{"d":"2026-04-08","a":10.0},{"d":"2026-04-09","a":4.0},{"d":"2026-04-10","a":11.0},{"d":"2026-04-11","a":11.0},{"d":"2026-04-12","a":8.0},{"d":"2026-04-13","a":7.0},{"d":"2026-04-14","a":9.0},{"d":"2026-04-15","a":9.0},{"d":"2026-04-16","a":3.0},{"d":"2026-04-17","a":15.0},{"d":"2026-04-20","a":5.0},{"d":"2026-04-21","a":15.0},{"d":"2026-04-22","a":5.0},{"d":"2026-04-23","a":10.0},{"d":"2026-04-24","a":2.0},{"d":"2026-04-25","a":18.0},{"d":"2026-04-26","a":6.0},{"d":"2026-04-27","a":5.0},{"d":"2026-04-28","a":11.0},{"d":"2026-04-29","a":9.0},{"d":"2026-04-30","a":14.0},{"d":"2026-05-02","a":3.0},{"d":"2026-05-04","a":22.0},{"d":"2026-05-05","a":10.0},{"d":"2026-05-06","a":14.0},{"d":"2026-05-07","a":17.0},{"d":"2026-05-08","a":18.0},{"d":"2026-05-09","a":16.0},{"d":"2026-05-10","a":10.0},{"d":"2026-05-11","a":19.0},{"d":"2026-05-12","a":4.0},{"d":"2026-05-13","a":7.0},{"d":"2026-05-14","a":1.0},{"d":"2026-05-15","a":13.0},{"d":"2026-05-16","a":13.0},{"d":"2026-05-17","a":1.0},{"d":"2026-05-18","a":8.0},{"d":"2026-05-19","a":15.0},{"d":"2026-05-20","a":9.0},{"d":"2026-05-21","a":14.0},{"d":"2026-05-22","a":22.0},{"d":"2026-05-23","a":3.0},{"d":"2026-05-24","a":3.0},{"d":"2026-05-25","a":8.0},{"d":"2026-05-26","a":4.0},{"d":"2026-05-28","a":3.0},{"d":"2026-05-29","a":4.0},{"d":"2026-05-30","a":5.0},{"d":"2026-06-01","a":6.0},{"d":"2026-06-02","a":5.0},{"d":"2026-06-03","a":6.0},{"d":"2026-06-04","a":1.0},{"d":"2026-06-05","a":6.0},{"d":"2026-06-06","a":13.0},{"d":"2026-06-08","a":41.0},{"d":"2026-06-09","a":2.0}],"backtest":[{"d":"2026-03-14","a":31.0,"f":18.0,"lo":1.0,"hi":64.0},{"d":"2026-03-16","a":102.0,"f":32.0,"lo":4.0,"hi":82.0},{"d":"2026-03-17","a":59.0,"f":22.0,"lo":2.0,"hi":65.0},{"d":"2026-03-18","a":56.0,"f":17.0,"lo":2.0,"hi":57.0},{"d":"2026-03-23","a":1.0,"f":7.0,"lo":2.0,"hi":16.0},{"d":"2026-03-24","a":7.0,"f":17.0,"lo":4.0,"hi":43.0},{"d":"2026-03-25","a":6.0,"f":14.0,"lo":2.0,"hi":38.0},{"d":"2026-03-26","a":17.0,"f":24.0,"lo":5.0,"hi":56.0},{"d":"2026-03-27","a":9.0,"f":16.0,"lo":2.0,"hi":53.0},{"d":"2026-03-28","a":12.0,"f":11.0,"lo":1.0,"hi":32.0},{"d":"2026-03-30","a":11.0,"f":24.0,"lo":4.0,"hi":60.0},{"d":"2026-03-31","a":8.0,"f":12.0,"lo":3.0,"hi":34.0},{"d":"2026-04-01","a":3.0,"f":21.0,"lo":4.0,"hi":52.0},{"d":"2026-04-02","a":2.0,"f":5.0,"lo":1.0,"hi":18.0},{"d":"2026-04-04","a":3.0,"f":16.0,"lo":2.0,"hi":50.0},{"d":"2026-04-06","a":8.0,"f":19.0,"lo":3.0,"hi":52.0},{"d":"2026-04-07","a":7.0,"f":22.0,"lo":4.0,"hi":52.0},{"d":"2026-04-08","a":10.0,"f":18.0,"lo":1.0,"hi":51.0},{"d":"2026-04-09","a":4.0,"f":20.0,"lo":2.0,"hi":51.0},{"d":"2026-04-10","a":11.0,"f":17.0,"lo":1.0,"hi":46.0},{"d":"2026-04-11","a":11.0,"f":22.0,"lo":3.0,"hi":55.0},{"d":"2026-04-13","a":15.0,"f":32.0,"lo":9.0,"hi":80.0},{"d":"2026-04-14","a":9.0,"f":20.0,"lo":6.0,"hi":62.0},{"d":"2026-04-15","a":9.0,"f":16.0,"lo":3.0,"hi":48.0},{"d":"2026-04-16","a":3.0,"f":11.0,"lo":2.0,"hi":32.0},{"d":"2026-04-17","a":15.0,"f":18.0,"lo":5.0,"hi":54.0},{"d":"2026-04-20","a":5.0,"f":27.0,"lo":9.0,"hi":66.0},{"d":"2026-04-21","a":15.0,"f":18.0,"lo":4.0,"hi":47.0},{"d":"2026-04-22","a":5.0,"f":16.0,"lo":3.0,"hi":46.0},{"d":"2026-04-23","a":10.0,"f":18.0,"lo":5.0,"hi":50.0},{"d":"2026-04-24","a":2.0,"f":14.0,"lo":3.0,"hi":40.0},{"d":"2026-04-25","a":18.0,"f":17.0,"lo":4.0,"hi":50.0},{"d":"2026-04-27","a":11.0,"f":16.0,"lo":5.0,"hi":44.0},{"d":"2026-04-28","a":11.0,"f":21.0,"lo":6.0,"hi":60.0},{"d":"2026-04-29","a":9.0,"f":23.0,"lo":6.0,"hi":67.0},{"d":"2026-04-30","a":14.0,"f":23.0,"lo":5.0,"hi":68.0},{"d":"2026-05-02","a":3.0,"f":11.0,"lo":3.0,"hi":32.0},{"d":"2026-05-04","a":22.0,"f":24.0,"lo":6.0,"hi":68.0},{"d":"2026-05-05","a":10.0,"f":19.0,"lo":5.0,"hi":56.0},{"d":"2026-05-06","a":14.0,"f":18.0,"lo":5.0,"hi":46.0},{"d":"2026-05-07","a":17.0,"f":26.0,"lo":7.0,"hi":71.0},{"d":"2026-05-08","a":18.0,"f":17.0,"lo":4.0,"hi":49.0},{"d":"2026-05-09","a":16.0,"f":20.0,"lo":4.0,"hi":59.0},{"d":"2026-05-11","a":29.0,"f":26.0,"lo":7.0,"hi":71.0},{"d":"2026-05-12","a":4.0,"f":15.0,"lo":3.0,"hi":41.0},{"d":"2026-05-13","a":7.0,"f":12.0,"lo":4.0,"hi":34.0},{"d":"2026-05-16","a":13.0,"f":12.0,"lo":2.0,"hi":41.0},{"d":"2026-05-18","a":9.0,"f":12.0,"lo":4.0,"hi":33.0},{"d":"2026-05-19","a":15.0,"f":17.0,"lo":5.0,"hi":51.0},{"d":"2026-05-20","a":9.0,"f":15.0,"lo":4.0,"hi":49.0},{"d":"2026-05-21","a":14.0,"f":16.0,"lo":5.0,"hi":49.0},{"d":"2026-05-22","a":22.0,"f":13.0,"lo":4.0,"hi":40.0},{"d":"2026-05-23","a":3.0,"f":5.0,"lo":2.0,"hi":17.0},{"d":"2026-05-25","a":11.0,"f":14.0,"lo":5.0,"hi":40.0},{"d":"2026-05-26","a":4.0,"f":5.0,"lo":2.0,"hi":17.0},{"d":"2026-05-28","a":3.0,"f":5.0,"lo":2.0,"hi":17.0},{"d":"2026-05-29","a":4.0,"f":5.0,"lo":2.0,"hi":17.0},{"d":"2026-05-30","a":5.0,"f":5.0,"lo":2.0,"hi":19.0},{"d":"2026-06-02","a":5.0,"f":4.0,"lo":2.0,"hi":9.0},{"d":"2026-06-03","a":6.0,"f":3.0,"lo":0.0,"hi":8.0},{"d":"2026-06-04","a":1.0,"f":4.0,"lo":2.0,"hi":10.0},{"d":"2026-06-05","a":6.0,"f":3.0,"lo":1.0,"hi":8.0},{"d":"2026-06-06","a":13.0,"f":14.0,"lo":5.0,"hi":37.0},{"d":"2026-06-08","a":41.0,"f":17.0,"lo":6.0,"hi":41.0},{"d":"2026-06-09","a":10.0,"f":13.0,"lo":5.0,"hi":31.0},{"d":"2026-06-10","a":8.0,"f":13.0,"lo":5.0,"hi":31.0},{"d":"2026-06-11","a":3.0,"f":15.0,"lo":4.0,"hi":37.0}],"forward":[{"d":"2026-06-12","f":18.6,"lo":6.2,"hi":52.2},{"d":"2026-06-13","f":19.9,"lo":6.2,"hi":54.6},{"d":"2026-06-17","f":23.6,"lo":9.9,"hi":63.3},{"d":"2026-06-18","f":19.9,"lo":6.2,"hi":52.2},{"d":"2026-06-19","f":17.4,"lo":6.2,"hi":49.7},{"d":"2026-06-20","f":18.6,"lo":7.5,"hi":50.9},{"d":"2026-06-22","f":22.4,"lo":8.7,"hi":54.6},{"d":"2026-06-23","f":19.9,"lo":7.5,"hi":48.4},{"d":"2026-06-24","f":19.9,"lo":7.5,"hi":50.9},{"d":"2026-06-25","f":18.6,"lo":7.5,"hi":45.9},{"d":"2026-06-26","f":18.6,"lo":6.2,"hi":48.4},{"d":"2026-06-27","f":18.6,"lo":7.5,"hi":49.7},{"d":"2026-06-29","f":22.4,"lo":7.5,"hi":55.9},{"d":"2026-06-30","f":19.9,"lo":7.5,"hi":52.2},{"d":"2026-07-01","f":21.1,"lo":8.7,"hi":54.6},{"d":"2026-07-02","f":21.1,"lo":7.5,"hi":54.6},{"d":"2026-07-03","f":18.6,"lo":6.2,"hi":50.9},{"d":"2026-07-04","f":16.1,"lo":6.2,"hi":48.4},{"d":"2026-07-06","f":18.6,"lo":6.2,"hi":50.9},{"d":"2026-07-07","f":14.9,"lo":6.2,"hi":49.7},{"d":"2026-07-08","f":17.4,"lo":6.2,"hi":47.2},{"d":"2026-07-09","f":17.4,"lo":6.2,"hi":48.4},{"d":"2026-07-10","f":16.1,"lo":6.2,"hi":48.4},{"d":"2026-07-11","f":14.9,"lo":6.2,"hi":48.4},{"d":"2026-07-13","f":21.1,"lo":8.7,"hi":57.1},{"d":"2026-07-14","f":17.4,"lo":6.2,"hi":48.4},{"d":"2026-07-15","f":19.9,"lo":7.5,"hi":49.7},{"d":"2026-07-16","f":19.9,"lo":7.5,"hi":52.2},{"d":"2026-07-17","f":18.6,"lo":5.0,"hi":50.9},{"d":"2026-07-18","f":18.6,"lo":6.2,"hi":48.4}]},"Djarum Super 12 / Bks":{"history":[{"d":"2026-02-01","a":18.0},{"d":"2026-02-02","a":124.0},{"d":"2026-02-03","a":63.0},{"d":"2026-02-04","a":71.0},{"d":"2026-02-05","a":77.0},{"d":"2026-02-06","a":109.0},{"d":"2026-02-07","a":76.0},{"d":"2026-02-08","a":14.0},{"d":"2026-02-09","a":84.0},{"d":"2026-02-10","a":89.0},{"d":"2026-02-11","a":101.0},{"d":"2026-02-12","a":59.0},{"d":"2026-02-13","a":96.0},{"d":"2026-02-14","a":55.0},{"d":"2026-02-15","a":10.0},{"d":"2026-02-16","a":78.0},{"d":"2026-02-17","a":72.0},{"d":"2026-02-18","a":86.0},{"d":"2026-02-19","a":40.0},{"d":"2026-02-20","a":61.0},{"d":"2026-02-21","a":49.0},{"d":"2026-02-22","a":32.0},{"d":"2026-02-23","a":72.0},{"d":"2026-02-24","a":36.0},{"d":"2026-02-25","a":33.0},{"d":"2026-02-26","a":63.0},{"d":"2026-02-27","a":59.0},{"d":"2026-02-28","a":55.0},{"d":"2026-03-01","a":6.0},{"d":"2026-03-02","a":68.0},{"d":"2026-03-03","a":42.0},{"d":"2026-03-04","a":54.0},{"d":"2026-03-05","a":75.0},{"d":"2026-03-06","a":54.0},{"d":"2026-03-07","a":49.0},{"d":"2026-03-08","a":16.0},{"d":"2026-03-09","a":81.0},{"d":"2026-03-10","a":28.0},{"d":"2026-03-11","a":45.0},{"d":"2026-03-12","a":76.0},{"d":"2026-03-13","a":93.0},{"d":"2026-03-14","a":77.0},{"d":"2026-03-15","a":13.0},{"d":"2026-03-16","a":100.0},{"d":"2026-03-17","a":82.0},{"d":"2026-03-18","a":93.0},{"d":"2026-03-19","a":84.0},{"d":"2026-03-20","a":2.0},{"d":"2026-03-22","a":19.0},{"d":"2026-03-23","a":160.0},{"d":"2026-03-24","a":67.0},{"d":"2026-03-25","a":122.0},{"d":"2026-03-26","a":128.0},{"d":"2026-03-27","a":59.0},{"d":"2026-03-28","a":46.0},{"d":"2026-03-29","a":13.0},{"d":"2026-03-30","a":79.0},{"d":"2026-03-31","a":57.0},{"d":"2026-04-01","a":84.0},{"d":"2026-04-02","a":99.0},{"d":"2026-04-03","a":46.0},{"d":"2026-04-04","a":127.0},{"d":"2026-04-05","a":28.0},{"d":"2026-04-06","a":96.0},{"d":"2026-04-07","a":91.0},{"d":"2026-04-08","a":89.0},{"d":"2026-04-09","a":51.0},{"d":"2026-04-10","a":79.0},{"d":"2026-04-11","a":81.0},{"d":"2026-04-12","a":17.0},{"d":"2026-04-13","a":108.0},{"d":"2026-04-14","a":57.0},{"d":"2026-04-15","a":69.0},{"d":"2026-04-16","a":63.0},{"d":"2026-04-17","a":93.0},{"d":"2026-04-18","a":68.0},{"d":"2026-04-19","a":19.0},{"d":"2026-04-20","a":132.0},{"d":"2026-04-21","a":76.0},{"d":"2026-04-22","a":78.0},{"d":"2026-04-23","a":75.0},{"d":"2026-04-24","a":76.0},{"d":"2026-04-25","a":108.0},{"d":"2026-04-26","a":13.0},{"d":"2026-04-27","a":105.0},{"d":"2026-04-28","a":80.0},{"d":"2026-04-29","a":53.0},{"d":"2026-04-30","a":94.0},{"d":"2026-05-01","a":44.0},{"d":"2026-05-02","a":83.0},{"d":"2026-05-03","a":35.0},{"d":"2026-05-04","a":97.0},{"d":"2026-05-05","a":80.0},{"d":"2026-05-06","a":70.0},{"d":"2026-05-07","a":53.0},{"d":"2026-05-08","a":69.0},{"d":"2026-05-09","a":52.0},{"d":"2026-05-10","a":18.0},{"d":"2026-05-11","a":112.0},{"d":"2026-05-12","a":63.0},{"d":"2026-05-13","a":59.0},{"d":"2026-05-14","a":9.0},{"d":"2026-05-15","a":56.0},{"d":"2026-05-16","a":97.0},{"d":"2026-05-17","a":2.0},{"d":"2026-05-18","a":101.0},{"d":"2026-05-19","a":71.0},{"d":"2026-05-20","a":64.0},{"d":"2026-05-21","a":50.0},{"d":"2026-05-22","a":77.0},{"d":"2026-05-23","a":82.0},{"d":"2026-05-24","a":27.0},{"d":"2026-05-25","a":93.0},{"d":"2026-05-26","a":102.0},{"d":"2026-05-27","a":17.0},{"d":"2026-05-28","a":118.0},{"d":"2026-05-29","a":65.0},{"d":"2026-05-30","a":86.0},{"d":"2026-05-31","a":6.0},{"d":"2026-06-01","a":25.0},{"d":"2026-06-02","a":99.0},{"d":"2026-06-03","a":48.0},{"d":"2026-06-04","a":66.0},{"d":"2026-06-05","a":54.0},{"d":"2026-06-06","a":78.0},{"d":"2026-06-07","a":6.0},{"d":"2026-06-08","a":60.0},{"d":"2026-06-09","a":67.0}],"backtest":[{"d":"2026-03-14","a":77.0,"f":57.0,"lo":37.0,"hi":96.0},{"d":"2026-03-16","a":113.0,"f":62.0,"lo":39.0,"hi":99.0},{"d":"2026-03-17","a":82.0,"f":58.0,"lo":38.0,"hi":97.0},{"d":"2026-03-18","a":93.0,"f":51.0,"lo":37.0,"hi":88.0},{"d":"2026-03-23","a":179.0,"f":76.0,"lo":45.0,"hi":126.0},{"d":"2026-03-24","a":67.0,"f":58.0,"lo":38.0,"hi":97.0},{"d":"2026-03-25","a":122.0,"f":61.0,"lo":41.0,"hi":101.0},{"d":"2026-03-26","a":128.0,"f":59.0,"lo":40.0,"hi":99.0},{"d":"2026-03-27","a":59.0,"f":41.0,"lo":27.0,"hi":68.0},{"d":"2026-03-28","a":46.0,"f":45.0,"lo":29.0,"hi":78.0},{"d":"2026-03-30","a":92.0,"f":52.0,"lo":32.0,"hi":92.0},{"d":"2026-03-31","a":57.0,"f":60.0,"lo":39.0,"hi":105.0},{"d":"2026-04-01","a":84.0,"f":64.0,"lo":39.0,"hi":107.0},{"d":"2026-04-02","a":99.0,"f":59.0,"lo":39.0,"hi":104.0},{"d":"2026-04-04","a":127.0,"f":63.0,"lo":41.0,"hi":110.0},{"d":"2026-04-06","a":124.0,"f":60.0,"lo":38.0,"hi":103.0},{"d":"2026-04-07","a":91.0,"f":60.0,"lo":38.0,"hi":107.0},{"d":"2026-04-08","a":89.0,"f":58.0,"lo":38.0,"hi":100.0},{"d":"2026-04-09","a":51.0,"f":60.0,"lo":38.0,"hi":103.0},{"d":"2026-04-10","a":79.0,"f":61.0,"lo":39.0,"hi":103.0},{"d":"2026-04-11","a":81.0,"f":59.0,"lo":38.0,"hi":95.0},{"d":"2026-04-13","a":125.0,"f":109.0,"lo":52.0,"hi":191.0},{"d":"2026-04-14","a":57.0,"f":83.0,"lo":44.0,"hi":149.0},{"d":"2026-04-15","a":69.0,"f":80.0,"lo":43.0,"hi":145.0},{"d":"2026-04-16","a":63.0,"f":69.0,"lo":39.0,"hi":122.0},{"d":"2026-04-17","a":93.0,"f":76.0,"lo":41.0,"hi":137.0},{"d":"2026-04-18","a":68.0,"f":66.0,"lo":36.0,"hi":120.0},{"d":"2026-04-20","a":151.0,"f":94.0,"lo":48.0,"hi":163.0},{"d":"2026-04-21","a":76.0,"f":75.0,"lo":40.0,"hi":139.0},{"d":"2026-04-22","a":78.0,"f":69.0,"lo":36.0,"hi":131.0},{"d":"2026-04-23","a":75.0,"f":68.0,"lo":38.0,"hi":125.0},{"d":"2026-04-24","a":76.0,"f":63.0,"lo":37.0,"hi":117.0},{"d":"2026-04-25","a":108.0,"f":69.0,"lo":36.0,"hi":130.0},{"d":"2026-04-27","a":118.0,"f":81.0,"lo":44.0,"hi":149.0},{"d":"2026-04-28","a":80.0,"f":76.0,"lo":42.0,"hi":150.0},{"d":"2026-04-29","a":53.0,"f":75.0,"lo":44.0,"hi":144.0},{"d":"2026-04-30","a":94.0,"f":72.0,"lo":40.0,"hi":141.0},{"d":"2026-05-02","a":83.0,"f":76.0,"lo":42.0,"hi":142.0},{"d":"2026-05-04","a":132.0,"f":80.0,"lo":41.0,"hi":149.0},{"d":"2026-05-05","a":80.0,"f":79.0,"lo":41.0,"hi":143.0},{"d":"2026-05-06","a":70.0,"f":74.0,"lo":40.0,"hi":134.0},{"d":"2026-05-07","a":53.0,"f":76.0,"lo":41.0,"hi":139.0},{"d":"2026-05-08","a":69.0,"f":73.0,"lo":39.0,"hi":131.0},{"d":"2026-05-09","a":52.0,"f":64.0,"lo":36.0,"hi":111.0},{"d":"2026-05-11","a":130.0,"f":82.0,"lo":45.0,"hi":148.0},{"d":"2026-05-12","a":63.0,"f":69.0,"lo":37.0,"hi":128.0},{"d":"2026-05-13","a":59.0,"f":75.0,"lo":46.0,"hi":135.0},{"d":"2026-05-16","a":97.0,"f":76.0,"lo":46.0,"hi":136.0},{"d":"2026-05-18","a":103.0,"f":73.0,"lo":46.0,"hi":128.0},{"d":"2026-05-19","a":71.0,"f":80.0,"lo":48.0,"hi":143.0},{"d":"2026-05-20","a":64.0,"f":73.0,"lo":45.0,"hi":127.0},{"d":"2026-05-21","a":50.0,"f":71.0,"lo":44.0,"hi":123.0},{"d":"2026-05-22","a":77.0,"f":70.0,"lo":45.0,"hi":127.0},{"d":"2026-05-23","a":82.0,"f":71.0,"lo":45.0,"hi":123.0},{"d":"2026-05-25","a":120.0,"f":74.0,"lo":46.0,"hi":129.0},{"d":"2026-05-26","a":102.0,"f":73.0,"lo":45.0,"hi":126.0},{"d":"2026-05-28","a":118.0,"f":69.0,"lo":44.0,"hi":120.0},{"d":"2026-05-29","a":65.0,"f":70.0,"lo":44.0,"hi":120.0},{"d":"2026-05-30","a":86.0,"f":67.0,"lo":44.0,"hi":117.0},{"d":"2026-06-02","a":99.0,"f":55.0,"lo":34.0,"hi":94.0},{"d":"2026-06-03","a":48.0,"f":55.0,"lo":35.0,"hi":94.0},{"d":"2026-06-04","a":66.0,"f":55.0,"lo":34.0,"hi":92.0},{"d":"2026-06-05","a":54.0,"f":53.0,"lo":34.0,"hi":93.0},{"d":"2026-06-06","a":78.0,"f":52.0,"lo":34.0,"hi":90.0},{"d":"2026-06-08","a":66.0,"f":62.0,"lo":38.0,"hi":107.0},{"d":"2026-06-09","a":93.0,"f":55.0,"lo":35.0,"hi":99.0},{"d":"2026-06-10","a":47.0,"f":55.0,"lo":36.0,"hi":95.0},{"d":"2026-06-11","a":35.0,"f":55.0,"lo":36.0,"hi":95.0}],"forward":[{"d":"2026-06-12","f":90.7,"lo":55.9,"hi":149.0},{"d":"2026-06-13","f":83.2,"lo":50.9,"hi":139.1},{"d":"2026-06-17","f":99.3,"lo":57.1,"hi":163.9},{"d":"2026-06-18","f":86.9,"lo":53.4,"hi":144.0},{"d":"2026-06-19","f":83.2,"lo":50.9,"hi":140.3},{"d":"2026-06-20","f":83.2,"lo":50.9,"hi":137.8},{"d":"2026-06-22","f":93.1,"lo":55.9,"hi":159.0},{"d":"2026-06-23","f":86.9,"lo":52.2,"hi":149.0},{"d":"2026-06-24","f":86.9,"lo":53.4,"hi":145.3},{"d":"2026-06-25","f":86.9,"lo":53.4,"hi":144.0},{"d":"2026-06-26","f":84.4,"lo":52.2,"hi":139.1},{"d":"2026-06-27","f":86.9,"lo":53.4,"hi":145.3},{"d":"2026-06-29","f":104.3,"lo":59.6,"hi":175.1},{"d":"2026-06-30","f":89.4,"lo":54.6,"hi":154.0},{"d":"2026-07-01","f":88.2,"lo":53.4,"hi":147.8},{"d":"2026-07-02","f":89.4,"lo":54.6,"hi":149.0},{"d":"2026-07-03","f":85.7,"lo":52.2,"hi":144.0},{"d":"2026-07-04","f":86.9,"lo":54.6,"hi":144.0},{"d":"2026-07-06","f":89.4,"lo":53.4,"hi":149.0},{"d":"2026-07-07","f":88.2,"lo":55.9,"hi":145.3},{"d":"2026-07-08","f":85.7,"lo":52.2,"hi":144.0},{"d":"2026-07-09","f":83.2,"lo":52.2,"hi":139.1},{"d":"2026-07-10","f":82.0,"lo":52.2,"hi":136.6},{"d":"2026-07-11","f":82.0,"lo":50.9,"hi":135.4},{"d":"2026-07-13","f":90.7,"lo":54.6,"hi":149.0},{"d":"2026-07-14","f":80.7,"lo":49.7,"hi":134.1},{"d":"2026-07-15","f":84.4,"lo":52.2,"hi":135.4},{"d":"2026-07-16","f":80.7,"lo":49.7,"hi":132.9},{"d":"2026-07-17","f":78.2,"lo":49.7,"hi":127.9},{"d":"2026-07-18","f":78.2,"lo":49.7,"hi":130.4}]},"Teh Pucuk Harum 350ml / Botol":{"history":[{"d":"2026-02-01","a":20.0},{"d":"2026-02-02","a":275.0},{"d":"2026-02-03","a":353.0},{"d":"2026-02-04","a":177.0},{"d":"2026-02-05","a":193.0},{"d":"2026-02-06","a":223.0},{"d":"2026-02-07","a":123.0},{"d":"2026-02-08","a":45.0},{"d":"2026-02-09","a":257.0},{"d":"2026-02-10","a":250.0},{"d":"2026-02-11","a":311.0},{"d":"2026-02-12","a":245.0},{"d":"2026-02-13","a":210.0},{"d":"2026-02-14","a":174.0},{"d":"2026-02-15","a":25.0},{"d":"2026-02-16","a":192.0},{"d":"2026-02-17","a":166.0},{"d":"2026-02-18","a":252.0},{"d":"2026-02-19","a":130.0},{"d":"2026-02-20","a":453.0},{"d":"2026-02-21","a":118.0},{"d":"2026-02-22","a":69.0},{"d":"2026-02-23","a":206.0},{"d":"2026-02-24","a":359.0},{"d":"2026-02-25","a":247.0},{"d":"2026-02-26","a":224.0},{"d":"2026-02-27","a":221.0},{"d":"2026-02-28","a":244.0},{"d":"2026-03-01","a":47.0},{"d":"2026-03-02","a":390.0},{"d":"2026-03-03","a":445.0},{"d":"2026-03-04","a":321.0},{"d":"2026-03-05","a":292.0},{"d":"2026-03-06","a":244.0},{"d":"2026-03-07","a":212.0},{"d":"2026-03-08","a":47.0},{"d":"2026-03-09","a":284.0},{"d":"2026-03-10","a":370.0},{"d":"2026-03-11","a":182.0},{"d":"2026-03-12","a":466.0},{"d":"2026-03-13","a":410.0},{"d":"2026-03-14","a":478.0},{"d":"2026-03-15","a":99.0},{"d":"2026-03-16","a":859.0},{"d":"2026-03-17","a":507.0},{"d":"2026-03-18","a":555.0},{"d":"2026-03-19","a":469.0},{"d":"2026-03-20","a":62.0},{"d":"2026-03-22","a":160.0},{"d":"2026-03-23","a":558.0},{"d":"2026-03-24","a":504.0},{"d":"2026-03-25","a":294.0},{"d":"2026-03-26","a":425.0},{"d":"2026-03-27","a":597.0},{"d":"2026-03-28","a":447.0},{"d":"2026-03-29","a":147.0},{"d":"2026-03-30","a":1098.0},{"d":"2026-03-31","a":361.0},{"d":"2026-04-01","a":184.0},{"d":"2026-04-02","a":258.0},{"d":"2026-04-03","a":63.0},{"d":"2026-04-04","a":187.0},{"d":"2026-04-05","a":15.0},{"d":"2026-04-06","a":200.0},{"d":"2026-04-07","a":10.0},{"d":"2026-04-08","a":254.0},{"d":"2026-04-09","a":268.0},{"d":"2026-04-10","a":484.0},{"d":"2026-04-11","a":809.0},{"d":"2026-04-12","a":132.0},{"d":"2026-04-13","a":690.0},{"d":"2026-04-14","a":759.0},{"d":"2026-04-15","a":528.0},{"d":"2026-04-16","a":503.0},{"d":"2026-04-17","a":523.0},{"d":"2026-04-18","a":467.0},{"d":"2026-04-19","a":89.0},{"d":"2026-04-20","a":518.0},{"d":"2026-04-21","a":403.0},{"d":"2026-04-22","a":258.0},{"d":"2026-04-23","a":408.0},{"d":"2026-04-24","a":642.0},{"d":"2026-04-25","a":414.0},{"d":"2026-04-26","a":131.0},{"d":"2026-04-27","a":864.0},{"d":"2026-04-28","a":642.0},{"d":"2026-04-29","a":609.0},{"d":"2026-04-30","a":386.0},{"d":"2026-05-01","a":109.0},{"d":"2026-05-02","a":488.0},{"d":"2026-05-03","a":90.0},{"d":"2026-05-04","a":652.0},{"d":"2026-05-05","a":335.0},{"d":"2026-05-06","a":582.0},{"d":"2026-05-07","a":280.0},{"d":"2026-05-08","a":384.0},{"d":"2026-05-09","a":147.0},{"d":"2026-05-10","a":155.0},{"d":"2026-05-11","a":1347.0},{"d":"2026-05-12","a":1055.0},{"d":"2026-05-13","a":720.0},{"d":"2026-05-14","a":306.0},{"d":"2026-05-15","a":979.0},{"d":"2026-05-16","a":491.0},{"d":"2026-05-17","a":103.0},{"d":"2026-05-18","a":861.0},{"d":"2026-05-19","a":463.0},{"d":"2026-05-20","a":493.0},{"d":"2026-05-21","a":422.0},{"d":"2026-05-22","a":595.0},{"d":"2026-05-23","a":218.0},{"d":"2026-05-24","a":7.0},{"d":"2026-05-25","a":84.0},{"d":"2026-05-26","a":7.0},{"d":"2026-05-27","a":7.0},{"d":"2026-05-28","a":145.0},{"d":"2026-05-29","a":673.0},{"d":"2026-05-30","a":716.0},{"d":"2026-05-31","a":62.0},{"d":"2026-06-01","a":258.0},{"d":"2026-06-02","a":686.0},{"d":"2026-06-03","a":1171.0},{"d":"2026-06-04","a":695.0},{"d":"2026-06-05","a":731.0},{"d":"2026-06-06","a":515.0},{"d":"2026-06-07","a":159.0},{"d":"2026-06-08","a":923.0},{"d":"2026-06-09","a":266.0}],"backtest":[{"d":"2026-03-14","a":501.0,"f":130.0,"lo":37.0,"hi":358.0},{"d":"2026-03-16","a":992.0,"f":159.0,"lo":47.0,"hi":390.0},{"d":"2026-03-17","a":546.0,"f":134.0,"lo":49.0,"hi":339.0},{"d":"2026-03-18","a":579.0,"f":103.0,"lo":36.0,"hi":289.0},{"d":"2026-03-23","a":718.0,"f":277.0,"lo":94.0,"hi":571.0},{"d":"2026-03-24","a":504.0,"f":152.0,"lo":57.0,"hi":357.0},{"d":"2026-03-25","a":294.0,"f":153.0,"lo":60.0,"hi":350.0},{"d":"2026-03-26","a":425.0,"f":143.0,"lo":54.0,"hi":340.0},{"d":"2026-03-27","a":597.0,"f":137.0,"lo":46.0,"hi":356.0},{"d":"2026-03-28","a":447.0,"f":123.0,"lo":35.0,"hi":329.0},{"d":"2026-03-30","a":1297.0,"f":230.0,"lo":77.0,"hi":495.0},{"d":"2026-03-31","a":549.0,"f":157.0,"lo":52.0,"hi":380.0},{"d":"2026-04-01","a":222.0,"f":132.0,"lo":44.0,"hi":295.0},{"d":"2026-04-02","a":266.0,"f":116.0,"lo":43.0,"hi":279.0},{"d":"2026-04-04","a":214.0,"f":138.0,"lo":49.0,"hi":313.0},{"d":"2026-04-06","a":225.0,"f":82.0,"lo":30.0,"hi":191.0},{"d":"2026-04-07","a":10.0,"f":25.0,"lo":11.0,"hi":53.0},{"d":"2026-04-08","a":254.0,"f":63.0,"lo":23.0,"hi":148.0},{"d":"2026-04-09","a":268.0,"f":67.0,"lo":24.0,"hi":151.0},{"d":"2026-04-10","a":484.0,"f":158.0,"lo":50.0,"hi":382.0},{"d":"2026-04-11","a":809.0,"f":148.0,"lo":49.0,"hi":348.0},{"d":"2026-04-13","a":822.0,"f":534.0,"lo":138.0,"hi":1203.0},{"d":"2026-04-14","a":759.0,"f":360.0,"lo":79.0,"hi":941.0},{"d":"2026-04-15","a":528.0,"f":342.0,"lo":76.0,"hi":877.0},{"d":"2026-04-16","a":551.0,"f":308.0,"lo":68.0,"hi":824.0},{"d":"2026-04-17","a":562.0,"f":263.0,"lo":51.0,"hi":766.0},{"d":"2026-04-18","a":544.0,"f":242.0,"lo":51.0,"hi":749.0},{"d":"2026-04-20","a":662.0,"f":304.0,"lo":98.0,"hi":669.0},{"d":"2026-04-21","a":407.0,"f":233.0,"lo":67.0,"hi":554.0},{"d":"2026-04-22","a":267.0,"f":226.0,"lo":62.0,"hi":553.0},{"d":"2026-04-23","a":409.0,"f":316.0,"lo":84.0,"hi":762.0},{"d":"2026-04-24","a":642.0,"f":264.0,"lo":83.0,"hi":700.0},{"d":"2026-04-25","a":414.0,"f":280.0,"lo":73.0,"hi":736.0},{"d":"2026-04-27","a":995.0,"f":318.0,"lo":99.0,"hi":788.0},{"d":"2026-04-28","a":642.0,"f":344.0,"lo":91.0,"hi":850.0},{"d":"2026-04-29","a":609.0,"f":301.0,"lo":84.0,"hi":753.0},{"d":"2026-04-30","a":386.0,"f":284.0,"lo":72.0,"hi":723.0},{"d":"2026-05-02","a":488.0,"f":187.0,"lo":53.0,"hi":441.0},{"d":"2026-05-04","a":742.0,"f":251.0,"lo":66.0,"hi":560.0},{"d":"2026-05-05","a":335.0,"f":217.0,"lo":61.0,"hi":480.0},{"d":"2026-05-06","a":611.0,"f":280.0,"lo":84.0,"hi":647.0},{"d":"2026-05-07","a":439.0,"f":317.0,"lo":96.0,"hi":748.0},{"d":"2026-05-08","a":423.0,"f":270.0,"lo":74.0,"hi":628.0},{"d":"2026-05-09","a":227.0,"f":116.0,"lo":47.0,"hi":245.0},{"d":"2026-05-11","a":1572.0,"f":363.0,"lo":96.0,"hi":784.0},{"d":"2026-05-12","a":1076.0,"f":241.0,"lo":61.0,"hi":606.0},{"d":"2026-05-13","a":720.0,"f":500.0,"lo":188.0,"hi":1182.0},{"d":"2026-05-16","a":491.0,"f":550.0,"lo":202.0,"hi":1258.0},{"d":"2026-05-18","a":964.0,"f":506.0,"lo":202.0,"hi":1186.0},{"d":"2026-05-19","a":463.0,"f":539.0,"lo":195.0,"hi":1236.0},{"d":"2026-05-20","a":493.0,"f":482.0,"lo":186.0,"hi":1081.0},{"d":"2026-05-21","a":422.0,"f":503.0,"lo":200.0,"hi":1099.0},{"d":"2026-05-22","a":595.0,"f":476.0,"lo":188.0,"hi":1075.0},{"d":"2026-05-23","a":218.0,"f":255.0,"lo":107.0,"hi":588.0},{"d":"2026-05-25","a":91.0,"f":162.0,"lo":58.0,"hi":361.0},{"d":"2026-05-26","a":7.0,"f":51.0,"lo":20.0,"hi":118.0},{"d":"2026-05-28","a":145.0,"f":332.0,"lo":143.0,"hi":775.0},{"d":"2026-05-29","a":673.0,"f":334.0,"lo":145.0,"hi":764.0},{"d":"2026-05-30","a":716.0,"f":289.0,"lo":139.0,"hi":640.0},{"d":"2026-06-02","a":686.0,"f":366.0,"lo":169.0,"hi":751.0},{"d":"2026-06-03","a":1171.0,"f":341.0,"lo":153.0,"hi":702.0},{"d":"2026-06-04","a":695.0,"f":304.0,"lo":131.0,"hi":622.0},{"d":"2026-06-05","a":731.0,"f":372.0,"lo":163.0,"hi":750.0},{"d":"2026-06-06","a":515.0,"f":282.0,"lo":138.0,"hi":612.0},{"d":"2026-06-08","a":1082.0,"f":411.0,"lo":190.0,"hi":823.0},{"d":"2026-06-09","a":345.0,"f":326.0,"lo":158.0,"hi":721.0},{"d":"2026-06-10","a":420.0,"f":331.0,"lo":157.0,"hi":691.0},{"d":"2026-06-11","a":186.0,"f":313.0,"lo":152.0,"hi":660.0}],"forward":[{"d":"2026-06-12","f":582.4,"lo":197.4,"hi":1187.2},{"d":"2026-06-13","f":536.5,"lo":172.6,"hi":1094.0},{"d":"2026-06-17","f":823.3,"lo":281.9,"hi":1572.1},{"d":"2026-06-18","f":571.2,"lo":190.0,"hi":1202.1},{"d":"2026-06-19","f":546.4,"lo":180.1,"hi":1178.5},{"d":"2026-06-20","f":511.6,"lo":171.4,"hi":1117.6},{"d":"2026-06-22","f":593.6,"lo":197.4,"hi":1267.9},{"d":"2026-06-23","f":551.4,"lo":170.1,"hi":1200.8},{"d":"2026-06-24","f":545.2,"lo":190.0,"hi":1187.2},{"d":"2026-06-25","f":551.4,"lo":192.5,"hi":1183.4},{"d":"2026-06-26","f":542.7,"lo":185.0,"hi":1188.4},{"d":"2026-06-27","f":541.4,"lo":188.8,"hi":1208.3},{"d":"2026-06-29","f":694.2,"lo":232.2,"hi":1441.7},{"d":"2026-06-30","f":575.0,"lo":188.8,"hi":1272.8},{"d":"2026-07-01","f":575.0,"lo":190.0,"hi":1236.8},{"d":"2026-07-02","f":552.6,"lo":196.2,"hi":1182.2},{"d":"2026-07-03","f":551.4,"lo":188.8,"hi":1174.7},{"d":"2026-07-04","f":531.5,"lo":183.8,"hi":1161.1},{"d":"2026-07-06","f":603.5,"lo":202.4,"hi":1260.4},{"d":"2026-07-07","f":566.3,"lo":198.7,"hi":1213.2},{"d":"2026-07-08","f":526.5,"lo":170.1,"hi":1151.1},{"d":"2026-07-09","f":500.4,"lo":168.9,"hi":1126.3},{"d":"2026-07-10","f":504.2,"lo":177.6,"hi":1095.3},{"d":"2026-07-11","f":473.1,"lo":150.3,"hi":1025.7},{"d":"2026-07-13","f":598.5,"lo":191.2,"hi":1259.2},{"d":"2026-07-14","f":480.6,"lo":146.5,"hi":1076.6},{"d":"2026-07-15","f":566.3,"lo":198.7,"hi":1182.2},{"d":"2026-07-16","f":507.9,"lo":170.1,"hi":1090.3},{"d":"2026-07-17","f":476.9,"lo":155.2,"hi":1036.9},{"d":"2026-07-18","f":475.6,"lo":145.3,"hi":1041.9}]}};
-
-    const IMPORTANCE = [
-        // grouped sums computed from per-feature LightGBM gain importance
-        {label: "Avg sales, last 2 weeks", val: 34.8, group: "sales"},
-        {label: "Avg sales, last 4 weeks", val: 17.2, group: "sales"},
-        {label: "Avg sales, last 7 days", val: 13.9, group: "sales"},
-        {label: "Same day 1–4 weeks ago (lags)", val: 15.6, group: "sales"},
-        {label: "Sales volatility (rolling std)", val: 3.3, group: "sales"},
-        {label: "Rainfall, last 3 days", val: 2.1, group: "weather"},
-        {label: "Rainfall today", val: 1.7, group: "weather"},
-        {label: "Max temperature", val: 1.9, group: "weather"},
-        {label: "Day of week", val: 2.0, group: "calendar"},
-        {label: "Day / week of month & year", val: 4.0, group: "calendar"},
-        {label: "Lebaran proximity + holidays", val: 0.9, group: "calendar"},
-        {label: "Product grade & trend", val: 2.4, group: "attrs"},
-    ];
-
-    // Teh Pucuk Harum 350ml @ warehouse 1, daily sales + OOS flag (stock ledger), spring 2026
-    const OOS_DATA = [
-        ["2026-03-02",97,0],["2026-03-03",164,0],["2026-03-04",71,0],["2026-03-05",73,0],["2026-03-06",51,0],
-        ["2026-03-07",58,0],["2026-03-08",1,0],["2026-03-09",100,0],["2026-03-10",87,0],["2026-03-11",15,0],
-        ["2026-03-12",176,0],["2026-03-13",134,0],["2026-03-14",206,0],["2026-03-15",16,0],["2026-03-16",276,0],
-        ["2026-03-17",137,0],["2026-03-18",152,0],["2026-03-19",181,0],["2026-03-20",24,0],["2026-03-21",0,0],
-        ["2026-03-22",31,0],["2026-03-23",103,0],["2026-03-24",98,0],["2026-03-25",81,0],["2026-03-26",159,0],
-        ["2026-03-27",284,0],["2026-03-28",195,0],["2026-03-29",15,0],["2026-03-30",345,0],["2026-03-31",138,0],
-        ["2026-04-01",0,1],["2026-04-02",0,1],["2026-04-03",0,1],["2026-04-04",0,1],["2026-04-05",0,1],
-        ["2026-04-06",0,1],["2026-04-07",0,1],["2026-04-08",0,1],["2026-04-09",0,1],["2026-04-10",122,0],
-        ["2026-04-11",452,0],["2026-04-12",18,0],["2026-04-13",267,0],["2026-04-14",347,0],["2026-04-15",140,0],
-        ["2026-04-16",124,0],["2026-04-17",127,0],["2026-04-18",113,1],["2026-04-19",0,1],["2026-04-20",0,1],
-        ["2026-04-21",0,1],["2026-04-22",0,1],["2026-04-23",34,0],["2026-04-24",303,0],["2026-04-25",167,0],
-        ["2026-04-26",54,0],["2026-04-27",394,0],["2026-04-28",174,0],["2026-04-29",122,0],["2026-04-30",77,0],
-        ["2026-05-01",71,0],["2026-05-02",273,0],["2026-05-03",56,0],["2026-05-04",333,0],["2026-05-05",159,0],
-        ["2026-05-06",115,0],["2026-05-07",77,0],["2026-05-08",45,1],["2026-05-09",0,0],["2026-05-10",87,0]
-    ];
-
-    const PRODUCT_META = {
-        "Indomie Goreng Original / Bks": {short: "Indomie Goreng", story: "The anchor case: the distributor's best-selling product is also its best-predicted — backtest error 28.5% WAPE. Steady staple demand is where the model shines."},
-        "AQUVIVA Air Mineral 700ml": {short: "AQUVIVA Water", story: "House-brand bottled water moving ~240 units/day. Weather-sensitive: rainfall features measurably shift its demand."},
-        "Syrup Kartika Frambozen 620ml / Botol": {short: "Kartika Syrup", story: "The seasonality stress test: this syrup is a Lebaran gift-basket item — demand concentrates around the holiday. The calendar features exist for products like this."},
-        "Beras Raja Lele 2.5 kg pcs": {short: "Raja Lele Rice", story: "The hardest series in the data (volatility 1.4× its own mean): shops buy rice in unpredictable bulk. Watch how wide the confidence band gets — that width is honest information."},
-        "Djarum Super 12 / Bks": {short: "Djarum Super", story: "Cigarettes follow habitual, steady demand — different physics from impulse goods. The model carries an is_cigarette flag; error here is a low 37.5% WAPE."},
-        "Teh Pucuk Harum 350ml / Botol": {short: "Teh Pucuk", story: "The honest failure: a high-volume iced tea the model under-forecasts badly (−51% bias in backtest). Promo-driven beverage spikes remain the open problem — shown here because hiding it would be dishonest."}
-    };
-
-    // ───────────────────────── forecast chart ─────────────────────────
-    const fcMargin = {top: 16, right: 16, bottom: 28, left: 48};
-    const fcSvg = d3.select("#forecastChart");
-    const tooltip = d3.select("#fcTooltip");
-    let currentProduct = Object.keys(PRODUCT_META)[0];
-    let scaleMode = "units"; // "units" | "norm"
-    const SCALE_MODES = [
-        {id: "units", label: "Actual daily sales (units)"},
-        {id: "norm", label: "Normalized (% of this product's average day)"}
-    ];
-
-    function renderSwitch() {
-        const sw = d3.select("#productSwitch");
-        sw.selectAll("button")
-            .data(Object.keys(PRODUCT_META))
-            .join("button")
-            .text(p => PRODUCT_META[p].short)
-            .classed("active", p => p === currentProduct)
-            .on("click", (e, p) => { currentProduct = p; renderSwitch(); renderForecast(); });
-        const st = d3.select("#scaleToggle");
-        st.selectAll("button")
-            .data(SCALE_MODES)
-            .join("button")
-            .text(m => m.label)
-            .classed("active", m => m.id === scaleMode)
-            .on("click", (e, m) => { scaleMode = m.id; renderSwitch(); renderForecast(); });
-    }
-
-    function renderForecast() {
-        const data = CHART_DATA[currentProduct];
-        d3.select("#productStory").text(PRODUCT_META[currentProduct].story);
-        fcSvg.selectAll("*").remove();
-
-        const width = fcSvg.node().clientWidth || 800;
-        const height = 380;
-        const iw = width - fcMargin.left - fcMargin.right;
-        const ih = height - fcMargin.top - fcMargin.bottom;
-        const g = fcSvg.append("g").attr("transform", `translate(${fcMargin.left},${fcMargin.top})`);
-        const parse = d3.timeParse("%Y-%m-%d");
-
-        // normalization base: this product's average historical day
-        const avgDay = d3.mean(data.history, d => d.a) || 1;
-        const k = scaleMode === "norm" ? 100 / avgDay : 1;
-        const unit = scaleMode === "norm" ? "%" : " units";
-        const rnd = v => scaleMode === "norm" ? Math.round(v) : v;
-
-        const hist = data.history.map(d => ({date: parse(d.d), a: d.a * k}));
-        const bt = data.backtest.map(d => ({date: parse(d.d), a: d.a * k, f: d.f * k, lo: d.lo * k, hi: d.hi * k}));
-        const fwd = data.forward.map(d => ({date: parse(d.d), f: d.f * k, lo: d.lo * k, hi: d.hi * k}));
-        const today = fwd.length ? fwd[0].date : d3.max(hist, d => d.date);
-
-        const allDates = hist.map(d => d.date).concat(fwd.map(d => d.date));
-        const x = d3.scaleTime().domain(d3.extent(allDates)).range([0, iw]);
-        const yMax = d3.max([d3.max(hist, d => d.a) || 0, d3.max(bt, d => d.hi) || 0, d3.max(fwd, d => d.hi) || 0]);
-        const y = d3.scaleLinear().domain([0, yMax * 1.05]).nice().range([ih, 0]);
-
-        g.append("g").attr("class", "axis").attr("transform", `translate(0,${ih})`)
-            .call(d3.axisBottom(x).ticks(width < 600 ? 4 : 7).tickFormat(d3.timeFormat("%b %d")));
-        g.append("g").attr("class", "axis")
-            .call(d3.axisLeft(y).ticks(6).tickFormat(v => scaleMode === "norm" ? v + "%" : v));
-
-        if (scaleMode === "norm") {
-            g.append("line").attr("x1", 0).attr("x2", iw).attr("y1", y(100)).attr("y2", y(100))
-                .attr("stroke", "#444").attr("stroke-dasharray", "2,4");
-            g.append("text").attr("x", iw - 4).attr("y", y(100) - 5).attr("text-anchor", "end")
-                .attr("fill", "#777").attr("font-size", 10.5).text("average day = 100%");
-        }
-
-        const band = d3.area().x(d => x(d.date)).y0(d => y(d.lo)).y1(d => y(d.hi)).curve(d3.curveMonotoneX);
-        const lineF = d3.line().x(d => x(d.date)).y(d => y(d.f)).curve(d3.curveMonotoneX);
-        const lineA = d3.line().x(d => x(d.date)).y(d => y(d.a)).curve(d3.curveMonotoneX);
-
-        g.append("path").datum(bt).attr("d", band).attr("fill", "rgba(110,168,254,0.16)");
-        g.append("path").datum(fwd).attr("d", band).attr("fill", "rgba(255,200,97,0.16)");
-
-        // today divider
-        g.append("line").attr("x1", x(today)).attr("x2", x(today)).attr("y1", 0).attr("y2", ih)
-            .attr("stroke", "#555").attr("stroke-dasharray", "4,4");
-        g.append("text").attr("x", x(today) - 6).attr("y", 12).attr("text-anchor", "end")
-            .attr("fill", "#888").attr("font-size", 11).text("today → forecast");
-
-        g.append("path").datum(bt).attr("d", lineF).attr("fill", "none").attr("stroke", "#6ea8fe").attr("stroke-width", 1.8);
-        g.append("path").datum(fwd).attr("d", lineF).attr("fill", "none").attr("stroke", "#ffc861").attr("stroke-width", 1.8);
-        g.append("path").datum(hist).attr("d", lineA).attr("fill", "none").attr("stroke", "#fff").attr("stroke-width", 1.4).attr("opacity", 0.9);
-
-        // hover
-        const bisect = d3.bisector(d => d.date).center;
-        const focus = g.append("circle").attr("r", 3.5).attr("fill", "#fff").style("display", "none");
-        fcSvg.on("pointermove", (event) => {
-            const [mx] = d3.pointer(event, g.node());
-            const date = x.invert(mx);
-            const fmt = d3.timeFormat("%a, %b %d %Y");
-            const h = hist[bisect(hist, date)];
-            const b = bt.length ? bt[bisect(bt, date)] : null;
-            const f = fwd.length ? fwd[bisect(fwd, date)] : null;
-            let pick = h, lines = [];
-            if (f && Math.abs(f.date - date) < Math.abs((h ? h.date : 0) - date)) {
-                pick = f;
-                lines = [fmt(f.date), `Forecast: ${rnd(f.f)}${unit}`, `Range: ${rnd(f.lo)} – ${rnd(f.hi)}${unit}`];
-                focus.attr("cx", x(f.date)).attr("cy", y(f.f));
-            } else if (h) {
-                lines = [fmt(h.date), `Actual: ${rnd(h.a)}${unit}`];
-                if (b && b.date.getTime() === h.date.getTime()) lines.push(`Predicted: ${rnd(b.f)} (${rnd(b.lo)}–${rnd(b.hi)})${unit}`);
-                focus.attr("cx", x(h.date)).attr("cy", y(h.a));
-            }
-            if (!pick) return;
-            focus.style("display", null);
-            tooltip.style("opacity", 1).html(lines.join("<br>"))
-                .style("left", Math.min(fcMargin.left + x(pick.date) + 14, width - 170) + "px")
-                .style("top", "30px");
-        }).on("pointerleave", () => { tooltip.style("opacity", 0); focus.style("display", "none"); });
-    }
-
-    // ───────────────────────── importance chart ─────────────────────────
-    function renderImportance() {
-        const svg = d3.select("#importanceChart");
-        svg.selectAll("*").remove();
-        const width = svg.node().clientWidth || 800;
-        const margin = {top: 6, right: 56, bottom: 6, left: Math.min(230, width * 0.42)};
-        const rowH = 30;
-        const data = IMPORTANCE.slice().sort((a, b) => b.val - a.val);
-        const height = data.length * rowH + margin.top + margin.bottom;
-        svg.attr("height", height);
-        const iw = width - margin.left - margin.right;
-        const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
-        const x = d3.scaleLinear().domain([0, d3.max(data, d => d.val)]).range([0, iw]);
-        const cls = {sales: "imp-bar", weather: "imp-bar weather", calendar: "imp-bar calendar", attrs: "imp-bar attrs"};
-        const rows = g.selectAll("g.row").data(data).join("g")
-            .attr("transform", (d, i) => `translate(0,${i * rowH})`);
-        rows.append("rect").attr("class", d => cls[d.group])
-            .attr("y", 6).attr("height", rowH - 14).attr("rx", 3)
-            .attr("width", d => Math.max(2, x(d.val)));
-        rows.append("text").attr("class", "imp-label").attr("x", -10).attr("y", rowH / 2 + 1)
-            .attr("text-anchor", "end").attr("dominant-baseline", "middle").text(d => d.label);
-        rows.append("text").attr("class", "imp-value").attr("x", d => x(d.val) + 8).attr("y", rowH / 2 + 1)
-            .attr("dominant-baseline", "middle").text(d => d.val.toFixed(1) + "%");
-    }
-
-    // ───────────────────────── OOS mini-chart ─────────────────────────
-    function renderOOS() {
-        const svg = d3.select("#oosChart");
-        svg.selectAll("*").remove();
-        const width = svg.node().clientWidth || 800;
-        const height = 240;
-        const margin = {top: 14, right: 12, bottom: 26, left: 42};
-        const iw = width - margin.left - margin.right;
-        const ih = height - margin.top - margin.bottom;
-        const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
-        const parse = d3.timeParse("%Y-%m-%d");
-        const data = OOS_DATA.map(d => ({date: parse(d[0]), s: d[1], oos: d[2]}));
-
-        const x = d3.scaleTime().domain(d3.extent(data, d => d.date)).range([0, iw]);
-        const y = d3.scaleLinear().domain([0, d3.max(data, d => d.s) * 1.08]).nice().range([ih, 0]);
-        const dayW = iw / data.length;
-
-        // OOS shading
-        data.filter(d => d.oos).forEach(d => {
-            g.append("rect").attr("x", x(d.date) - dayW / 2).attr("width", dayW + 0.5)
-                .attr("y", 0).attr("height", ih).attr("fill", "rgba(226,113,111,0.18)");
-        });
-        g.append("g").attr("class", "axis").attr("transform", `translate(0,${ih})`)
-            .call(d3.axisBottom(x).ticks(width < 600 ? 4 : 6).tickFormat(d3.timeFormat("%b %d")));
-        g.append("g").attr("class", "axis").call(d3.axisLeft(y).ticks(5));
-
-        g.selectAll("rect.sale").data(data).join("rect")
-            .attr("x", d => x(d.date) - dayW * 0.35).attr("width", dayW * 0.7)
-            .attr("y", d => y(d.s)).attr("height", d => ih - y(d.s))
-            .attr("fill", "#fff").attr("opacity", 0.85).attr("rx", 1);
-
-        // annotations on the two main gaps
-        const gap1 = data.find(d => d.date.getTime() === parse("2026-04-05").getTime());
-        g.append("text").attr("x", x(gap1.date)).attr("y", 14).attr("text-anchor", "middle")
-            .attr("fill", "#e2716f").attr("font-size", 11.5).attr("font-weight", 600).text("out of stock — 9 days");
-        const rebound = data.find(d => d.s === 452);
-        g.append("text").attr("x", x(rebound.date) + 6).attr("y", y(452) - 6)
-            .attr("fill", "#ffc861").attr("font-size", 11).text("restock rebound: 452");
-    }
-
-    renderSwitch();
-    renderForecast();
-    renderImportance();
-    renderOOS();
-    let rs; window.addEventListener("resize", () => { clearTimeout(rs); rs = setTimeout(() => { renderForecast(); renderImportance(); renderOOS(); }, 150); });
-    </script>
 </body>
 </html>
