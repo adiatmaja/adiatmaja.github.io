@@ -558,6 +558,27 @@ a {
     gap: 24px;
 }
 
+.project-group + .project-group {
+    margin-top: 64px;
+}
+
+.project-group-title {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+}
+
+.project-group-sub {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin: -16px 0 24px;
+    max-width: 640px;
+    line-height: 1.6;
+}
+
 .project-card {
     padding: 32px;
     background: var(--bg-card);

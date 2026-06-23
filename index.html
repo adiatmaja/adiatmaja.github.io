@@ -290,75 +290,23 @@
     <section class="section" id="projects">
         <div class="container">
             <h2 class="section-title">Projects</h2>
-            <div class="projects-grid">
-                <article class="project-card" id="proj-fmcg-forecast">
-                    <div class="project-header">
-                        <span class="project-year">2024&ndash;2026</span>
-                        <a href="https://github.com/adiatmaja/fmcg-demand-forecast" class="project-link" target="_blank" aria-label="View FMCG Demand Forecast on GitHub">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
-                            </svg>
-                        </a>
-                    </div>
-                    <h3 class="project-title"><a href="pages/fmcg-demand-forecast.html">FMCG Demand Forecast</a></h3>
-                    <p class="project-sub">Production Demand Forecasting — In Production, Fully Automated</p>
-                    <p class="project-desc">Production pipeline forecasting <strong>1,300+ products and 4,000+ product-warehouse series, 30 days ahead</strong> on ~8 years of live data — tiered <strong>NHITS + LightGBM</strong> models with P10/P90 confidence bands, out-of-stock-aware training, bias calibration, and <strong>unattended weekly GPU retraining</strong>.</p>
-                    <div class="project-tags">
-                        <span>NHITS</span>
-                        <span>Probabilistic Forecasting</span>
-                        <span>LightGBM</span>
-                        <span>MLOps</span>
-                    </div>
-                    <a href="pages/fmcg-demand-forecast.html" class="read-more">Read more &rarr;</a>
-                </article>
-                <article class="project-card" id="proj-llm-distill">
-                    <div class="project-header">
-                        <span class="project-year">2026</span>
-                        <a href="https://github.com/adiatmaja/llm-distill-pipeline" class="project-link" target="_blank" aria-label="View LLM Distillation Pipeline on GitHub">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
-                            </svg>
-                        </a>
-                    </div>
-                    <h3 class="project-title"><a href="pages/llm-distill-pipeline.html">LLM Distillation Pipeline</a></h3>
-                    <p class="project-sub">Indonesian-Javanese Language Model Fine-tuning</p>
-                    <p class="project-desc">Distilled a <strong>70B teacher model</strong> into a <strong>9B student model</strong> via a <strong>three-zone Docker pipeline</strong> on a restricted GPU server with no Python runtime.</p>
-                    <div class="project-tags">
-                        <span>Knowledge Distillation</span>
-                        <span>LoRA</span>
-                        <span>Unsloth</span>
-                        <span>Docker</span>
-                    </div>
-                    <a href="pages/llm-distill-pipeline.html" class="read-more">Read more &rarr;</a>
-                </article>
-                <article class="project-card" id="proj-chromadb-rag">
-                    <div class="project-header">
-                        <span class="project-year">2025</span>
-                        <a href="https://github.com/adiatmaja/chromadb-rag-chatbot" class="project-link" target="_blank" aria-label="View ChromaDB RAG Chatbot on GitHub">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
-                            </svg>
-                        </a>
-                    </div>
-                    <h3 class="project-title"><a href="pages/chromadb-rag-chatbot.html">ChromaDB RAG Chatbot</a></h3>
-                    <p class="project-sub">B2B FMCG Semantic Search & Intent Classification</p>
-                    <p class="project-desc">Architected a <strong>Dockerized RAG system</strong> using <strong>ChromaDB</strong> and <strong>sentence-transformers</strong> for a B2B platform — enabling semantic product search across colloquial Indonesian names and <strong>35+ intent classification types</strong>.</p>
-                    <div class="project-tags">
-                        <span>RAG</span>
-                        <span>ChromaDB</span>
-                        <span>sentence-transformers</span>
-                        <span>Docker</span>
-                    </div>
-                    <a href="pages/chromadb-rag-chatbot.html" class="read-more">Read more &rarr;</a>
-                </article>
+
+            <div class="project-group">
+                <h3 class="project-group-title">Personal &amp; Academic</h3>
+                <p class="project-group-sub">Open-source side projects and research, unrelated to my day job.</p>
+                <div class="projects-grid">
                 <article class="project-card" id="proj-praxis">
                     <div class="project-header">
                         <span class="project-year">2026</span>
-                        <span class="tag">Private</span>
+                        <a href="https://github.com/adiatmaja/praxis" class="project-link" target="_blank" aria-label="View Praxis on GitHub">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+                            </svg>
+                        </a>
                     </div>
                     <h3 class="project-title"><a href="pages/praxis.html">Praxis</a></h3>
                     <p class="project-sub">AI Agent Orchestrator — Plan, Implement, Review, Merge</p>
-                    <p class="project-desc">An orchestrator that turns a spec into <strong>merged, reviewed code</strong> — <strong>Claude Opus</strong> plans and reviews while cheap <strong>local LLMs</strong> implement via <strong>Aider</strong> on isolated branches, with an autonomous self-improvement loop. <strong>101 tests, 88% coverage</strong>.</p>
+                    <p class="project-desc">Turns a spec into <strong>merged, reviewed code</strong> on a <strong>flat-rate subscription</strong> &mdash; it drives your <strong>Claude / Gemini / GPT CLI</strong> to plan and review, while a <strong>free local LLM</strong> does the coding on isolated branches, plus an autonomous self-improvement loop. <strong>286 tests, 88% coverage</strong>.</p>
                     <div class="project-tags">
                         <span>Agent Orchestration</span>
                         <span>FastAPI</span>
@@ -426,6 +374,59 @@
                     </div>
                     <a href="pages/asah.html" class="read-more">Read more &rarr;</a>
                 </article>
+                </div>
+            </div>
+
+            <div class="project-group">
+                <h3 class="project-group-title">Professional Work</h3>
+                <p class="project-group-sub">Systems built in my data science role. The source is private &mdash; these cards explain what they do.</p>
+                <div class="projects-grid">
+                    <article class="project-card" id="proj-fmcg-forecast">
+                        <div class="project-header">
+                            <span class="project-year">2024&ndash;2026</span>
+                        </div>
+                        <h3 class="project-title"><a href="pages/fmcg-demand-forecast.html">FMCG Demand Forecast</a></h3>
+                        <p class="project-sub">Production Demand Forecasting</p>
+                        <p class="project-desc">Forecasts <strong>1,300+ products</strong> across <strong>4,000+ product-warehouse series</strong> 30 days ahead on ~8 years of live data, using tiered <strong>NHITS + LightGBM</strong> models with P10/P90 bands and <strong>unattended weekly GPU retraining</strong>.</p>
+                        <div class="project-tags">
+                            <span>NHITS</span>
+                            <span>Probabilistic Forecasting</span>
+                            <span>LightGBM</span>
+                            <span>MLOps</span>
+                        </div>
+                        <a href="pages/fmcg-demand-forecast.html" class="read-more">Read more &rarr;</a>
+                    </article>
+                    <article class="project-card" id="proj-llm-distill">
+                        <div class="project-header">
+                            <span class="project-year">2026</span>
+                        </div>
+                        <h3 class="project-title"><a href="pages/llm-distill-pipeline.html">LLM Distillation Pipeline</a></h3>
+                        <p class="project-sub">Indonesian-Javanese Language Model Fine-tuning</p>
+                        <p class="project-desc">Distilled a <strong>70B teacher</strong> into a <strong>9B student</strong> model through a <strong>three-zone Docker pipeline</strong> running on a restricted GPU server with no Python runtime.</p>
+                        <div class="project-tags">
+                            <span>Knowledge Distillation</span>
+                            <span>LoRA</span>
+                            <span>Unsloth</span>
+                            <span>Docker</span>
+                        </div>
+                        <a href="pages/llm-distill-pipeline.html" class="read-more">Read more &rarr;</a>
+                    </article>
+                    <article class="project-card" id="proj-chromadb-rag">
+                        <div class="project-header">
+                            <span class="project-year">2025</span>
+                        </div>
+                        <h3 class="project-title"><a href="pages/chromadb-rag-chatbot.html">ChromaDB RAG Chatbot</a></h3>
+                        <p class="project-sub">B2B FMCG Semantic Search & Intent Classification</p>
+                        <p class="project-desc">A <strong>Dockerized RAG system</strong> on <strong>ChromaDB</strong> and <strong>sentence-transformers</strong> &mdash; semantic product search over colloquial Indonesian names plus <strong>35+ intent types</strong>.</p>
+                        <div class="project-tags">
+                            <span>RAG</span>
+                            <span>ChromaDB</span>
+                            <span>sentence-transformers</span>
+                            <span>Docker</span>
+                        </div>
+                        <a href="pages/chromadb-rag-chatbot.html" class="read-more">Read more &rarr;</a>
+                    </article>
+                </div>
             </div>
         </div>
     </section>
