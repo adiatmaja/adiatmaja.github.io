@@ -57,3 +57,9 @@ adiatmaja.github.io/
 - **Push to deploy**: `git push origin main` triggers deploy (no CI step needed)
 - **Custom domain**: none - served at `https://adiatmaja.github.io/`
 - **HTTPS**: provided automatically by GitHub Pages
+
+---
+
+## Agent Memories
+
+- **Playwright is installed and available** globally. It can be used directly for visual testing and browser verification in future sessions.
