@@ -387,9 +387,15 @@ a {
     background: #151515;
 }
 
-.skill-item i {
+.skill-item i, .skill-item img {
     font-size: 24px;
     line-height: 1;
+    filter: grayscale(100%) opacity(0.6);
+    transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+.skill-item:hover i, .skill-item:hover img {
+    filter: grayscale(0%) opacity(1);
 }
 
 .skill-item span {
@@ -711,6 +717,15 @@ a {
     font-size: 14px;
     width: 14px;
     height: 14px;
+    filter: grayscale(100%) opacity(0.6);
+    transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+.project-card:hover .project-tags i, 
+.project-card:hover .project-tags img,
+.project-tags span:hover i, 
+.project-tags span:hover img {
+    filter: grayscale(0%) opacity(1);
 }
 
 /* Contact */
@@ -1065,3 +1080,75 @@ a {
         border-top: 1px solid var(--border);
     }
 }
+
+/* Split Layout for Detail Pages (Redesign) */
+.project-split-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.project-split-left {
+    width: 45%;
+    background: var(--bg-card);
+    border-right: 1px solid var(--border);
+    padding: 120px 80px 80px;
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.project-split-left .sticky-content {
+    position: sticky;
+    top: 120px;
+    max-width: 500px; /* Aligns with the center without being too wide */
+    width: 100%;
+}
+
+.project-split-right {
+    width: 55%;
+    padding: 120px 80px 80px;
+    background: var(--bg);
+}
+
+.project-split-right .article-content {
+    max-width: 700px;
+}
+
+/* Redesigned Sidebar inside Split Layout */
+.project-split-left .meta-sidebar {
+    position: static;
+    margin-top: 48px;
+    padding-top: 48px;
+    border-top: 1px solid var(--border);
+}
+
+.project-split-left .page-title {
+    font-size: clamp(32px, 4vw, 48px);
+    margin-bottom: 16px;
+    line-height: 1.1;
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 1100px) {
+    .project-split-layout {
+        flex-direction: column;
+    }
+    .project-split-left, .project-split-right {
+        width: 100%;
+        padding: 100px 40px 60px;
+        justify-content: flex-start;
+    }
+    .project-split-left {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+    .project-split-left .sticky-content,
+    .project-split-right .article-content {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    .project-split-right {
+        padding-top: 60px;
+    }
+}
+

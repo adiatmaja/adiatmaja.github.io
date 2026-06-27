@@ -21,49 +21,20 @@
         </ul>
     </nav>
 
-    <header class="page-header">
-        <div class="container">
-            <a href="../index.html#projects" class="back-link">
+        <main class="project-split-layout">
+        <div class="project-split-left">
+            <div class="sticky-content">
+                <a href="../index.html#projects" class="back-link">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M19 12H5M12 19l-7-7 7-7"/>
                 </svg>
                 Back to Projects
             </a>
-            <h1 class="page-title">ASAH</h1>
-            <p class="page-subtitle">Waste Classification Mobile App</p>
-        </div>
-    </header>
-
-    <main class="section">
-        <div class="container">
-            <div class="article-layout">
-                <div class="article-content">
-                    <h3>TL;DR — 94%-Accurate Waste Sorting That Runs Offline on Your Phone</h3>
-                    <p>ASAH (Aplikasi Sortir Sampah) is an Android app that classifies waste from the camera in <strong>real time</strong> to guide proper disposal and recycling. A fine-tuned <strong>MobileNetV2</strong> model hits <strong>94% accuracy</strong> and runs <strong>fully on-device via TensorFlow Lite</strong> — no internet required — making it usable anywhere.</p>
-
-                    <pre><code>  Camera frame ──▶ MobileNetV2 (TFLite, on-device) ──▶ waste type + 94% acc.
-                         │                                      │
-                   no network call                    recycling guidance</code></pre>
-
-                    <h3>The Problem</h3>
-                    <p>Most people don't know which bin a given item belongs in, and poor sorting at the source undermines recycling. A useful tool has to give an instant answer, work for non-experts, and keep working in places with weak or no connectivity — ruling out a cloud-only inference approach.</p>
-
-                    <h3>The Approach</h3>
-                    <ul>
-                        <li><strong>Mobile-first model:</strong> MobileNetV2 chosen for its efficiency on phones, fine-tuned on a custom waste-image dataset.</li>
-                        <li><strong>On-device inference:</strong> converted to TensorFlow Lite so classification runs locally — instant and offline.</li>
-                        <li><strong>Native Android app:</strong> built in Kotlin with the TFLite interpreter for smooth real-time performance, plus educational recycling guidance.</li>
-                    </ul>
-
-                    <h3>Results</h3>
-                    <ul>
-                        <li><strong>94% accuracy</strong> in waste categorization from a fine-tuned MobileNetV2.</li>
-                        <li>Real-time, fully offline classification on consumer Android devices.</li>
-                        <li>Turns correct disposal into a one-tap action for everyday users.</li>
-                    </ul>
-                </div>
-
-                <aside class="meta-sidebar">
+                <h1 class="page-title">ASAH</h1>
+                <p class="page-subtitle">Waste Classification Mobile App</p>
+                
+                <div class="meta-sidebar">
+                    
                     <div class="meta-group">
                         <span class="meta-label">Role</span>
                         <p>Machine Learning Engineer</p>
@@ -99,7 +70,37 @@
                             </a>
                         </div>
                     </div>
-                </aside>
+                
+                </div>
+            </div>
+        </div>
+        <div class="project-split-right">
+            <div class="article-content">
+                
+                    <h3>TL;DR — 94%-Accurate Waste Sorting That Runs Offline on Your Phone</h3>
+                    <p>ASAH (Aplikasi Sortir Sampah) is an Android app that classifies waste from the camera in <strong>real time</strong> to guide proper disposal and recycling. A fine-tuned <strong>MobileNetV2</strong> model hits <strong>94% accuracy</strong> and runs <strong>fully on-device via TensorFlow Lite</strong> — no internet required — making it usable anywhere.</p>
+
+                    <pre><code>  Camera frame ──▶ MobileNetV2 (TFLite, on-device) ──▶ waste type + 94% acc.
+                         │                                      │
+                   no network call                    recycling guidance</code></pre>
+
+                    <h3>The Problem</h3>
+                    <p>Most people don't know which bin a given item belongs in, and poor sorting at the source undermines recycling. A useful tool has to give an instant answer, work for non-experts, and keep working in places with weak or no connectivity — ruling out a cloud-only inference approach.</p>
+
+                    <h3>The Approach</h3>
+                    <ul>
+                        <li><strong>Mobile-first model:</strong> MobileNetV2 chosen for its efficiency on phones, fine-tuned on a custom waste-image dataset.</li>
+                        <li><strong>On-device inference:</strong> converted to TensorFlow Lite so classification runs locally — instant and offline.</li>
+                        <li><strong>Native Android app:</strong> built in Kotlin with the TFLite interpreter for smooth real-time performance, plus educational recycling guidance.</li>
+                    </ul>
+
+                    <h3>Results</h3>
+                    <ul>
+                        <li><strong>94% accuracy</strong> in waste categorization from a fine-tuned MobileNetV2.</li>
+                        <li>Real-time, fully offline classification on consumer Android devices.</li>
+                        <li>Turns correct disposal into a one-tap action for everyday users.</li>
+                    </ul>
+                
             </div>
         </div>
     </main>

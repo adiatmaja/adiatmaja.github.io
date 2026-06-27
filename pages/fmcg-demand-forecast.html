@@ -21,25 +21,75 @@
         </ul>
     </nav>
 
-    <header class="page-header">
-        <div class="container">
-            <a href="../index.html#projects" class="back-link">
+        <main class="project-split-layout">
+        <div class="project-split-left">
+            <div class="sticky-content">
+                <a href="../index.html#projects" class="back-link">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M19 12H5M12 19l-7-7 7-7"/>
                 </svg>
                 Back to Projects
             </a>
-            <h1 class="page-title">FMCG Demand Forecast</h1>
-            <p class="page-subtitle">Production Dual-Pipeline Demand &amp; Sales Forecasting — In Production, Fully Automated</p>
+                <h1 class="page-title">FMCG Demand Forecast</h1>
+                <p class="page-subtitle">Production Dual-Pipeline Demand &amp; Sales Forecasting — In Production, Fully Automated</p>
+                
+                <div class="meta-sidebar">
+                    
+                    <div class="meta-group">
+                        <span class="meta-label">Role</span>
+                        <p>AI Engineer</p>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Timeline</span>
+                        <p>2024 — 2026</p>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Status</span>
+                        <p>In production, fully automated</p>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Languages</span>
+                        <div class="project-tags">
+                            <span><i class="devicon-python-plain colored"></i> Python</span>
+                            <span><i class="devicon-mysql-plain colored"></i> SQL</span>
+                        </div>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Tools &amp; Frameworks</span>
+                        <div class="project-tags">
+                            <span><i class="devicon-pytorch-original colored"></i> PyTorch</span>
+                            <span>NHITS / neuralforecast</span>
+                            <span>LightGBM</span>
+                            <span><i class="devicon-docker-plain colored"></i> Docker</span>
+                            <span>ClickHouse</span>
+                        </div>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Methodologies</span>
+                        <div class="project-tags">
+                            <span>Probabilistic Forecasting</span>
+                            <span>Time Series</span>
+                            <span>Bias Correction</span>
+                            <span>MLOps</span>
+                        </div>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Links</span>
+                        <div class="meta-links">
+                            <a href="https://github.com/adiatmaja/fmcg-demand-forecast" target="_blank" class="btn btn-secondary">
+                                View on GitHub
+                            </a>
+                        </div>
+                    </div>
+                
+                </div>
+            </div>
         </div>
-    </header>
-
-    <main class="section">
-        <div class="container">
-            <div class="article-layout">
-                <div class="article-content">
-                    <h3>TL;DR — Probabilistic Forecasts for 1,300+ Products, Retraining Itself Weekly</h3>
-                    <p>A production forecasting system for an Indonesian FMCG distributor that predicts daily <strong>demand</strong> (units, 30 days ahead) and <strong>sales revenue</strong> (90 days ahead) across <strong>1,300+ products and 4,000+ product-warehouse series</strong> on ~8 years of live data. It ships <strong>P10/P50/P90 probabilistic</strong> output, runs the full pipeline in <strong>~7.4 min on an RTX 5090</strong>, and <strong>retrains itself unattended every week</strong>. A disciplined 9-round A/B trail produced the headline win: a pooled bias correction that <strong>halved chronic under-forecast (−28.7% → −13.0%)</strong> without regressing accuracy.</p>
+        <div class="project-split-right">
+            <div class="article-content">
+                
+                    <h3>TL;DR — Probabilistic Forecasts for 600+ Products, Retraining Itself Weekly</h3>
+                    <p>A production forecasting system for an Indonesian FMCG distributor that predicts daily <strong>demand</strong> (units, 30 days ahead) and <strong>sales revenue</strong> (90 days ahead) across <strong>600+ products and 4,000+ product-warehouse series</strong> on ~8 years of live data. It ships <strong>P10/P50/P90 probabilistic</strong> output, runs the full pipeline in <strong>~7.4 min on an RTX 5090</strong>, and <strong>retrains itself unattended every week</strong>. A disciplined 9-round A/B trail produced the headline win: a pooled bias correction that <strong>halved chronic under-forecast (−28.7% → −13.0%)</strong> without regressing accuracy.</p>
 
                     <pre><code>  DEMAND ACCURACY  —  raw vs bias-corrected (v9 rolling-origin backtest)
 
@@ -88,56 +138,7 @@
                         <li><strong>Operational:</strong> full pipeline runs in ~7.4 min on an RTX 5090 and retrains unattended weekly via Task Scheduler, writing probabilistic results back for the reporting dashboards.</li>
                     </ul>
                     <p><em>Portfolio note: this describes the production system built for an Indonesian FMCG distributor. A companion public repository reproduces the full architecture on a synthetic data generator; figures shown here are model-performance metrics, with client revenue and infrastructure details omitted.</em></p>
-                </div>
-
-                <aside class="meta-sidebar">
-                    <div class="meta-group">
-                        <span class="meta-label">Role</span>
-                        <p>Data Scientist</p>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Timeline</span>
-                        <p>2024 — 2026</p>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Status</span>
-                        <p>In production, fully automated</p>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Languages</span>
-                        <div class="project-tags">
-                            <span><i class="devicon-python-plain colored"></i> Python</span>
-                            <span><i class="devicon-mysql-plain colored"></i> SQL</span>
-                        </div>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Tools &amp; Frameworks</span>
-                        <div class="project-tags">
-                            <span><i class="devicon-pytorch-original colored"></i> PyTorch</span>
-                            <span>NHITS / neuralforecast</span>
-                            <span>LightGBM</span>
-                            <span><i class="devicon-docker-plain colored"></i> Docker</span>
-                            <span>ClickHouse</span>
-                        </div>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Methodologies</span>
-                        <div class="project-tags">
-                            <span>Probabilistic Forecasting</span>
-                            <span>Time Series</span>
-                            <span>Bias Correction</span>
-                            <span>MLOps</span>
-                        </div>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Links</span>
-                        <div class="meta-links">
-                            <a href="https://github.com/adiatmaja/fmcg-demand-forecast" target="_blank" class="btn btn-secondary">
-                                View on GitHub
-                            </a>
-                        </div>
-                    </div>
-                </aside>
+                
             </div>
         </div>
     </main>

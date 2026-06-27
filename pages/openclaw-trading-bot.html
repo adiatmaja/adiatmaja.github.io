@@ -21,23 +21,73 @@
         </ul>
     </nav>
 
-    <header class="page-header">
-        <div class="container">
-            <a href="../index.html#projects" class="back-link">
+        <main class="project-split-layout">
+        <div class="project-split-left">
+            <div class="sticky-content">
+                <a href="../index.html#projects" class="back-link">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M19 12H5M12 19l-7-7 7-7"/>
                 </svg>
                 Back to Projects
             </a>
-            <h1 class="page-title">Crypto Swing Trading Bot</h1>
-            <p class="page-subtitle">LLM-Assisted, Fully Deterministic BTC/ETH Trading on Binance</p>
+                <h1 class="page-title">Crypto Swing Trading Bot</h1>
+                <p class="page-subtitle">LLM-Assisted, Fully Deterministic BTC/ETH Trading on Binance</p>
+                
+                <div class="meta-sidebar">
+                    
+                    <div class="meta-group">
+                        <span class="meta-label">Role</span>
+                        <p>Solo Developer</p>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Timeline</span>
+                        <p>2026</p>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Status</span>
+                        <p>Paper trading (live-gated)</p>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Languages</span>
+                        <div class="project-tags">
+                            <span><i class="devicon-typescript-plain colored"></i> TypeScript</span>
+                            <span><i class="devicon-python-plain colored"></i> Python</span>
+                        </div>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Tools &amp; Frameworks</span>
+                        <div class="project-tags">
+                            <span><i class="devicon-docker-plain colored"></i> Docker</span>
+                            <span>OpenClaw</span>
+                            <span>MCP</span>
+                            <span>Binance API</span>
+                            <span>LM Studio</span>
+                        </div>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Concepts</span>
+                        <div class="project-tags">
+                            <span>Deterministic Strategy</span>
+                            <span>Risk Management</span>
+                            <span>Regime Detection</span>
+                            <span>Backtesting</span>
+                        </div>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Links</span>
+                        <div class="meta-links">
+                            <a href="https://github.com/adiatmaja/trading-bot" target="_blank" class="btn btn-secondary">
+                                View on GitHub
+                            </a>
+                        </div>
+                    </div>
+                
+                </div>
+            </div>
         </div>
-    </header>
-
-    <main class="section">
-        <div class="container">
-            <div class="article-layout">
-                <div class="article-content">
+        <div class="project-split-right">
+            <div class="article-content">
+                
                     <h3>TL;DR — Built to Win in Trends, Lose Small Everywhere Else</h3>
                     <p>A swing trading bot for BTC and ETH whose trading decisions are <strong>100% deterministic TypeScript</strong> — the LLM only routes Telegram commands, never picks trades. Backtested across <strong>10 historical market regimes</strong>, it profits in clean trends (<strong>+6.52%</strong> over the last 6 months, <strong>+3.34%</strong> shorting an ETF-outflow downtrend) and bleeds slowly in chop and crashes — while <strong>max drawdown never exceeds ~5%</strong>, even through the FTX collapse and the Oct-2025 flash crash. Paper-only by design until graduation gates pass.</p>
 
@@ -105,56 +155,7 @@
                         <li><strong>The chop tax:</strong> in directionless markets it takes few trades and loses small (Mid-2023 Chop -1.79% on just 2 trades) rather than churning capital.</li>
                     </ul>
                     <p>Philosophy: missing a large winner is acceptable if the alternative is clustered losses or oversized drawdown.</p>
-                </div>
-
-                <aside class="meta-sidebar">
-                    <div class="meta-group">
-                        <span class="meta-label">Role</span>
-                        <p>Solo Developer</p>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Timeline</span>
-                        <p>2026</p>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Status</span>
-                        <p>Paper trading (live-gated)</p>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Languages</span>
-                        <div class="project-tags">
-                            <span><i class="devicon-typescript-plain colored"></i> TypeScript</span>
-                            <span><i class="devicon-python-plain colored"></i> Python</span>
-                        </div>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Tools &amp; Frameworks</span>
-                        <div class="project-tags">
-                            <span><i class="devicon-docker-plain colored"></i> Docker</span>
-                            <span>OpenClaw</span>
-                            <span>MCP</span>
-                            <span>Binance API</span>
-                            <span>LM Studio</span>
-                        </div>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Concepts</span>
-                        <div class="project-tags">
-                            <span>Deterministic Strategy</span>
-                            <span>Risk Management</span>
-                            <span>Regime Detection</span>
-                            <span>Backtesting</span>
-                        </div>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Links</span>
-                        <div class="meta-links">
-                            <a href="https://github.com/adiatmaja/trading-bot" target="_blank" class="btn btn-secondary">
-                                View on GitHub
-                            </a>
-                        </div>
-                    </div>
-                </aside>
+                
             </div>
         </div>
     </main>

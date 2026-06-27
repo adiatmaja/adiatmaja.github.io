@@ -29,10 +29,10 @@
     // ==========================================
     function initTypingAnimation() {
         var roles = [
-            'Machine Learning Engineer',
-            'Data Scientist',
-            'Forecasting',
-            'Natural Language Processing',
+            'AI Native Engineer',
+            'Agentic AI & LLMs',
+            'Forecasting & MLOps',
+            'AI-Assisted Development',
             'Computer Vision'
         ];
 

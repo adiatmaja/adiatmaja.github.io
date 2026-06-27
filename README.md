@@ -1,12 +1,12 @@
 # Johannes Baptista Adiatmaja Pambudi - Portfolio
 
-Personal portfolio website showcasing my work as a Data Scientist, specializing in Forecasting, RAG Systems, and Deep Learning.
+Personal portfolio website showcasing my work as a AI Native Engineer, specializing in Forecasting, RAG Systems, and Deep Learning.
 
 Live at: [https://adiatmaja.github.io/](https://adiatmaja.github.io/)
 
 ## 🚀 About Me
 
-I am a Data Scientist based in Indonesia, focused on building end-to-end ML solutions from data pipelines to production models. My expertise lies in:
+I am a AI Native Engineer based in Indonesia, focused on building end-to-end ML solutions from data pipelines to production models. My expertise lies in:
 - **Time Series Forecasting:** Demand and sales prediction.
 - **RAG Systems:** Building intelligent retrieval systems with ChromaDB and knowledge distillation.
 - **Deep Learning:** Computer vision and neural network optimization.

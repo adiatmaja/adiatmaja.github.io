@@ -21,23 +21,60 @@
         </ul>
     </nav>
 
-    <header class="page-header">
-        <div class="container">
-            <a href="../index.html#projects" class="back-link">
+        <main class="project-split-layout">
+        <div class="project-split-left">
+            <div class="sticky-content">
+                <a href="../index.html#projects" class="back-link">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M19 12H5M12 19l-7-7 7-7"/>
                 </svg>
                 Back to Projects
             </a>
-            <h1 class="page-title">Praxis</h1>
-            <p class="page-subtitle">AI Agent Orchestrator — Opus Plans &amp; Reviews, Local LLMs Implement</p>
+                <h1 class="page-title">Praxis</h1>
+                <p class="page-subtitle">AI Agent Orchestrator — Opus Plans &amp; Reviews, Local LLMs Implement</p>
+                
+                <div class="meta-sidebar">
+                    
+                    <div class="meta-group">
+                        <span class="meta-label">Role</span>
+                        <p>Solo Developer</p>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Timeline</span>
+                        <p>2026</p>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Languages</span>
+                        <div class="project-tags">
+                            <span><i class="devicon-python-plain colored"></i> Python</span>
+                        </div>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Tools &amp; Frameworks</span>
+                        <div class="project-tags">
+                            <span><i class="devicon-fastapi-plain colored"></i> FastAPI</span>
+                            <span><i class="devicon-sqlite-plain colored"></i> SQLite</span>
+                            <span><i class="devicon-docker-plain colored"></i> Docker</span>
+                            <span>Aider</span>
+                            <span>Caddy</span>
+                        </div>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Concepts</span>
+                        <div class="project-tags">
+                            <span>Agent Orchestration</span>
+                            <span>Multi-Model Routing</span>
+                            <span>Autonomous CI</span>
+                            <span>LLM-as-Reviewer</span>
+                        </div>
+                    </div>
+                
+                </div>
+            </div>
         </div>
-    </header>
-
-    <main class="section">
-        <div class="container">
-            <div class="article-layout">
-                <div class="article-content">
+        <div class="project-split-right">
+            <div class="article-content">
+                
                     <h3>TL;DR — From Spec to Shipped Code, Hands-Off</h3>
                     <p>Praxis turns a written spec into <strong>merged, reviewed code</strong> with no human in the loop for the busywork. Claude Opus breaks the spec into a task graph and reviews every pull request; cheap <strong>local LLMs do the actual coding</strong> via Aider in isolated Docker containers, each on its own git branch. Opus squash-merges what passes and retries what fails (up to 3×). An optional autonomous loop then proposes its own improvements. The result: a self-driving <strong>plan → implement → review → merge</strong> cycle where expensive reasoning is reserved for planning and judgment, and commodity tokens do the typing.</p>
 
@@ -85,43 +122,7 @@
                         <li><strong>Deploy-anywhere:</strong> pure-stdlib-friendly stack with Docker Compose and a Caddy auto-HTTPS hosted profile; SQLite persistence with no external services.</li>
                         <li><strong>Resilient:</strong> automatic rate-limit resume (5h + buffer) keeps long autonomous runs alive unattended.</li>
                     </ul>
-                </div>
-
-                <aside class="meta-sidebar">
-                    <div class="meta-group">
-                        <span class="meta-label">Role</span>
-                        <p>Solo Developer</p>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Timeline</span>
-                        <p>2026</p>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Languages</span>
-                        <div class="project-tags">
-                            <span><i class="devicon-python-plain colored"></i> Python</span>
-                        </div>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Tools &amp; Frameworks</span>
-                        <div class="project-tags">
-                            <span><i class="devicon-fastapi-plain colored"></i> FastAPI</span>
-                            <span><i class="devicon-sqlite-plain colored"></i> SQLite</span>
-                            <span><i class="devicon-docker-plain colored"></i> Docker</span>
-                            <span>Aider</span>
-                            <span>Caddy</span>
-                        </div>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Concepts</span>
-                        <div class="project-tags">
-                            <span>Agent Orchestration</span>
-                            <span>Multi-Model Routing</span>
-                            <span>Autonomous CI</span>
-                            <span>LLM-as-Reviewer</span>
-                        </div>
-                    </div>
-                </aside>
+                
             </div>
         </div>
     </main>

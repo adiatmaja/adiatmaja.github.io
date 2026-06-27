@@ -21,23 +21,69 @@
         </ul>
     </nav>
 
-    <header class="page-header">
-        <div class="container">
-            <a href="../index.html#projects" class="back-link">
+        <main class="project-split-layout">
+        <div class="project-split-left">
+            <div class="sticky-content">
+                <a href="../index.html#projects" class="back-link">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M19 12H5M12 19l-7-7 7-7"/>
                 </svg>
                 Back to Projects
             </a>
-            <h1 class="page-title">LLM Distillation Pipeline</h1>
-            <p class="page-subtitle">Knowledge Distillation for Indonesian-Javanese Language Models</p>
+                <h1 class="page-title">LLM Distillation Pipeline</h1>
+                <p class="page-subtitle">Knowledge Distillation for Indonesian-Javanese Language Models</p>
+                
+                <div class="meta-sidebar">
+                    
+                    <div class="meta-group">
+                        <span class="meta-label">Role</span>
+                        <p>AI Engineer</p>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Timeline</span>
+                        <p>2025 — 2026</p>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Languages</span>
+                        <div class="project-tags">
+                            <span><i class="devicon-python-plain colored"></i> Python</span>
+                            <span><i class="devicon-bash-plain colored"></i> Bash</span>
+                        </div>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Tools &amp; Frameworks</span>
+                        <div class="project-tags">
+                            <span><i class="devicon-docker-plain colored"></i> Docker</span>
+                            <span><i class="devicon-pytorch-original colored"></i> PyTorch</span>
+                            <span>Unsloth</span>
+                            <span>LM Studio</span>
+                            <span>llama.cpp</span>
+                        </div>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Methodologies</span>
+                        <div class="project-tags">
+                            <span>Knowledge Distillation</span>
+                            <span>LoRA Fine-tuning</span>
+                            <span>SFT</span>
+                            <span>Data Augmentation</span>
+                        </div>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Links</span>
+                        <div class="meta-links">
+                            <a href="https://github.com/adiatmaja/llm-distill-pipeline" target="_blank" class="btn btn-secondary">
+                                View on GitHub
+                            </a>
+                        </div>
+                    </div>
+                
+                </div>
+            </div>
         </div>
-    </header>
-
-    <main class="section">
-        <div class="container">
-            <div class="article-layout">
-                <div class="article-content">
+        <div class="project-split-right">
+            <div class="article-content">
+                
                     <h3>TL;DR — A 70B Model's Knowledge, Shipped in a 9B Model, Trained in ~15 Minutes</h3>
                     <p>An end-to-end knowledge distillation pipeline that compresses a <strong>70B teacher</strong> into a deployable <strong>9B Indonesian-Javanese student model</strong> — on a locked-down GPU server with <strong>no Python runtime allowed</strong>. A three-zone Docker architecture sidesteps the constraint entirely: <strong>274 source FAQs</strong> expand to <strong>~175 validated training conversations</strong>, training finishes in <strong>~15–20 min on an RTX 5090</strong>, and anti-fabrication validation measurably cuts hallucinated URLs and invented policies. One command runs the whole thing.</p>
 
@@ -147,52 +193,7 @@
                         <li>Automated pipeline eliminates manual steps between data generation and model deployment.</li>
                         <li>Anti-fabrication validation measurably reduced hallucinated URLs and invented policies in the fine-tuned model's outputs compared to the base student model.</li>
                     </ul>
-                </div>
-
-                <aside class="meta-sidebar">
-                    <div class="meta-group">
-                        <span class="meta-label">Role</span>
-                        <p>Data Scientist</p>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Timeline</span>
-                        <p>2025 — 2026</p>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Languages</span>
-                        <div class="project-tags">
-                            <span><i class="devicon-python-plain colored"></i> Python</span>
-                            <span><i class="devicon-bash-plain colored"></i> Bash</span>
-                        </div>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Tools &amp; Frameworks</span>
-                        <div class="project-tags">
-                            <span><i class="devicon-docker-plain colored"></i> Docker</span>
-                            <span><i class="devicon-pytorch-original colored"></i> PyTorch</span>
-                            <span>Unsloth</span>
-                            <span>LM Studio</span>
-                            <span>llama.cpp</span>
-                        </div>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Methodologies</span>
-                        <div class="project-tags">
-                            <span>Knowledge Distillation</span>
-                            <span>LoRA Fine-tuning</span>
-                            <span>SFT</span>
-                            <span>Data Augmentation</span>
-                        </div>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Links</span>
-                        <div class="meta-links">
-                            <a href="https://github.com/adiatmaja/llm-distill-pipeline" target="_blank" class="btn btn-secondary">
-                                View on GitHub
-                            </a>
-                        </div>
-                    </div>
-                </aside>
+                
             </div>
         </div>
     </main>

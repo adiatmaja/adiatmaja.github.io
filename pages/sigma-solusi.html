@@ -21,42 +21,18 @@
         </ul>
     </nav>
 
-    <header class="page-header">
-        <div class="container">
-            <a href="../index.html#experience" class="back-link">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M19 12H5M12 19l-7-7 7-7"/>
-                </svg>
-                Back to Experience
-            </a>
-            <h1 class="page-title">Data Scientist</h1>
-            <p class="page-subtitle">Sigma Solusi Indonesia</p>
-        </div>
-    </header>
-
-    <main class="section">
-        <div class="container">
-            <div class="article-layout">
-                <div class="article-content">
-                    <p>At Sigma Solusi Indonesia, I work as a Data Scientist building end-to-end ML solutions for supply chain optimization and intelligent automation. The work spans demand forecasting, conversational AI, LLM fine-tuning, and automated retraining — all serving a B2B FMCG distribution platform.</p>
-
-                    <h3>RAG Chatbot for B2B FMCG</h3>
-                    <p>Architected the foundational chatbot layer for the platform using a Dockerized RAG system built on ChromaDB and sentence-transformers. The core challenge was that customers use colloquial and regional product names that don't match official catalog entries — "mie goreng bungkusan merah" won't keyword-match any SKU. The solution uses semantic embeddings across three unified collections (products, FAQs, intents) to resolve queries regardless of naming variation. The system handles <strong>35+ customer intent types</strong> through semantic similarity against example phrases — no hardcoded keyword matching.</p>
-
-                    <h3>LLM Fine-tuning for WhatsApp Deployment</h3>
-                    <p>Engineered a specialized FAQ model for WhatsApp deployment using knowledge distillation and LoRA fine-tuning — distilling a <strong>Llama-3.1 70B teacher</strong> into a <strong>Gemma-2 9B student</strong>. The goal was to reduce inference latency while maintaining response quality for Indonesian-Javanese customer support. The pipeline includes 8 augmentation strategies that expand the base dataset ~5x, category-aware balancing across ~20 topic types, and multi-layer anti-fabrication validation that rejects hallucinated URLs, invented payment methods, and fabricated policies. Training runs entirely inside Docker — the GPU server requires no Python installation.</p>
-
-                    <h3>MLOps Retraining Pipeline</h3>
-                    <p>Built an automated MLOps retraining pipeline via <strong>n8n</strong>, enabling iterative model improvement with rigorous evaluation. The pipeline has completed <strong>10+ retraining rounds</strong> with <strong>A/B validation</strong> across <strong>154 structured test scenarios</strong> — covering product queries, FAQ answering, intent classification, and out-of-scope handling. Each round produces a diagnostic training report with loss curves, inference tests, and automated recommendations, enabling remote collaboration between analyst and server admin.</p>
-
-                    <h3>Demand Forecasting & BI Solutions</h3>
-                    <p>Developed end-to-end demand and sales forecasting pipelines using <strong>PyTorch</strong> and <strong>SQL</strong>, enabling better inventory planning across 6 darkstores and 2,240+ SKUs. Designed complementary <strong>BI solutions</strong> including warehouse simulations and a stock balancing system that optimizes goods distribution across the warehouse network — minimizing holding costs and reducing transfer times.</p>
-                </div>
-
-                <aside class="meta-sidebar">
+        <main class="project-split-layout">
+        <div class="project-split-left">
+            <div class="sticky-content">
+                
+                <h1 class="page-title">Data Scientist</h1>
+                <p class="page-subtitle">Sigma Solusi Indonesia</p>
+                
+                <div class="meta-sidebar">
+                    
                     <div class="meta-group">
                         <span class="meta-label">Role</span>
-                        <p>Data Scientist</p>
+                        <p>AI Engineer</p>
                     </div>
                     <div class="meta-group">
                         <span class="meta-label">Date</span>
@@ -100,7 +76,27 @@
                             <span>A/B Validation</span>
                         </div>
                     </div>
-                </aside>
+                
+                </div>
+            </div>
+        </div>
+        <div class="project-split-right">
+            <div class="article-content">
+                
+                    <p>At Sigma Solusi Indonesia, I work as a Data Scientist building end-to-end ML solutions for supply chain optimization and intelligent automation. The work spans demand forecasting, conversational AI, LLM fine-tuning, and automated retraining — all serving a B2B FMCG distribution platform.</p>
+
+                    <h3>RAG Chatbot for B2B FMCG</h3>
+                    <p>Architected the foundational chatbot layer for the platform using a Dockerized RAG system built on ChromaDB and sentence-transformers. The core challenge was that customers use colloquial and regional product names that don't match official catalog entries — "mie goreng bungkusan merah" won't keyword-match any SKU. The solution uses semantic embeddings across three unified collections (products, FAQs, intents) to resolve queries regardless of naming variation. The system handles <strong>35+ customer intent types</strong> through semantic similarity against example phrases — no hardcoded keyword matching.</p>
+
+                    <h3>LLM Fine-tuning for WhatsApp Deployment</h3>
+                    <p>Engineered a specialized FAQ model for WhatsApp deployment using knowledge distillation and LoRA fine-tuning — distilling a <strong>Llama-3.1 70B teacher</strong> into a <strong>Gemma-2 9B student</strong>. The goal was to reduce inference latency while maintaining response quality for Indonesian-Javanese customer support. The pipeline includes 8 augmentation strategies that expand the base dataset ~5x, category-aware balancing across ~20 topic types, and multi-layer anti-fabrication validation that rejects hallucinated URLs, invented payment methods, and fabricated policies. Training runs entirely inside Docker — the GPU server requires no Python installation.</p>
+
+                    <h3>MLOps Retraining Pipeline</h3>
+                    <p>Built an automated MLOps retraining pipeline via <strong>n8n</strong>, enabling iterative model improvement with rigorous evaluation. The pipeline has completed <strong>10+ retraining rounds</strong> with <strong>A/B validation</strong> across <strong>154 structured test scenarios</strong> — covering product queries, FAQ answering, intent classification, and out-of-scope handling. Each round produces a diagnostic training report with loss curves, inference tests, and automated recommendations, enabling remote collaboration between analyst and server admin.</p>
+
+                    <h3>Demand Forecasting & BI Solutions</h3>
+                    <p>Developed end-to-end demand and sales forecasting pipelines using <strong>PyTorch</strong> and <strong>SQL</strong>, enabling better inventory planning across 6 darkstores and 2,240+ SKUs. Designed complementary <strong>BI solutions</strong> including warehouse simulations and a stock balancing system that optimizes goods distribution across the warehouse network — minimizing holding costs and reducing transfer times.</p>
+                
             </div>
         </div>
     </main>
